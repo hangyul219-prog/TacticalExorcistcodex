@@ -1,0 +1,4137 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>택티컬 퇴마사 — 세계관 설정집</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600;700;900&family=Noto+Sans+KR:wght@300;400;500;700&family=Black+Han+Sans&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:        #0a0807;
+  --bg2:       #110d0a;
+  --bg3:       #1a1411;
+  --panel:     #15110d;
+  --paper:     #1c1612;
+  --border:    rgba(180,140,80,0.12);
+  --gold:      #c9a875;
+  --gold-bright: #e9c46a;
+  --gold-dim:  rgba(201,168,117,0.15);
+  --red:       #8b2a2a;
+  --red-blood: #6b1a1a;
+  --red-ink:   #a8302f;
+  --ink:       #2a1810;
+  --paper-text: #c7b8a3;
+  --paper-dim: #8a7864;
+  --paper-bright: #ddc9a8;
+  --shadow:    rgba(0,0,0,0.6);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -5%, rgba(139,42,42,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 100% 90%, rgba(201,168,117,0.04) 0%, transparent 50%),
+    /* paper grain */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.7 0 0 0 0 0.5 0 0 0 0 0.3 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-attachment: fixed;
+  font-family: 'Noto Serif KR', serif;
+  color: var(--paper-text);
+  min-height: 100vh;
+  padding: 48px 20px 80px;
+  position: relative;
+}
+/* Burn marks at edges */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 30% at 0% 0%, rgba(20,8,4,0.4), transparent 60%),
+    radial-gradient(ellipse 50% 30% at 100% 100%, rgba(20,8,4,0.5), transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+/* Subtle dust */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.04) 3px, rgba(0,0,0,0.04) 4px);
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.5;
+}
+.wrap { max-width: 760px; margin: 0 auto; position: relative; z-index: 1; }
+
+/* ── COVER ── */
+.cover {
+  text-align: center;
+  padding: 90px 50px 80px;
+  position: relative;
+  margin-bottom: 32px;
+  border: 1px solid rgba(201,168,117,0.25);
+  background:
+    linear-gradient(135deg, var(--paper) 0%, var(--bg2) 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 0.2 0 0 0 0 0.1 0 0 0 0 0 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)'/%3E%3C/svg%3E");
+  overflow: hidden;
+  box-shadow:
+    inset 0 0 80px rgba(0,0,0,0.6),
+    0 0 60px rgba(139,42,42,0.12),
+    0 16px 50px rgba(0,0,0,0.7);
+}
+.cover::before {
+  content: '';
+  position: absolute;
+  inset: 16px;
+  border: 1px solid rgba(201,168,117,0.2);
+  pointer-events: none;
+}
+.cover::after {
+  content: '';
+  position: absolute;
+  inset: 22px;
+  border: 1px solid rgba(201,168,117,0.08);
+  pointer-events: none;
+}
+
+.cover-classify {
+  display: inline-block;
+  margin-bottom: 32px;
+  padding: 6px 18px;
+  border: 1px solid var(--red-ink);
+  color: var(--red-ink);
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  font-weight: 700;
+  background: rgba(139,42,42,0.05);
+  position: relative;
+}
+.cover-classify::before,
+.cover-classify::after {
+  content: '✦';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--red-ink);
+  font-size: 10px;
+}
+.cover-classify::before { left: -14px; }
+.cover-classify::after  { right: -14px; }
+
+.cover-seal {
+  display: inline-block;
+  margin: 0 auto 28px;
+  width: 96px; height: 96px;
+  position: relative;
+}
+.cover-seal svg { width: 100%; height: 100%; }
+
+.cover-jp {
+  font-family: 'Cormorant Garamond', 'Noto Serif KR', serif;
+  font-size: 12px;
+  letter-spacing: 0.5em;
+  color: var(--paper-dim);
+  margin-bottom: 8px;
+  font-style: italic;
+  text-transform: uppercase;
+}
+.cover-main {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 900;
+  font-size: 46px;
+  color: var(--paper-bright);
+  letter-spacing: 0.06em;
+  line-height: 1.1;
+  margin-bottom: 14px;
+  text-shadow:
+    0 0 30px rgba(201,168,117,0.3),
+    1px 1px 0 rgba(0,0,0,0.8);
+}
+.cover-main .accent {
+  color: var(--gold);
+  font-style: italic;
+  font-weight: 700;
+}
+.cover-sub {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-style: italic;
+  color: var(--gold);
+  letter-spacing: 0.2em;
+  margin-bottom: 36px;
+  font-weight: 400;
+}
+.cover-rule {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 28px 0 22px;
+}
+.cover-rule .line {
+  width: 60px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.cover-rule .diamond {
+  width: 6px; height: 6px;
+  background: var(--gold);
+  transform: rotate(45deg);
+  box-shadow: 0 0 8px var(--gold);
+}
+.cover-desc {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 13px;
+  color: var(--paper-dim);
+  line-height: 2;
+  letter-spacing: 0.05em;
+  max-width: 480px;
+  margin: 0 auto 32px;
+  font-style: italic;
+}
+.cover-desc strong {
+  color: var(--paper-bright);
+  font-weight: 600;
+  font-style: normal;
+  letter-spacing: 0.08em;
+}
+
+.cover-meta {
+  display: flex;
+  justify-content: center;
+  gap: 36px;
+  flex-wrap: wrap;
+  padding-top: 24px;
+  border-top: 1px solid rgba(201,168,117,0.15);
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 10px;
+  color: var(--paper-dim);
+  letter-spacing: 0.18em;
+}
+.cover-meta .item {
+  display: flex; align-items: center; gap: 8px;
+}
+.cover-meta .item strong {
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.cover-btn {
+  display: inline-block;
+  margin-top: 28px;
+  padding: 12px 36px;
+  background: transparent;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  font-family: 'Noto Serif KR', serif;
+  font-size: 13px;
+  letter-spacing: 0.25em;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.4s ease;
+  position: relative;
+}
+.cover-btn:hover {
+  background: rgba(201,168,117,0.08);
+  letter-spacing: 0.3em;
+  box-shadow: 0 0 20px rgba(201,168,117,0.3);
+}
+
+/* ── PAGE — manuscript style ── */
+.page {
+  background: var(--paper);
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.35 0 0 0 0 0.2 0 0 0 0.03 0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+  border: 1px solid rgba(201,168,117,0.15);
+  margin-bottom: 32px;
+  position: relative;
+  overflow: hidden;
+  animation: fadeUp 0.6s ease both;
+  box-shadow:
+    0 0 60px rgba(139,42,42,0.05),
+    0 12px 40px rgba(0,0,0,0.6),
+    inset 0 0 120px rgba(0,0,0,0.25);
+  transition: box-shadow 0.6s ease, transform 0.6s ease;
+}
+.page:hover {
+  box-shadow:
+    0 0 80px rgba(201,168,117,0.12),
+    0 16px 50px rgba(0,0,0,0.7),
+    inset 0 0 120px rgba(0,0,0,0.2);
+  transform: translateY(-2px);
+}
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(20px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* Paper edge burns */
+.page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 40% 20% at 0% 0%, rgba(0,0,0,0.4), transparent 70%),
+    radial-gradient(ellipse 40% 20% at 100% 0%, rgba(0,0,0,0.4), transparent 70%),
+    radial-gradient(ellipse 40% 20% at 0% 100%, rgba(0,0,0,0.4), transparent 70%),
+    radial-gradient(ellipse 40% 20% at 100% 100%, rgba(0,0,0,0.4), transparent 70%);
+  pointer-events: none;
+  z-index: 1;
+}
+/* Center hot spot */
+.page::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 70% at 50% 50%, transparent 0%, rgba(0,0,0,0.25) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Page inner */
+.page-inner {
+  padding: 50px 56px 56px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Corner ornaments — like illuminated manuscript */
+.page-corner {
+  position: absolute;
+  width: 60px; height: 60px;
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0.6;
+}
+.page-corner.tl { top: 14px; left: 14px; }
+.page-corner.tr { top: 14px; right: 14px; transform: scaleX(-1); }
+.page-corner.bl { bottom: 14px; left: 14px; transform: scaleY(-1); }
+.page-corner.br { bottom: 14px; right: 14px; transform: scale(-1,-1); }
+
+/* Watermark seal */
+.page-seal {
+  position: absolute;
+  top: 50%; right: 40px;
+  transform: translateY(-50%);
+  width: 180px; height: 180px;
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 0;
+}
+.page-seal text {
+  font-family: 'Noto Serif KR', serif;
+}
+
+/* Page heading */
+.ch-header {
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px double rgba(201,168,117,0.25);
+  position: relative;
+}
+.ch-header::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 50%;
+  transform: translateX(-50%);
+  width: 60px; height: 1px;
+  background: var(--gold);
+  box-shadow: 0 0 10px var(--gold);
+}
+.ch-kicker {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.35em;
+  color: var(--paper-dim);
+  text-transform: uppercase;
+}
+.ch-kicker .left {
+  display: flex; align-items: center; gap: 10px;
+}
+.ch-kicker .num-block {
+  color: var(--red-ink);
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.05em;
+}
+.ch-title-en {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 14px;
+  color: var(--gold);
+  letter-spacing: 0.25em;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+.ch-title-ko {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 700;
+  font-size: 28px;
+  color: var(--paper-bright);
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  text-shadow: 0 0 16px rgba(201,168,117,0.15);
+}
+.ch-title-ko .jp-side {
+  color: var(--paper-dim);
+  font-size: 16px;
+  font-weight: 400;
+  margin-left: 8px;
+  font-style: italic;
+}
+
+/* Body paragraphs - novel style */
+.body {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 14px;
+  color: var(--paper-text);
+  line-height: 2;
+  letter-spacing: 0.02em;
+  margin-bottom: 18px;
+  text-align: justify;
+  text-indent: 1em;
+}
+.body strong {
+  color: var(--paper-bright);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.body em {
+  color: var(--gold);
+  font-style: italic;
+}
+
+/* Drop cap for first paragraph in each chapter */
+.body.lead {
+  text-indent: 0;
+}
+.body.lead::first-letter {
+  font-family: 'Cormorant Garamond', serif;
+  float: left;
+  font-size: 60px;
+  line-height: 0.85;
+  padding: 6px 12px 0 0;
+  color: var(--red-ink);
+  font-weight: 700;
+  text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+}
+
+/* Section divider — Japanese style */
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 28px 0;
+  color: var(--gold);
+  opacity: 0.6;
+}
+.divider .line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.divider .mark {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px;
+  letter-spacing: 0.3em;
+  font-style: italic;
+}
+
+/* Note / annotation box */
+.note {
+  margin: 24px 0;
+  padding: 18px 24px;
+  background: rgba(0,0,0,0.2);
+  border-left: 3px solid var(--red-ink);
+  font-family: 'Noto Serif KR', serif;
+  font-size: 13px;
+  color: var(--paper-text);
+  line-height: 1.9;
+  font-style: italic;
+  position: relative;
+}
+.note::before {
+  content: '※';
+  position: absolute;
+  left: 8px; top: 14px;
+  color: var(--red-ink);
+  font-size: 14px;
+  font-style: normal;
+}
+.note .note-body { padding-left: 18px; }
+
+/* Quote */
+.quote {
+  margin: 28px 0;
+  padding: 22px 32px;
+  background: linear-gradient(135deg, rgba(201,168,117,0.05), rgba(139,42,42,0.04));
+  border-left: 1px solid var(--gold);
+  border-right: 1px solid rgba(201,168,117,0.2);
+  position: relative;
+  font-family: 'Noto Serif KR', serif;
+  font-size: 14px;
+  color: var(--paper-bright);
+  font-style: italic;
+  line-height: 2;
+  letter-spacing: 0.04em;
+}
+.quote::before {
+  content: '〝';
+  position: absolute;
+  top: -8px; left: -2px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 56px;
+  color: var(--gold);
+  opacity: 0.3;
+  line-height: 1;
+}
+.quote .attr {
+  display: block;
+  margin-top: 12px;
+  font-size: 11px;
+  color: var(--paper-dim);
+  letter-spacing: 0.2em;
+  font-style: normal;
+  text-align: right;
+}
+.quote .attr::before {
+  content: '— ';
+}
+
+/* Definition card - for terminology */
+.term-card {
+  margin: 22px 0;
+  background:
+    linear-gradient(135deg, rgba(20,16,12,0.6), rgba(28,22,18,0.4));
+  border: 1px solid rgba(201,168,117,0.2);
+  position: relative;
+  overflow: hidden;
+}
+.term-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  background-size: 200% 100%;
+  animation: term-flow 6s linear infinite;
+}
+@keyframes term-flow {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+.term-card .head {
+  padding: 12px 20px;
+  background: rgba(0,0,0,0.3);
+  border-bottom: 1px solid rgba(201,168,117,0.15);
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.term-card .head .label {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  color: var(--red-ink);
+  font-style: italic;
+  text-transform: uppercase;
+}
+.term-card .head .name {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--paper-bright);
+  letter-spacing: 0.05em;
+}
+.term-card .head .reading {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 12px;
+  color: var(--gold);
+  letter-spacing: 0.15em;
+}
+.term-card .body-text {
+  padding: 16px 22px;
+  font-size: 13px;
+  color: var(--paper-text);
+  line-height: 2;
+  letter-spacing: 0.03em;
+}
+
+/* ── TIMELINE ── */
+.timeline {
+  position: relative;
+  padding-left: 36px;
+  margin: 28px 0;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 6px; bottom: 6px;
+  left: 8px;
+  width: 1px;
+  background: linear-gradient(180deg,
+    transparent,
+    var(--gold) 8%,
+    rgba(201,168,117,0.4) 50%,
+    var(--gold) 92%,
+    transparent);
+}
+.tl-entry {
+  position: relative;
+  padding: 0 0 22px 0;
+}
+.tl-entry::before {
+  content: '';
+  position: absolute;
+  left: -33px;
+  top: 7px;
+  width: 10px; height: 10px;
+  background: var(--bg);
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(201,168,117,0.4);
+  transition: all 0.4s ease;
+}
+.tl-entry:hover::before {
+  background: var(--red-ink);
+  border-color: var(--red-ink);
+  box-shadow: 0 0 14px var(--red-ink), 0 0 24px rgba(168,48,47,0.5);
+  transform: scale(1.3);
+}
+.tl-entry.major::before {
+  width: 14px; height: 14px;
+  background: var(--gold);
+  box-shadow: 0 0 12px var(--gold), 0 0 24px rgba(201,168,117,0.4);
+  left: -35px;
+  top: 5px;
+}
+.tl-year {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--gold);
+  letter-spacing: 0.08em;
+  margin-bottom: 4px;
+  font-style: italic;
+}
+.tl-entry.major .tl-year {
+  color: var(--red-ink);
+  font-size: 22px;
+}
+.tl-text {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 13px;
+  color: var(--paper-text);
+  line-height: 1.9;
+  letter-spacing: 0.02em;
+}
+.tl-text strong {
+  color: var(--paper-bright);
+  font-weight: 600;
+}
+.tl-text em {
+  color: var(--gold);
+  font-style: italic;
+  font-weight: 500;
+}
+
+/* ── GRADE TABLE (호급 분류표) ── */
+.grade-table {
+  margin: 28px 0;
+  background: linear-gradient(135deg, rgba(20,16,12,0.6), rgba(28,22,18,0.4));
+  border: 1px solid rgba(201,168,117,0.2);
+  overflow: hidden;
+  position: relative;
+}
+.grade-table::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  background-size: 200% 100%;
+  animation: term-flow 6s linear infinite;
+}
+.grade-table-head {
+  padding: 14px 22px;
+  background: rgba(0,0,0,0.3);
+  border-bottom: 1px solid rgba(201,168,117,0.15);
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+.gt-kicker {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  color: var(--red-ink);
+  text-transform: uppercase;
+}
+.gt-title {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--paper-bright);
+  letter-spacing: 0.04em;
+}
+
+.grade-row {
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid rgba(201,168,117,0.08);
+  transition: background 0.3s ease;
+}
+.grade-row:last-child { border-bottom: none; }
+.grade-row:hover {
+  background: rgba(201,168,117,0.04);
+}
+
+.grade-num {
+  width: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 8px;
+  background: rgba(0,0,0,0.25);
+  border-right: 1px solid rgba(201,168,117,0.12);
+  position: relative;
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 900;
+  font-size: 28px;
+  color: var(--gold);
+  letter-spacing: 0;
+  line-height: 1;
+}
+.grade-num .grade-en {
+  display: block;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 11px;
+  color: var(--paper-dim);
+  margin-top: 4px;
+  letter-spacing: 0.15em;
+}
+
+.grade-1 .grade-num { color: #9bb88a; }
+.grade-2 .grade-num { color: #c9a875; }
+.grade-3 .grade-num { color: #d99454; }
+.grade-4 .grade-num { color: #c46a48; }
+.grade-5 .grade-num {
+  color: #a8302f;
+  text-shadow: 0 0 12px rgba(168,48,47,0.5);
+}
+
+.grade-body {
+  padding: 14px 22px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.grade-label {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--paper-bright);
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+.grade-5 .grade-label { color: #d97070; }
+.grade-desc {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 12.5px;
+  color: var(--paper-text);
+  line-height: 1.8;
+  letter-spacing: 0.02em;
+}
+.grade-desc strong {
+  color: var(--paper-bright);
+  font-weight: 600;
+}
+.grade-desc em {
+  color: var(--gold);
+  font-style: italic;
+}
+
+/* ── RANK TABLE (신기관 5계급) ── */
+.rank-table {
+  margin: 28px 0;
+  background: linear-gradient(135deg, rgba(20,16,12,0.6), rgba(28,22,18,0.4));
+  border: 1px solid rgba(201,168,117,0.2);
+  overflow: hidden;
+  position: relative;
+}
+.rank-table::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--red-ink), transparent);
+  background-size: 200% 100%;
+  animation: term-flow 5s linear infinite;
+}
+.rank-table-head {
+  padding: 14px 22px;
+  background: rgba(0,0,0,0.3);
+  border-bottom: 1px solid rgba(201,168,117,0.15);
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+.rank-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+.rank-cell {
+  padding: 18px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  border-right: 1px solid rgba(201,168,117,0.1);
+  background: rgba(0,0,0,0.15);
+  transition: all 0.4s ease;
+  position: relative;
+}
+.rank-cell:last-child { border-right: none; }
+.rank-cell:hover {
+  background: rgba(168,48,47,0.08);
+  transform: translateY(-2px);
+}
+.rank-cell:hover .rank-kanji {
+  color: var(--red-ink);
+  text-shadow: 0 0 14px rgba(168,48,47,0.6);
+}
+.rank-kanji {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 900;
+  font-size: 34px;
+  color: var(--gold);
+  text-shadow: 0 0 12px rgba(201,168,117,0.4);
+  line-height: 1;
+  transition: all 0.4s ease;
+}
+.rank-1 .rank-kanji { color: #e9c46a; text-shadow: 0 0 14px rgba(233,196,106,0.6); }
+.rank-2 .rank-kanji { color: #d4b886; }
+.rank-3 .rank-kanji { color: #b8a280; }
+.rank-4 .rank-kanji { color: #9c8b74; }
+.rank-5 .rank-kanji { color: #7d7060; }
+.rank-ko {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 11px;
+  color: var(--paper-dim);
+  letter-spacing: 0.08em;
+  font-weight: 500;
+}
+.rank-num {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 9px;
+  color: var(--paper-dim);
+  opacity: 0.6;
+  letter-spacing: 0.1em;
+}
+.rank-footer {
+  padding: 14px 22px;
+  background: rgba(0,0,0,0.25);
+  border-top: 1px solid rgba(201,168,117,0.1);
+  font-family: 'Noto Serif KR', serif;
+  font-size: 12px;
+  color: var(--paper-text);
+  line-height: 1.8;
+  letter-spacing: 0.02em;
+  font-style: italic;
+}
+.rank-footer strong {
+  color: var(--paper-bright);
+  font-weight: 600;
+  font-style: normal;
+}
+.rank-footer em {
+  color: var(--gold);
+  font-style: italic;
+}
+
+/* ── DEPT CARD (부서 소개 카드) ── */
+.dept-card {
+  margin: 20px 0;
+  border: 1px solid rgba(201,168,117,0.2);
+  background: linear-gradient(135deg, rgba(20,16,12,0.7), rgba(28,22,18,0.5));
+  overflow: hidden;
+  position: relative;
+}
+.dept-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background-size: 200% 100%;
+  animation: term-flow 5s linear infinite;
+}
+.dept-red::before   { background: linear-gradient(90deg, transparent, var(--red-ink), transparent); }
+.dept-cyan::before  { background: linear-gradient(90deg, transparent, #8bb8c0, transparent); }
+.dept-gold::before  { background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+
+.dept-card-head {
+  padding: 14px 20px;
+  background: rgba(0,0,0,0.3);
+  border-bottom: 1px solid rgba(201,168,117,0.12);
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.dept-icon {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 900;
+  font-size: 36px;
+  line-height: 1;
+  min-width: 44px;
+  text-align: center;
+  filter: drop-shadow(0 0 8px currentColor);
+}
+.dept-red   .dept-icon { color: var(--red-ink); }
+.dept-cyan  .dept-icon { color: #7ab0b8; }
+.dept-gold  .dept-icon { color: var(--gold); }
+.dept-titles { flex: 1; }
+.dept-label {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  color: var(--paper-dim);
+  margin-bottom: 4px;
+}
+.dept-name {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--paper-bright);
+  letter-spacing: 0.04em;
+}
+.dept-card-body {
+  padding: 16px 22px;
+  font-family: 'Noto Serif KR', serif;
+  font-size: 13.5px;
+  color: var(--paper-text);
+  line-height: 2;
+  letter-spacing: 0.02em;
+}
+.dept-card-body strong { color: var(--paper-bright); font-weight: 600; }
+.dept-card-body em    { color: var(--gold); font-style: italic; }
+
+/* ── SKILL PILLARS (3기둥 역량 표시) ── */
+.skill-pillars {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  margin: 24px 0;
+}
+.skill-pillar {
+  padding: 20px 14px;
+  background: rgba(0,0,0,0.25);
+  border: 1px solid rgba(201,168,117,0.15);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.skill-pillar:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
+.skill-pillar::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+}
+.pillar-1::before { background: linear-gradient(90deg, transparent, var(--red-ink), transparent); }
+.pillar-2::before { background: linear-gradient(90deg, transparent, #7ab0b8, transparent); }
+.pillar-3::before { background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+
+.pillar-num {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 900;
+  font-size: 24px;
+  margin-bottom: 8px;
+  line-height: 1;
+}
+.pillar-1 .pillar-num { color: var(--red-ink); text-shadow: 0 0 10px rgba(168,48,47,0.5); }
+.pillar-2 .pillar-num { color: #7ab0b8; }
+.pillar-3 .pillar-num { color: var(--gold); text-shadow: 0 0 10px rgba(201,168,117,0.5); }
+.pillar-title {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--paper-bright);
+  margin-bottom: 8px;
+  letter-spacing: 0.04em;
+}
+.pillar-desc {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 11.5px;
+  color: var(--paper-dim);
+  line-height: 1.75;
+  font-style: italic;
+}
+.pillar-desc em { color: var(--gold); }
+
+/* ── THREE DIVISIONS (3과 정립 표시) ── */
+.three-divisions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 20px;
+  background: rgba(0,0,0,0.2);
+  border: 1px solid rgba(201,168,117,0.15);
+  margin: 20px 0;
+}
+.td-connector {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  color: var(--paper-dim);
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+.td-cell {
+  flex: 1;
+  padding: 16px 10px;
+  text-align: center;
+  background: rgba(0,0,0,0.2);
+  border: 1px solid rgba(201,168,117,0.1);
+  transition: all 0.4s ease;
+}
+.td-cell:hover {
+  transform: scale(1.03);
+  border-color: rgba(201,168,117,0.3);
+}
+.td-kanji {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 900;
+  font-size: 32px;
+  margin-bottom: 6px;
+  line-height: 1;
+}
+.td-red  .td-kanji { color: var(--red-ink); text-shadow: 0 0 12px rgba(168,48,47,0.6); }
+.td-cyan .td-kanji { color: #7ab0b8; text-shadow: 0 0 10px rgba(122,176,184,0.5); }
+.td-gold .td-kanji { color: var(--gold); text-shadow: 0 0 12px rgba(201,168,117,0.6); }
+.td-name {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--paper-bright);
+  margin-bottom: 4px;
+  letter-spacing: 0.04em;
+}
+.td-sub {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 10px;
+  color: var(--paper-dim);
+  letter-spacing: 0.2em;
+}
+
+/* ── FACTION CARD (세력 소개 카드) ── */
+.faction-card {
+  margin: 24px 0;
+  border: 1px solid rgba(201,168,117,0.2);
+  background: linear-gradient(135deg, rgba(20,16,12,0.7), rgba(28,22,18,0.5));
+  overflow: hidden;
+  position: relative;
+}
+.faction-card-head {
+  padding: 16px 24px;
+  background: rgba(0,0,0,0.35);
+  border-bottom: 1px solid rgba(201,168,117,0.15);
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.faction-seal {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 900;
+  font-size: 42px;
+  line-height: 1;
+  min-width: 50px;
+  text-align: center;
+}
+.faction-titles { flex: 1; }
+.faction-kicker {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  color: var(--paper-dim);
+  margin-bottom: 4px;
+}
+.faction-name {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--paper-bright);
+  letter-spacing: 0.04em;
+}
+.faction-card-body {
+  padding: 18px 26px;
+  font-family: 'Noto Serif KR', serif;
+  font-size: 13.5px;
+  color: var(--paper-text);
+  line-height: 2;
+  letter-spacing: 0.02em;
+}
+.faction-card-body strong { color: var(--paper-bright); font-weight: 600; }
+.faction-card-body em    { color: var(--gold); font-style: italic; }
+
+/* Summary list for factions */
+.summary-list {
+  margin: 20px 0;
+  background: rgba(0,0,0,0.2);
+  border: 1px solid rgba(201,168,117,0.15);
+  overflow: hidden;
+}
+.summary-list-head {
+  padding: 10px 20px;
+  background: rgba(0,0,0,0.3);
+  border-bottom: 1px solid rgba(201,168,117,0.12);
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  color: var(--paper-dim);
+}
+.summary-list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 14px 22px;
+  border-bottom: 1px solid rgba(201,168,117,0.08);
+  font-family: 'Noto Serif KR', serif;
+  font-size: 13px;
+  color: var(--paper-text);
+  line-height: 1.9;
+  letter-spacing: 0.02em;
+  transition: background 0.3s ease;
+}
+.summary-list-item:last-child { border-bottom: none; }
+.summary-list-item:hover { background: rgba(201,168,117,0.04); }
+.summary-list-item .sli-num {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 900;
+  font-size: 18px;
+  color: var(--gold);
+  min-width: 28px;
+  line-height: 1.5;
+  flex-shrink: 0;
+}
+.summary-list-item .sli-body strong { color: var(--paper-bright); font-weight: 600; }
+.summary-list-item .sli-body em    { color: var(--gold); font-style: italic; }
+
+/* Footer */
+.page-foot {
+  border-top: 1px solid rgba(201,168,117,0.15);
+  margin: 0 56px;
+  padding: 14px 0 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 11px;
+  color: var(--paper-dim);
+  letter-spacing: 0.2em;
+  position: relative;
+  z-index: 2;
+}
+.page-foot .num {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+  font-style: normal;
+}
+
+/* ── TABLE OF CONTENTS ── */
+.toc-page .page-inner {
+  padding: 44px 56px 50px;
+}
+.toc-header {
+  text-align: center;
+  margin-bottom: 32px;
+  padding-bottom: 22px;
+  border-bottom: 1px double rgba(201,168,117,0.25);
+  position: relative;
+}
+.toc-header::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 50%;
+  transform: translateX(-50%);
+  width: 80px; height: 1px;
+  background: var(--gold);
+  box-shadow: 0 0 12px var(--gold);
+}
+.toc-kicker {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 13px;
+  letter-spacing: 0.4em;
+  color: var(--paper-dim);
+  margin-bottom: 6px;
+}
+.toc-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--paper-bright);
+  letter-spacing: 0.08em;
+}
+
+.toc-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px 11px 18px;
+  text-decoration: none;
+  color: var(--paper-text);
+  font-family: 'Noto Serif KR', serif;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  position: relative;
+  transition: all 0.3s ease;
+  border-left: 1px solid transparent;
+}
+.toc-item::before {
+  content: '◇';
+  position: absolute;
+  left: 0; top: 50%;
+  transform: translateY(-50%);
+  color: var(--gold);
+  font-size: 10px;
+  opacity: 0.4;
+  transition: all 0.3s ease;
+}
+.toc-item:hover {
+  background: rgba(201,168,117,0.06);
+  border-left-color: var(--gold);
+  padding-left: 22px;
+  color: var(--paper-bright);
+}
+.toc-item:hover::before {
+  content: '◆';
+  color: var(--red-ink);
+  opacity: 1;
+  text-shadow: 0 0 10px var(--red-ink);
+}
+.toc-item:hover .toc-num {
+  color: var(--gold-bright);
+  text-shadow: 0 0 10px var(--gold);
+}
+.toc-label {
+  flex-shrink: 0;
+}
+.toc-en {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  color: var(--paper-dim);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  margin-left: 6px;
+}
+.toc-dots {
+  flex: 1;
+  border-bottom: 1px dotted rgba(201,168,117,0.2);
+  margin: 0 8px;
+  height: 6px;
+}
+.toc-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 16px;
+  color: var(--gold);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+  min-width: 28px;
+  text-align: right;
+}
+
+/* Back to TOC floating button */
+.back-to-toc {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 52px;
+  height: 52px;
+  background: var(--paper);
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 100;
+  box-shadow: 0 0 20px rgba(201,168,117,0.25), 0 4px 16px rgba(0,0,0,0.6);
+  transition: all 0.4s ease;
+  opacity: 0;
+  pointer-events: none;
+  text-decoration: none;
+}
+.back-to-toc.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+.back-to-toc::before {
+  content: '永';
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 900;
+  font-size: 22px;
+  color: var(--gold);
+  text-shadow: 0 0 10px rgba(201,168,117,0.6);
+}
+.back-to-toc:hover {
+  transform: translateY(-3px) scale(1.08);
+  box-shadow: 0 0 30px rgba(201,168,117,0.5), 0 8px 24px rgba(0,0,0,0.7);
+  border-color: var(--gold-bright);
+}
+
+/* Smooth scroll target */
+.page { scroll-margin-top: 20px; }
+.page:target {
+  animation: target-highlight 1.5s ease-out;
+}
+@keyframes target-highlight {
+  0%   { box-shadow: 0 0 0 rgba(201,168,117,0); }
+  20%  { box-shadow: 0 0 80px rgba(201,168,117,0.5), 0 0 120px rgba(168,48,47,0.3); }
+  100% { box-shadow: 0 0 60px rgba(139,42,42,0.05), 0 12px 40px rgba(0,0,0,0.6); }
+}
+
+/* Cross-link to rulebook */
+.cross-link {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 6px 14px;
+  border: 1px solid rgba(201,168,117,0.4);
+  color: var(--gold);
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.cross-link:hover {
+  background: rgba(201,168,117,0.08);
+  letter-spacing: 0.2em;
+}
+
+@media (max-width: 720px) {
+  body { padding: 24px 12px 60px; }
+  .cover { padding: 60px 24px 48px; }
+  .cover-main { font-size: 32px; }
+  .page-inner { padding: 32px 28px; }
+  .ch-title-ko { font-size: 22px; }
+  .toc-item { font-size: 12px; padding: 9px 10px 9px 16px; }
+  .page-foot { margin: 0 28px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ════ COVER ════ -->
+<div class="cover">
+  <div class="cover-classify">CLASSIFIED · 機密文書</div>
+
+  <div class="cover-seal">
+    <svg viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="46" fill="none" stroke="#c9a875" stroke-width="0.8" opacity="0.6"/>
+      <circle cx="50" cy="50" r="40" fill="none" stroke="#c9a875" stroke-width="0.4" opacity="0.4"/>
+      <circle cx="50" cy="50" r="30" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/>
+      <!-- octagram -->
+      <polygon points="50,18 60,40 82,50 60,60 50,82 40,60 18,50 40,40" fill="none" stroke="#c9a875" stroke-width="0.5" opacity="0.6"/>
+      <polygon points="50,12 58,50 50,88 42,50" fill="none" stroke="#a8302f" stroke-width="0.4" opacity="0.5"/>
+      <text x="50" y="58" text-anchor="middle" font-family="Noto Serif KR, serif" font-size="22" fill="#a8302f" font-weight="900">永</text>
+    </svg>
+  </div>
+
+  <div class="cover-jp">— Tactical Exorcist Codex —</div>
+  <div class="cover-main">택티컬 퇴마사</div>
+  <div class="cover-sub">永慈 · World Codex</div>
+
+  <div class="cover-rule">
+    <div class="line"></div>
+    <div class="diamond"></div>
+    <div class="line"></div>
+  </div>
+
+  <div class="cover-desc">
+    환경청 신기부의 기록 보관소에 봉인된, <strong>경계 너머의 역사</strong>.<br>
+    영자(永慈) 연호의 일본에서, 형(穢)을 사르고 경계를 지키는 자들의 발자취를 여기 옮겨 적는다.
+  </div>
+
+  <div class="cover-meta">
+    <div class="item">VOLUME <strong>I</strong></div>
+    <div class="item">PAGES <strong>VII</strong></div>
+    <div class="item">EDITION <strong>MMXL</strong></div>
+  </div>
+
+  <a href="#page-toc" class="cover-btn">목차로 들어가기</a>
+</div>
+
+
+<!-- ════ TABLE OF CONTENTS ════ -->
+<div class="page toc-page" id="page-toc">
+  <svg class="page-corner tl" viewBox="0 0 60 60">
+    <path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/>
+    <path d="M4 4 L14 14 M56 4 L46 14 M4 56 L14 46" stroke="#c9a875" stroke-width="0.5" fill="none" opacity="0.4"/>
+    <circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/>
+    <path d="M14 4 L26 4 M4 14 L4 26" stroke="#a8302f" stroke-width="0.5" opacity="0.5"/>
+  </svg>
+  <svg class="page-corner tr" viewBox="0 0 60 60">
+    <path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/>
+    <circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/>
+  </svg>
+  <svg class="page-corner bl" viewBox="0 0 60 60">
+    <path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/>
+    <circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/>
+  </svg>
+  <svg class="page-corner br" viewBox="0 0 60 60">
+    <path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/>
+    <circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/>
+  </svg>
+
+  <div class="page-inner">
+    <div class="toc-header">
+      <div class="toc-kicker">— Index of Records —</div>
+      <div class="toc-title">目 次 · 목차</div>
+    </div>
+
+    <a href="#page-preface" class="toc-item">
+      <span class="toc-label">머리말<span class="toc-en">Preface</span></span>
+      <span class="toc-dots"></span>
+      <span class="toc-num">I</span>
+    </a>
+    <a href="#page-canon" class="toc-item">
+      <span class="toc-label">4-1 · 캐논 · "영자(永慈)"<span class="toc-en">Canon Eternal Mercy</span></span>
+      <span class="toc-dots"></span>
+      <span class="toc-num">II</span>
+    </a>
+    <a href="#page-timeline-1" class="toc-item">
+      <span class="toc-label">4-2 · 택티컬 퇴마사 연표 (上)<span class="toc-en">Chronology, vol.1</span></span>
+      <span class="toc-dots"></span>
+      <span class="toc-num">III</span>
+    </a>
+    <a href="#page-timeline-2" class="toc-item">
+      <span class="toc-label">4-2 · 택티컬 퇴마사 연표 (下)<span class="toc-en">Chronology, vol.2</span></span>
+      <span class="toc-dots"></span>
+      <span class="toc-num">IV</span>
+    </a>
+    <a href="#page-2040s" class="toc-item">
+      <span class="toc-label">4-3 · 초상이 일상이 된 2040년대<span class="toc-en">When the Supernatural Became Mundane</span></span>
+      <span class="toc-dots"></span>
+      <span class="toc-num">V</span>
+    </a>
+    <a href="#page-boundary-1" class="toc-item">
+      <span class="toc-label">4-4 · '경계 이상'이란<span class="toc-en">On Boundary Anomaly</span></span>
+      <span class="toc-dots"></span>
+      <span class="toc-num">VI</span>
+    </a>
+    <a href="#page-boundary-2" class="toc-item">
+      <span class="toc-label">4-4-1 · 현세 · 유세의 경계<span class="toc-en">Utsushiyo & Kakuriyo</span></span>
+      <span class="toc-dots"></span>
+      <span class="toc-num">VII</span>
+    </a>
+    <a href="#page-essence" class="toc-item">
+      <span class="toc-label">4-4-2 · 가호와 부정<span class="toc-en">Kago & Kegare</span></span>
+      <span class="toc-dots"></span>
+      <span class="toc-num">VIII</span>
+    </a>
+    <a href="#page-kai-i" class="toc-item">
+      <span class="toc-label">4-4-3 · "너머"로부터의 위협, '계이'<span class="toc-en">Threats from Beyond</span></span>
+      <span class="toc-dots"></span>
+      <span class="toc-num">IX</span>
+    </a>
+    <a href="#page-shinki-bu" class="toc-item">
+      <span class="toc-label">4-5 · 경계 이상 대책 기관, 신기부<span class="toc-en">The Shinki-bu</span></span>
+      <span class="toc-dots"></span>
+      <span class="toc-num">X</span>
+    </a>
+    <a href="#page-frontline" class="toc-item">
+      <span class="toc-label">4-5-1 · 경계 대책의 최전선<span class="toc-en">Frontline of Defense</span></span>
+      <span class="toc-dots"></span>
+      <span class="toc-num">XI</span>
+    </a>
+    <a href="#page-chuou" class="toc-item">
+      <span class="toc-label">4-5-2 · 중앙신기실과 '신기관'<span class="toc-en">The Central Office</span></span>
+      <span class="toc-dots"></span>
+      <span class="toc-num">XII</span>
+    </a>
+    <a href="#page-keitai" class="toc-item">
+      <span class="toc-label">4-5-3 · 경계대책과 · 퇴마 전투 스페셜리스트<span class="toc-en">Frontline Specialists</span></span>
+      <span class="toc-dots"></span>
+      <span class="toc-num">XIII</span>
+    </a>
+    <a href="#page-kekkai" class="toc-item">
+      <span class="toc-label">4-5-4 · 결계관리과 · 봉인의 수호자<span class="toc-en">Wards of Containment</span></span>
+      <span class="toc-dots"></span>
+      <span class="toc-num">XIV</span>
+    </a>
+    <a href="#page-seigu" class="toc-item">
+      <span class="toc-label">4-5-5 · 제구개발과 · 미지에 대항하는 연구<span class="toc-en">Research & Armament</span></span>
+      <span class="toc-dots"></span>
+      <span class="toc-num">XV</span>
+    </a>
+    <a href="#page-environ" class="toc-item">
+      <span class="toc-label">4-6 · 신기부를 둘러싼 환경<span class="toc-en">Surrounding Forces</span></span>
+      <span class="toc-dots"></span>
+      <span class="toc-num">XVI</span>
+    </a>
+    <a href="#page-jinguu" class="toc-item">
+      <span class="toc-label">4-7 · 구시대의 퇴마사들, 신궁본사<span class="toc-en">The Jinguu-Honsha</span></span>
+      <span class="toc-dots"></span>
+      <span class="toc-num">XVII</span>
+    </a>
+    <a href="#page-onmyou" class="toc-item">
+      <span class="toc-label">4-7-1 · 식법의 탐구자, 음양료<span class="toc-en">Onmyou-ryou</span></span>
+      <span class="toc-dots"></span>
+      <span class="toc-num">XVIII</span>
+    </a>
+    <a href="#page-yakumo" class="toc-item">
+      <span class="toc-label">4-7-2 · 고대 제구의 사용자, 야쿠모타이샤<span class="toc-en">Yakumo-Taisha</span></span>
+      <span class="toc-dots"></span>
+      <span class="toc-num">XIX</span>
+    </a>
+    <a href="#page-daiku" class="toc-item">
+      <span class="toc-label">4-7-3 · 사를 두르는 의술자, 신궁대공중<span class="toc-en">Jinguu Daikoushu</span></span>
+      <span class="toc-dots"></span>
+      <span class="toc-num">XX</span>
+    </a>
+    <a href="#page-jusha" class="toc-item">
+      <span class="toc-label">4-8 · 경계 기술의 악용자, 주저 범죄자<span class="toc-en">Cursed Criminals</span></span>
+      <span class="toc-dots"></span>
+      <span class="toc-num">XXI</span>
+    </a>
+    <a href="#page-jusatsu" class="toc-item">
+      <span class="toc-label">4-8-1 · 흉악 주저 범죄자, 주살사<span class="toc-en">The Jusalsha</span></span>
+      <span class="toc-dots"></span>
+      <span class="toc-num">XXII</span>
+    </a>
+    <a href="#page-juyo" class="toc-item">
+      <span class="toc-label">4-8-2·3 · 주여사 / 시술사<span class="toc-en">Enchanter & Necromancer</span></span>
+      <span class="toc-dots"></span>
+      <span class="toc-num">XXIII</span>
+    </a>
+    <a href="#page-gear-1" class="toc-item">
+      <span class="toc-label">4-10 · 제구(기어) — 수의·카타시로·흑부정<span class="toc-en">Gear I</span></span>
+      <span class="toc-dots"></span>
+      <span class="toc-num">XXIV</span>
+    </a>
+    <a href="#page-gear-2" class="toc-item">
+      <span class="toc-label">4-10 · 제구(기어) — 카라비너·주련강승·하라이구시<span class="toc-en">Gear II</span></span>
+      <span class="toc-dots"></span>
+      <span class="toc-num">XXV</span>
+    </a>
+    <a href="#page-terms-1" class="toc-item">
+      <span class="toc-label">4-11 · 용어 — 신기부 · 경계 이상<span class="toc-en">Terminology I</span></span>
+      <span class="toc-dots"></span>
+      <span class="toc-num">XXVI</span>
+    </a>
+    <a href="#page-terms-2" class="toc-item">
+      <span class="toc-label">4-11 · 용어 — 식신 · 계이<span class="toc-en">Terminology II</span></span>
+      <span class="toc-dots"></span>
+      <span class="toc-num">XXVII</span>
+    </a>
+    <a href="#page-terms-3" class="toc-item">
+      <span class="toc-label">4-11 · 용어 — 연기 (縁起)<span class="toc-en">Terminology III</span></span>
+      <span class="toc-dots"></span>
+      <span class="toc-num">XXVIII</span>
+    </a>
+    <a href="#page-terms-4" class="toc-item">
+      <span class="toc-label">4-11 · 용어 — 의식 · 식법 / 퇴마술<span class="toc-en">Terminology IV</span></span>
+      <span class="toc-dots"></span>
+      <span class="toc-num">XXIX</span>
+    </a>
+    <a href="#page-terms-5" class="toc-item">
+      <span class="toc-label">4-11 · 용어 — 주저 · 주저 범죄<span class="toc-en">Terminology V</span></span>
+      <span class="toc-dots"></span>
+      <span class="toc-num">XXX</span>
+    </a>
+
+    <div class="divider" style="margin-top:36px;">
+      <div class="line"></div>
+      <div class="mark">FINIS</div>
+      <div class="line"></div>
+    </div>
+
+    <div style="text-align:center;margin-top:20px;">
+      <a href="tactical-exorcist-rulebook.html" class="cross-link">→ 룰북으로 이동</a>
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <span>Tactical Exorcist Codex</span>
+    <span class="num">·</span>
+    <span>Table of Contents</span>
+  </div>
+</div>
+
+
+<!-- ════ PAGE I — PREFACE ════ -->
+<div class="page" id="page-preface">
+  <svg class="page-corner tl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><path d="M4 4 L14 14 M56 4 L46 14 M4 56 L14 46" stroke="#c9a875" stroke-width="0.5" fill="none" opacity="0.4"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner tr" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner bl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner br" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+
+  <svg class="page-seal" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="0.4"/>
+    <text x="50" y="68" text-anchor="middle" font-size="60" fill="currentColor">序</text>
+  </svg>
+
+  <div class="page-inner">
+    <div class="ch-header">
+      <div class="ch-kicker">
+        <div class="left"><span class="num-block">i</span><span>chapter four · preface</span></div>
+        <div>WORLD SECTION</div>
+      </div>
+      <div class="ch-title-en">— Preface —</div>
+      <div class="ch-title-ko">머리말 <span class="jp-side">序文</span></div>
+    </div>
+
+    <p class="body lead">본 항목에서는 택티컬 퇴마사 TRPG의 무대에 대해 기재한다. 본 항목에서 다루는 설정은 일종의 <strong>캐논(Canon, 공식 설정)</strong>으로 삼으며, 코어 설정과는 일정한 거리를 두는 것으로 한다.</p>
+
+    <p class="body">또한, 본 시스템으로 세션을 개최하는 게임 마스터는 본 항목의 설정이 아닌 자신이 구상한 캐논을 적용하여 시나리오를 작성하거나, 게임을 진행해도 무방하다.</p>
+
+    <p class="body">본 항목은 어디까지나 필자(<em>보팔 놋치</em>)가 TRPG를 위해 준비한 설정 모음이라는 점을 유의하기 바란다.</p>
+
+    <div class="divider">
+      <div class="line"></div>
+      <div class="mark">✦</div>
+      <div class="line"></div>
+    </div>
+
+    <div class="note">
+      <div class="note-body">
+        룰북 제작자의 요청에 따라, <strong>비공식적인 캐릭터는 제거</strong>되었다. 사유는, 개인성을 강조하기 위해, 유저가 창작한 캐릭터로써의 조직을 선출하는 방식을 취한다.
+        <br><br>
+        <em>(월드 섹션 참고 : note.com/vorpal_notch/n/nad175d71c375)</em>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <span>Tactical Exorcist Codex</span>
+    <span class="num">I</span>
+    <span>Preface</span>
+  </div>
+</div>
+
+
+<!-- ════ PAGE II — CANON: EIJI ════ -->
+<div class="page" id="page-canon">
+  <svg class="page-corner tl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><path d="M4 4 L14 14 M56 4 L46 14 M4 56 L14 46" stroke="#c9a875" stroke-width="0.5" fill="none" opacity="0.4"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner tr" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner bl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner br" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+
+  <svg class="page-seal" viewBox="0 0 100 100">
+    <text x="50" y="68" text-anchor="middle" font-size="60" fill="currentColor">永</text>
+  </svg>
+
+  <div class="page-inner">
+    <div class="ch-header">
+      <div class="ch-kicker">
+        <div class="left"><span class="num-block">4·1</span><span>canon · eiji</span></div>
+        <div>ETERNAL MERCY</div>
+      </div>
+      <div class="ch-title-en">— Canon : "Eiji" —</div>
+      <div class="ch-title-ko">캐논 · 영자(永慈) <span class="jp-side">에이지</span></div>
+    </div>
+
+    <p class="body lead">본 항목에서는, <strong>"영자(에이지)"</strong>라는 명칭에 몇 가지 의미를 부여하고 있다. 하나는 <em>「택티컬 퇴마사 TRPG용 설정 모음을 포괄한 캐논의 명칭」</em>이라는 의미이다.</p>
+
+    <p class="body">또 다른 하나는 <em>「택티컬 퇴마사 TRPG용 무대 설정에서 사용되는 가상의 연호」</em>라는 의미이다.</p>
+
+    <div class="term-card">
+      <div class="head">
+        <span class="label">Definition</span>
+        <span class="name">永慈</span>
+        <span class="reading">Eiji · 에이지</span>
+      </div>
+      <div class="body-text">
+        택티컬 퇴마사 TRPG 내에서의 <strong>2040년대 일본</strong>은, "영자"라는 가상의 연호를 채택한 <strong>IF(만약)의 세계선</strong>으로 설정된다.
+        <br><br>
+        영자와 서기(서력)의 상세한 대응은 굳이 설정하지 않았으므로, 필요에 따라 시나리오 내에서 자유롭게 설정할 것.
+      </div>
+    </div>
+
+    <div class="quote">
+      영원토록 자비가 깃들기를 — 어두운 시대에 바라는 단 하나의 소원이, 한 연호의 이름이 되었다.
+      <span class="attr">『영자 연호 제정 의례서』</span>
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <span>Tactical Exorcist Codex</span>
+    <span class="num">II</span>
+    <span>Canon Eiji</span>
+  </div>
+</div>
+
+
+<!-- ════ PAGE III — TIMELINE I ════ -->
+<div class="page" id="page-timeline-1">
+  <svg class="page-corner tl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><path d="M4 4 L14 14 M56 4 L46 14 M4 56 L14 46" stroke="#c9a875" stroke-width="0.5" fill="none" opacity="0.4"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner tr" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner bl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner br" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+
+  <svg class="page-seal" viewBox="0 0 100 100">
+    <text x="50" y="68" text-anchor="middle" font-size="60" fill="currentColor">記</text>
+  </svg>
+
+  <div class="page-inner">
+    <div class="ch-header">
+      <div class="ch-kicker">
+        <div class="left"><span class="num-block">4·2</span><span>chronology · part one</span></div>
+        <div>1970 — 2007</div>
+      </div>
+      <div class="ch-title-en">— Tactical Exorcist Chronology —</div>
+      <div class="ch-title-ko">택티컬 퇴마사 연표 <span class="jp-side">壱</span></div>
+    </div>
+
+    <p class="body lead">본 항목에서는, 택티컬 퇴마사 TRPG의 세계관 베이스를 설명하기 위해 <em>'환경청 신기부(神祇部)'</em>의 설립 경위에 대해 간단히 해설한다.</p>
+
+    <div class="note">
+      <div class="note-body">
+        전제로서, 코어 설정에서는 <strong>'2001년에 환경성(環境省)이 발족하지 않았다'</strong>는 IF(만약)의 세계를 다루고 있다. 이에 따라, 택티컬 퇴마사 TRPG용 캐논 "영자"에서는 '환경청 신기부'에 아래와 같은 경위를 부여하고 있다.
+      </div>
+    </div>
+
+    <div class="divider">
+      <div class="line"></div>
+      <div class="mark">CHRONICLES</div>
+      <div class="line"></div>
+    </div>
+
+    <div class="timeline">
+
+      <div class="tl-entry">
+        <div class="tl-year">~ 1970</div>
+        <div class="tl-text">일부 영능력자나 신관, 승려 등이 <strong>민간의 범주</strong>에서 활동하던 시기.</div>
+      </div>
+
+      <div class="tl-entry major">
+        <div class="tl-year">1971</div>
+        <div class="tl-text">총리부 외청으로 <strong>환경청</strong>이 설립됨. 같은 시기, 마찬가지로 총리부 외청으로 <em>신기청(神祇庁)</em>이 설립됨.</div>
+      </div>
+
+      <div class="tl-entry">
+        <div class="tl-year">1980 경</div>
+        <div class="tl-text">고도 경제 성장과 함께 인구 증가 및 도시 발전이 급격히 진행됨. 그에 따라 <strong>괴기 현상이나 유령, 요괴, 우주인 등 초상 현상의 보고 건수가 증가</strong>함.</div>
+      </div>
+
+      <div class="tl-entry">
+        <div class="tl-year">1981</div>
+        <div class="tl-text"><em>신기청 퇴마부</em> 설립. 괴기 현상에 대항하기 위해 <strong>"퇴마"에 관한 지식과 문헌</strong>을 전국에서 수집. 병행하여 유력한 신사와 사찰에 협조를 구하고 제한적으로 임무를 수행함.</div>
+      </div>
+
+      <div class="tl-entry">
+        <div class="tl-year">1987</div>
+        <div class="tl-text">신기청 퇴마부 <em>퇴멸과</em> 설립. 총리부 직할의 <strong>비공식 기관</strong>으로서, 영능력자와 기도사(오가미야)가 입청함. 수도 근교를 중심으로 수많은 '요괴 퇴치'가 이루어짐.</div>
+      </div>
+
+      <div class="tl-entry major">
+        <div class="tl-year">1993</div>
+        <div class="tl-text">신기청 신학국의 연구를 통해 <strong>'유세(저승/은세)'의 존재가 관측</strong>됨. 역설적으로 '현세'와 <em>'경계'</em>의 개념이 확립됨. 유엔(UN)이 경계 재해의 존재를 인정하고, 국제적인 대(對) 초상 현상 활동의 기운이 싹틈.</div>
+      </div>
+
+      <div class="tl-entry">
+        <div class="tl-year">1994</div>
+        <div class="tl-text">신기청 <em>경계대책부</em> 설립. 개인의 영능력에 의존하던 종래의 수법에서 벗어나, <strong>이론화된 영력 공학에 기초한 "제구"</strong>의 개발이 추진됨.</div>
+      </div>
+
+      <div class="tl-entry major">
+        <div class="tl-year">2001</div>
+        <div class="tl-text">조직 개편에 따라 신기청이 <strong>발전적 해체</strong>. 국가가 계이로 인한 부정을 '특정 공해'로 지정함에 따라, 신기청의 인원과 기술은 <em>환경청</em>으로 인계됨.<br><br>조직 명칭을 <strong>'환경청 신기부'</strong>로 고치고, 조직과 인원을 재정비함. 같은 해, 신기부 직속 내국으로 '중앙신기실' 설립. 고등 신직으로서 <em>'신기관' 국가 자격 제도</em>가 정비됨.<br><br>'경계 이상'이라는 용어가 공식 용어로 정의되고, 관련 법규 정비 및 제구 개발이 본격화됨.</div>
+      </div>
+
+      <div class="tl-entry">
+        <div class="tl-year">2002</div>
+        <div class="tl-text">환경청 신기부 <em>퇴마과</em> 설립. 경계 이상에 대한 처치 프로세스가 결정되어, <strong>퇴마과가 실동 부대로서 가동</strong>되기 시작함.</div>
+      </div>
+
+      <div class="tl-entry">
+        <div class="tl-year">2007</div>
+        <div class="tl-text">경계 이상에 대항할 인재 육성과 경계 연구를 목적으로 한 학술 기관 <em>'신학교'</em> 설립. 같은 해, 실동 인원의 육성을 목적으로 한 양성 기관 <em>'음양료'</em> 설립.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <span>Tactical Exorcist Codex</span>
+    <span class="num">III</span>
+    <span>Chronology I</span>
+  </div>
+</div>
+
+
+<!-- ════ PAGE IV — TIMELINE II ════ -->
+<div class="page" id="page-timeline-2">
+  <svg class="page-corner tl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><path d="M4 4 L14 14 M56 4 L46 14 M4 56 L14 46" stroke="#c9a875" stroke-width="0.5" fill="none" opacity="0.4"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner tr" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner bl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner br" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+
+  <svg class="page-seal" viewBox="0 0 100 100">
+    <text x="50" y="68" text-anchor="middle" font-size="60" fill="currentColor">録</text>
+  </svg>
+
+  <div class="page-inner">
+    <div class="ch-header">
+      <div class="ch-kicker">
+        <div class="left"><span class="num-block">4·2</span><span>chronology · part two</span></div>
+        <div>2008 — 2040</div>
+      </div>
+      <div class="ch-title-en">— Tactical Exorcist Chronology —</div>
+      <div class="ch-title-ko">택티컬 퇴마사 연표 <span class="jp-side">弐</span></div>
+    </div>
+
+    <div class="timeline">
+
+      <div class="tl-entry major">
+        <div class="tl-year">2008</div>
+        <div class="tl-text">환경청 신기부의 내부 조직을 <strong>재편성</strong>. 경계 이상 대처 전반을 총괄하는 <em>'중앙신기실'</em>을 중심으로, 다음 3개 섹션을 설립함.
+        <br><br>
+        · 제구의 연구 개발을 담당하는 <strong>'제구개발과'</strong><br>
+        · 광역 결계의 유지 보수 관리를 담당하는 <strong>'결계관리과'</strong><br>
+        · 계이에 대한 퇴멸 업무를 담당하는 <strong>'경계대책과'</strong>
+        </div>
+      </div>
+
+      <div class="tl-entry">
+        <div class="tl-year">2012</div>
+        <div class="tl-text">제구개발과가 <em>'카타시로'</em>의 <strong>실용화에 성공</strong>. 방어성 제구 '수의(카리카누이)'의 기구에 조립을 시작함.</div>
+      </div>
+
+      <div class="tl-entry">
+        <div class="tl-year">2015</div>
+        <div class="tl-text">개발과를 주체로 한 <strong>신규 제구 개발 프로젝트</strong>가 발족. 부서에 구애받지 않고 직원들의 아이디어를 모으는 <em>자율 활동(유지 활동)</em>을 시작함.</div>
+      </div>
+
+      <div class="tl-entry">
+        <div class="tl-year">2020</div>
+        <div class="tl-text">신기부, 독일의 총기 메이커 <em>'카라비너 사'</em>와 제휴. 카라비너 사 일본 법인과 <strong>기술 교류 및 라이선스 계약 체결</strong>.</div>
+      </div>
+
+      <div class="tl-entry">
+        <div class="tl-year">2022</div>
+        <div class="tl-text">카라비너 사, 소형 휴대용 하라이구시 사출기 <strong>'PKK/T'</strong> 개발. 보조 제구로서 경계대책과의 표준 장비에 추가됨.</div>
+      </div>
+
+      <div class="tl-entry">
+        <div class="tl-year">2024</div>
+        <div class="tl-text">하라이구시 사출기 <strong>'ORZ50'</strong>, <strong>'LW800'</strong> 배치. 퇴멸 업무에 종사하는 직원의 <em>원거리 선택지</em>가 늘어남.</div>
+      </div>
+
+      <div class="tl-entry">
+        <div class="tl-year">2029</div>
+        <div class="tl-text">환경청 신기부가 <em>'인재 등용 프로그램'</em> 발표. 음양료에 의존하지 않고 <strong>폭넓은 범위에서 신기부에 인재를 모집</strong>할 것을 기도함. 카라비너 사 'ORZ70', 'LW1600' 개발.</div>
+      </div>
+
+      <div class="tl-entry">
+        <div class="tl-year">2035</div>
+        <div class="tl-text">환경청 신기부 부서 횡단 자율(유지) 단체 <em>'유한개발구락부'</em> 발족.</div>
+      </div>
+
+      <div class="tl-entry">
+        <div class="tl-year">2038</div>
+        <div class="tl-text">카라비너 사의 하라이구시 사출기 <strong>'EW-38'</strong>, <strong>'ORZ90'</strong>, <strong>'LW2000'</strong> 정식 채용.</div>
+      </div>
+
+      <div class="tl-entry major">
+        <div class="tl-year">2040</div>
+        <div class="tl-text">환경청 신기부 <strong>비상시 임시 부대 편성 제도</strong> 마련. 기존 조직에 얽매이지 않고 <em>"반(班)"을 편성하여 임무를 실행</em>하는 방침으로 전환.<br><br>— 이로써, 그대들이 활동할 무대가 정해졌다 —</div>
+      </div>
+
+    </div>
+
+    <div class="divider" style="margin-top:36px;">
+      <div class="line"></div>
+      <div class="mark">FINIS</div>
+      <div class="line"></div>
+    </div>
+
+    <div style="text-align:center;font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--paper-dim);font-size:12px;letter-spacing:0.2em;margin-top:8px;">
+      — 永慈の世に、新たなる班が立ち上がる —
+    </div>
+    <div style="text-align:center;font-family:'Noto Serif KR',serif;color:var(--paper-dim);font-size:11px;letter-spacing:0.15em;margin-top:6px;font-style:italic;">
+      영자의 세상에, 새로운 반이 일어선다.
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <span>Tactical Exorcist Codex</span>
+    <span class="num">IV</span>
+    <span>Chronology II</span>
+  </div>
+</div>
+
+
+<!-- ════ PAGE V — 2040s : SUPERNATURAL AS MUNDANE ════ -->
+<div class="page" id="page-2040s">
+  <svg class="page-corner tl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><path d="M4 4 L14 14 M56 4 L46 14 M4 56 L14 46" stroke="#c9a875" stroke-width="0.5" fill="none" opacity="0.4"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner tr" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner bl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner br" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+
+  <svg class="page-seal" viewBox="0 0 100 100">
+    <text x="50" y="68" text-anchor="middle" font-size="60" fill="currentColor">常</text>
+  </svg>
+
+  <div class="page-inner">
+    <div class="ch-header">
+      <div class="ch-kicker">
+        <div class="left"><span class="num-block">4·3</span><span>the supernatural age</span></div>
+        <div>ERA · 2040s</div>
+      </div>
+      <div class="ch-title-en">— When the Supernatural Became Mundane —</div>
+      <div class="ch-title-ko">초상이 일상이 된 2040년대 <span class="jp-side">常異の刻</span></div>
+    </div>
+
+    <p class="body lead">본 캐논에서의 일본은 <strong>서기 2040년대</strong>를 무대로 하고 있다.</p>
+
+    <p class="body">본 캐논의 2040년대는 <em>'경계 이상'</em>이나 <em>'경계 재해'</em>라 불리는 초상 현상이 전 세계에서 발생하고 있는 시대로 설정되어 있다. 이러한 사건들은 대도시 근교라면 일주일에 2~3건, 지방 도시라면 1~2건, 인구 희박 지역이라면 거의 일어나지 않는 수준의 빈도로 발생하고 있다.</p>
+
+    <p class="body">이러한 현상은 1990년대 이전에는 오컬트나 도시 전설 취급을 받았으나, 90년대 당시 일본에 있던 연구 기관 <em>'신기청 신학국'</em>이 그 메커니즘의 일부를 밝혀냄으로써 인류는 <strong>'유세(幽世, 저승/은세)'</strong>라는 미지의 영역을 지각하기에 이른다.</p>
+
+    <div class="divider">
+      <div class="line"></div>
+      <div class="mark">✦</div>
+      <div class="line"></div>
+    </div>
+
+    <p class="body">시대가 흐른 2040년대에 이르러서는, 세계 각국이 저마다 '경계 이상'에 대항하는 기관을 설치하여 자국 내의 문제에 대처하고 있다. 그 대부분은 일본이 그러하듯 해당 국가에서 주류를 이루는 종교 단체를 기반으로 한다는 배경이 있다. 일본에서는 <strong>'환경청 신기부'</strong>가 경계 이상 대책 기관에 해당하며, <em>경찰·소방에 이은 제3의 공안 조직</em>으로서 기능하고 있다.</p>
+
+    <p class="body">일본에서는 신기실이 주도하는 <strong>정보 통제</strong>를 통해 '경계'에 관련된 정보가 민간에 유출되는 것을 제한하고 있다. 이는 경계 이상에 수반되어 발생하는 '부정(穢れ)'이, 다수 인간의 심리 상태에 영향을 받는 성질을 지녔기 때문에 이를 고려한 대책으로 여겨진다.</p>
+
+    <div class="note">
+      <div class="note-body">
+        정보 통제의 결과, 도시 지역에 사는 많은 사람들은 (빈번하게 일어나는 일이기도 해서) '경계 이상'을 딱히 희귀한 일이라고 생각하지는 않는 듯하다.
+      </div>
+    </div>
+
+    <p class="body">하지만 그 이면에는 <em>실체 없는 소문이나 경계 대책을 빙자한 사기</em> 등이 횡행하는 실태도 존재하여, 경찰 및 사법 기관과 연계한 대책 마련에 신기부가 인력과 자원을 할애할 수밖에 없게 된 점이 골칫거리가 되고 있다.</p>
+  </div>
+
+  <div class="page-foot">
+    <span>Tactical Exorcist Codex</span>
+    <span class="num">V</span>
+    <span>The 2040s</span>
+  </div>
+</div>
+
+
+<!-- ════ PAGE VI — BOUNDARY ANOMALY ════ -->
+<div class="page" id="page-boundary-1">
+  <svg class="page-corner tl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><path d="M4 4 L14 14 M56 4 L46 14 M4 56 L14 46" stroke="#c9a875" stroke-width="0.5" fill="none" opacity="0.4"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner tr" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner bl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner br" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+
+  <svg class="page-seal" viewBox="0 0 100 100">
+    <text x="50" y="68" text-anchor="middle" font-size="60" fill="currentColor">界</text>
+  </svg>
+
+  <div class="page-inner">
+    <div class="ch-header">
+      <div class="ch-kicker">
+        <div class="left"><span class="num-block">4·4</span><span>on boundary anomaly</span></div>
+        <div>境界異常</div>
+      </div>
+      <div class="ch-title-en">— On the "Boundary Anomaly" —</div>
+      <div class="ch-title-ko">'경계 이상(境界異常)'이란 <span class="jp-side">怪異の正体</span></div>
+    </div>
+
+    <p class="body lead"><strong>현세(우츠시요)</strong>와 <strong>유세(카쿠리요, 저승/은세)</strong>를 가르는 경계를 돌파하여 이쪽(현세)으로 현현한 초상적 현상, 혹은 존재의 총칭. 과거 <em>영장(霊障, 영적 장애)</em>이나 재앙, 혹은 픽션 등에서 <em>"괴이(怪異)"</em>라고 불리던 것과 가깝다.</p>
+
+    <div class="term-card">
+      <div class="head">
+        <span class="label">Vernacular</span>
+        <span class="name">界異</span>
+        <span class="reading">Kai-i · 계이</span>
+      </div>
+      <div class="body-text">
+        민간에서는 주로 이 표현이 사용된다. 기본적으로 <strong>물질적인 접근으로는 간섭할 수 없으며</strong>, 일방적으로 인류 사회에 재앙을 가져온다. 대처하기 위해서는 <em>제구(기어)</em>나 <em>의식 기술</em>을 사용해야만 한다.
+        <br><br>
+        그 존재 규모와 위협도에 따라 <strong>1에서 5까지의 '호급(号級)'</strong>으로 구분된다.
+      </div>
+    </div>
+
+    <p class="body">'경계'에 대한 설정은, <em>"택티컬 퇴마사"</em>라는 셰어드 월드 창작을 이어주는 큰 특징 중 하나이다. 본 캐논에서는, 이 설정을 아래와 같이 해석하고 있다.</p>
+
+    <div class="note">
+      <div class="note-body">
+        코어 설정을 어느 정도 답습하고 있으나, <strong>세부적으로 다른 점이 있으므로</strong> 창작 시 혼동하지 않도록 주의할 것.
+      </div>
+    </div>
+
+    <div class="quote">
+      어둠을 들여다보는 자여, 어둠 또한 그대를 들여다본다. 우리들이 마주하는 것은 단순한 적이 아니라, 세계의 균열 그 자체이다.
+      <span class="attr">『경계대책 입문서』 제1장</span>
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <span>Tactical Exorcist Codex</span>
+    <span class="num">VI</span>
+    <span>Boundary Anomaly</span>
+  </div>
+</div>
+
+
+<!-- ════ PAGE VII — UTSUSHIYO & KAKURIYO ════ -->
+<div class="page" id="page-boundary-2">
+  <svg class="page-corner tl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><path d="M4 4 L14 14 M56 4 L46 14 M4 56 L14 46" stroke="#c9a875" stroke-width="0.5" fill="none" opacity="0.4"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner tr" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner bl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner br" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+
+  <svg class="page-seal" viewBox="0 0 100 100">
+    <text x="50" y="68" text-anchor="middle" font-size="60" fill="currentColor">幽</text>
+  </svg>
+
+  <div class="page-inner">
+    <div class="ch-header">
+      <div class="ch-kicker">
+        <div class="left"><span class="num-block">4·4·1</span><span>between worlds</span></div>
+        <div>現世 ⇆ 幽世</div>
+      </div>
+      <div class="ch-title-en">— The Threshold of Known and Unknown —</div>
+      <div class="ch-title-ko">현세(우츠시요)와 유세(카쿠리요) <span class="jp-side">二重の界</span></div>
+    </div>
+
+    <p class="body lead">PC들이 평소 생활하는 현실 세계는 <strong>'현세(現世 · 우츠시요)'</strong>라고 불린다. 이 영역은 물리 법칙에 의해 정해져 있으며, 이는 영학적(霊学的) 관점에서 <em>"물질적 요소로 공간이 구성되어 있다"</em>고 표현된다.</p>
+
+    <div class="term-card">
+      <div class="head">
+        <span class="label">First Realm</span>
+        <span class="name">現世</span>
+        <span class="reading">Utsushiyo · 우츠시요</span>
+      </div>
+      <div class="body-text">
+        우리가 살아 숨 쉬는 <strong>물질의 세계</strong>. 인과율과 물리 법칙이 지배하며, 영학적으로는 <em>"물질적 요소(物質素)"</em>로 구성된 공간이라 정의된다.
+      </div>
+    </div>
+
+    <p class="body">'현세'와 대비되는 곳이 <strong>'유세(幽世 · 카쿠리요)'</strong>라 이름 붙여진 영역이다. 이 영역에서는 일반적인 물리 법칙이 의미를 갖지 못하며, <em>시공간을 포함해 매우 불안정</em>한 것으로 여겨진다. 영학적 관점에서, 유세는 <em>"영적 요소로 공간이 구성되어 있다"</em>고 표현된다.</p>
+
+    <div class="term-card">
+      <div class="head">
+        <span class="label">Second Realm</span>
+        <span class="name">幽世</span>
+        <span class="reading">Kakuriyo · 카쿠리요</span>
+      </div>
+      <div class="body-text">
+        물리 법칙이 무효한, <strong>영적 요소(霊素)</strong>로 구성된 미지의 영역. 시공간조차 안정되지 않으며, 살아있는 자가 오래 머물 수 없다.
+      </div>
+    </div>
+
+    <div class="divider">
+      <div class="line"></div>
+      <div class="mark">境</div>
+      <div class="line"></div>
+    </div>
+
+    <p class="body">이러한 공간 영역은 <strong>겹쳐진 두 장의 종이</strong>와 같은 형태로 존재하며, 어느 장소에서든 인접해 있다. 참고로, 이 두 공간의 맞닿은 선을 <em>'경계'</em>라고 부른다. 통상적으로 두 공간은 독립성을 확보하고 있어 서로 교차하는 일은 없다.</p>
+
+    <p class="body"><strong>'경계 이상'</strong>이란, '현세'와 '유세'라는 두 공간의 경계가 애매해져 서로 뒤섞이는 현상으로 정의된다. 경계 이상이 발생하면, <em>'계이(界異)의 출현'</em>, <em>'현세로의 부정(穢れ) 누출'</em> 등의 현상이 발생한다.</p>
+
+    <div class="note">
+      <div class="note-body">
+        계이의 대부분은 <strong>사람이나 사람이 생활하는 설비에 피해</strong>를 입히며, 부정은 <strong>인체(엄밀히 말하자면 생물의 영체)에 유해</strong>하다. 어찌 되었든, 경계 이상에 대해서는 조속한 대처가 요구된다.
+      </div>
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <span>Tactical Exorcist Codex</span>
+    <span class="num">VII</span>
+    <span>Utsushiyo & Kakuriyo</span>
+  </div>
+</div>
+
+
+<!-- ════ PAGE VIII — KAGO & KEGARE ════ -->
+<div class="page" id="page-essence">
+  <svg class="page-corner tl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><path d="M4 4 L14 14 M56 4 L46 14 M4 56 L14 46" stroke="#c9a875" stroke-width="0.5" fill="none" opacity="0.4"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner tr" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner bl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner br" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+
+  <svg class="page-seal" viewBox="0 0 100 100">
+    <text x="50" y="68" text-anchor="middle" font-size="60" fill="currentColor">護</text>
+  </svg>
+
+  <div class="page-inner">
+    <div class="ch-header">
+      <div class="ch-kicker">
+        <div class="left"><span class="num-block">4·4·2</span><span>essence of spirit</span></div>
+        <div>加護 ⇆ 穢れ</div>
+      </div>
+      <div class="ch-title-en">— Spiritual Essence : Kago & Kegare —</div>
+      <div class="ch-title-ko">영적 요소 · 가호와 부정 <span class="jp-side">命と死の力</span></div>
+    </div>
+
+    <p class="body lead"><strong>'영적 요소'</strong>란, 이 세계에 존재하는 비물질적인 구성 요소를 가리킨다. '영적 요소'에는 <em>'가호(加護)'</em>와 <em>'부정(穢れ, 케가레)'</em> 두 종류가 존재한다.</p>
+
+    <div class="divider">
+      <div class="line"></div>
+      <div class="mark">✦ KAGO ✦</div>
+      <div class="line"></div>
+    </div>
+
+    <p class="body">현세(現世)에 존재하는 모든 생물은 <strong>'가호'</strong>를 그 몸에 품고 있다. 만약 어떤 영향으로 인해 모든 '가호'를 상실할 경우, 그 생명체는 <em>죽음에 이르는 것</em>으로 알려져 있다. 이로부터 '가호'는 생물이 지닌 힘이며, <strong>"생명과 결부된 힘"</strong>이라고 표현할 수 있다.</p>
+
+    <div class="term-card">
+      <div class="head">
+        <span class="label">Positive Essence</span>
+        <span class="name">加護</span>
+        <span class="reading">Kago · 가호</span>
+      </div>
+      <div class="body-text">
+        <strong>"생명과 결부된 힘"</strong>. '부정'이 가져오는 신체적·영체적 악영향을 중화하는 <em>양(正)의 에너지</em>로서 작용. 신기부에서는 가호를 사용하여 부정을 제거하는 것을 가리켜 <strong>'정화'</strong>라고 부른다.
+      </div>
+    </div>
+
+    <div class="divider">
+      <div class="line"></div>
+      <div class="mark">✦ KEGARE ✦</div>
+      <div class="line"></div>
+    </div>
+
+    <p class="body">한편, '가호'의 대극에 위치하는 <strong>'부정'</strong>은 유세(幽世)에서 유래한 영적 요소이며, 본래는 현세에 존재하지 않는 것으로 여겨진다. 유세는 물질이 아닌 '부정'으로 형성되어 있다고 여겨지며, 현세의 생명체가 장시간 머무를 수 없다.</p>
+
+    <p class="body">이는 '부정'이 '가호'와 상반되는 성질을 지녔기 때문이며, <em>'가호'와 '부정'은 서로의 존재를 상쇄하는 작용</em>을 갖추고 있다. 바꿔 말하면, '부정'은 죽음을 가져오는 힘이며, <strong>"죽음과 결부된 힘"</strong>이라고 표현할 수 있다.</p>
+
+    <div class="term-card">
+      <div class="head">
+        <span class="label">Negative Essence</span>
+        <span class="name">穢れ</span>
+        <span class="reading">Kegare · 케가레</span>
+      </div>
+      <div class="body-text">
+        <strong>"죽음과 결부된 힘"</strong>. 유세에서 유래한 영적 요소로, 본래 현세에 존재하지 않는다. <em>가호와 서로의 존재를 상쇄</em>하는 음(負)의 에너지.
+      </div>
+    </div>
+
+    <div class="note">
+      <div class="note-body">
+        영학적으로는 '가호'와 '부정' 이 둘을 가르는 것은 <strong>'상(相)의 차이'</strong>라는 설이 주류이며, 생명체에 대한 작용을 참조하여 '가호'를 <em>'양(플러스)'</em>, '부정'을 <em>'음(마이너스)'</em>으로 규정하고 있다.
+      </div>
+    </div>
+
+    <div class="divider">
+      <div class="line"></div>
+      <div class="mark">退魔術</div>
+      <div class="line"></div>
+    </div>
+
+    <p class="body">에너지로서의 연구가 이루어지기 아득히 오래전부터 '가호'를 사용하는 사람들은 존재했으며, 과거의 일본에서는 <em>고승이나 신직, 기도사(오가미야)</em> 같은 사람들이 '가호'를 활용했다는 것이 기록되어 있다. '가호'의 힘을 사용하여 초상 현상을 발생시키는 술법을 <strong>'퇴마술'</strong>이라고 부른다.</p>
+
+    <p class="body">강력한 술법을 전하는 오래된 가문은 <em>퇴마의 명문</em>으로 여겨지며, 퇴마사가 일반화된 현대에 있어서도 <strong>격이 다른 존재</strong>로 취급된다.</p>
+
+    <div class="quote">
+      만약 '부정'을 '가호'로 변환할 수 있다면, '유세'를 막대한 에너지 공급원으로 삼을 수 있다. 몇몇 대기업이 경계대책기관에 대한 투자를 아끼지 않는 데에는, 차세대 에너지 전략과 얽힌 속셈이 있는 듯하다.
+      <span class="attr">『영력 공학 산업 동향 보고서』</span>
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <span>Tactical Exorcist Codex</span>
+    <span class="num">VIII</span>
+    <span>Kago & Kegare</span>
+  </div>
+</div>
+
+
+<!-- ════ PAGE IX — KAI-I : THREATS FROM BEYOND ════ -->
+<div class="page" id="page-kai-i">
+  <svg class="page-corner tl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><path d="M4 4 L14 14 M56 4 L46 14 M4 56 L14 46" stroke="#c9a875" stroke-width="0.5" fill="none" opacity="0.4"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner tr" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner bl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner br" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+
+  <svg class="page-seal" viewBox="0 0 100 100">
+    <text x="50" y="68" text-anchor="middle" font-size="60" fill="currentColor">異</text>
+  </svg>
+
+  <div class="page-inner">
+    <div class="ch-header">
+      <div class="ch-kicker">
+        <div class="left"><span class="num-block">4·4·3</span><span>threats from beyond</span></div>
+        <div>界異 · KAI-I</div>
+      </div>
+      <div class="ch-title-en">— Threats from "Beyond" : The Kai-i —</div>
+      <div class="ch-title-ko">"너머"로부터의 위협, '계이' <span class="jp-side">向こうの来訪者</span></div>
+    </div>
+
+    <p class="body lead"><strong>'계이(界異)'</strong>라는 용어는 '경계 이상(境界異常)'의 약칭으로 쓰이는 경우도 있지만, 작중에서는 오로지 <em>"경계 이상에 수반되어 출현하는 위험한 괴물"</em>이라는 뉘앙스로 사용된다.</p>
+
+    <p class="body">어느 정도 포멀한 표현인 '경계 이상'에 비해, '계이'라는 용어는 <strong>민간에서도 빈번하게 사용</strong>되고 있다는 배경이 있어, 일반인은 '계이' 그 자체를 '경계 이상'이라고 생각하는 경우도 많다.</p>
+
+    <p class="body">'계이'의 정체에 대해서는 현대에도 완전히 해명되었다고 말하기 어렵지만, <em>"유세(幽世)에서 유래한 영적 구성 요소인 '부정'이 단독으로, 또는 현세의 물질·물체에 작용하여 발생하는 현상"</em>이라는 것이 영학적인 정설로 여겨지고 있다.</p>
+
+    <div class="divider">
+      <div class="line"></div>
+      <div class="mark">号級</div>
+      <div class="line"></div>
+    </div>
+
+    <p class="body">계이는 그 위협도에 따라 <strong>1호~5호의 '존재 규모'</strong>가 정해져 있다. 이는 신기실이 판단하여 계이의 종류마다 책정하고 있으며, 작전 규모나 피해 예측의 참고가 된다. 현장의 직원 대부분은 <em>"계이의 강도를 등급 매긴 것"</em>으로 대략적으로 파악하고 있다.</p>
+
+    <div class="note">
+      <div class="note-body">
+        이 지표는 계이의 위협도를 나타낸 것이지만, <strong>같은 호급이라도 그 전투 능력에는 어느 정도 편차가 있다</strong>는 점에 주의하기 바란다.
+      </div>
+    </div>
+
+    <!-- 호급 분류표 -->
+    <div class="grade-table">
+      <div class="grade-table-head">
+        <span class="gt-kicker">[참고]</span>
+        <span class="gt-title">신기실이 정한 존재 규모의 대략적인 기준</span>
+      </div>
+
+      <div class="grade-row grade-1">
+        <div class="grade-num">壱<span class="grade-en">I</span></div>
+        <div class="grade-body">
+          <div class="grade-label">1호급</div>
+          <div class="grade-desc">일반인에게는 위협이 되는 레벨. <em>퇴마사 몇 명이라면 문제없음.</em></div>
+        </div>
+      </div>
+
+      <div class="grade-row grade-2">
+        <div class="grade-num">弐<span class="grade-en">II</span></div>
+        <div class="grade-body">
+          <div class="grade-label">2호급</div>
+          <div class="grade-desc">퇴마사 몇 명이 대처하는 편이 좋은 레벨. <em>일단은 대인 전투의 범주.</em></div>
+        </div>
+      </div>
+
+      <div class="grade-row grade-3">
+        <div class="grade-num">参<span class="grade-en">III</span></div>
+        <div class="grade-body">
+          <div class="grade-label">3호급</div>
+          <div class="grade-desc">퇴마사 몇 명으로 구성된 <strong>반(班) 단위의 대처가 필수</strong>인 레벨.</div>
+        </div>
+      </div>
+
+      <div class="grade-row grade-4">
+        <div class="grade-num">肆<span class="grade-en">IV</span></div>
+        <div class="grade-body">
+          <div class="grade-label">4호급</div>
+          <div class="grade-desc"><strong>여러 반이 공동으로 작전</strong>에 임해야 하는 레벨.</div>
+        </div>
+      </div>
+
+      <div class="grade-row grade-5">
+        <div class="grade-num">伍<span class="grade-en">V</span></div>
+        <div class="grade-body">
+          <div class="grade-label">5호급</div>
+          <div class="grade-desc"><strong>상한선 없음</strong>(측정 불가). <em>매우 위험.</em></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="page-foot">
+    <span>Tactical Exorcist Codex</span>
+    <span class="num">IX</span>
+    <span>The Kai-i</span>
+  </div>
+</div>
+
+
+<!-- ════ PAGE X — SHINKI-BU OVERVIEW ════ -->
+<div class="page" id="page-shinki-bu">
+  <svg class="page-corner tl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><path d="M4 4 L14 14 M56 4 L46 14 M4 56 L14 46" stroke="#c9a875" stroke-width="0.5" fill="none" opacity="0.4"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner tr" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner bl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner br" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+
+  <svg class="page-seal" viewBox="0 0 100 100">
+    <text x="50" y="68" text-anchor="middle" font-size="60" fill="currentColor">祇</text>
+  </svg>
+
+  <div class="page-inner">
+    <div class="ch-header">
+      <div class="ch-kicker">
+        <div class="left"><span class="num-block">4·5</span><span>organization · shinki-bu</span></div>
+        <div>環境庁 神祇部</div>
+      </div>
+      <div class="ch-title-en">— The Shinki-bu : Anti-Anomaly Agency —</div>
+      <div class="ch-title-ko">경계 이상 대책 기관, 신기부 <span class="jp-side">境対の本陣</span></div>
+    </div>
+
+    <p class="body lead"><strong>환경청 신기부(神祇部)</strong>에 속하는 정부 기관. <em>경찰·소방에 이은 제3의 공안계 기관</em>으로 불린다. 계이와 상대하며 그 퇴멸을 담당하는 퇴마사 및 이들을 감독하는 신기관으로 구성된 실동 부대를 보유하고, 최전선에서 경계 재해에 대처하는 조직.</p>
+
+    <div class="term-card">
+      <div class="head">
+        <span class="label">Common Name</span>
+        <span class="name">境対</span>
+        <span class="reading">Kyou-tai · 경대</span>
+      </div>
+      <div class="body-text">
+        종종 <em>경대(境対)</em>라고도 불린다. 그 활동 실태에 대해 정보가 일반에 공개되지는 않았으나, <strong>퇴마사의 만성적인 부족</strong>으로 인해 빈번하게 홍보 활동을 실시하고 있다.
+      </div>
+    </div>
+
+    <div class="divider">
+      <div class="line"></div>
+      <div class="mark">✦</div>
+      <div class="line"></div>
+    </div>
+
+    <p class="body">본 항목에서는 <em>'택티컬 퇴마사 TRPG'</em>에서의 신기부 조직 구성과 게임적 위치에 대해 기술한다.</p>
+
+    <div class="quote">
+      우리는 그림자 속에서 빛을 지킨다. 시민은 우리의 존재를 알지 못한 채 살아가도 좋다 — 그것이야말로 우리의 임무가 성공했다는 증거이니.
+      <span class="attr">『신기부 홍보 책자 · 2040년판』</span>
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <span>Tactical Exorcist Codex</span>
+    <span class="num">X</span>
+    <span>The Shinki-bu</span>
+  </div>
+</div>
+
+
+<!-- ════ PAGE XI — FRONTLINE OF DEFENSE ════ -->
+<div class="page" id="page-frontline">
+  <svg class="page-corner tl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><path d="M4 4 L14 14 M56 4 L46 14 M4 56 L14 46" stroke="#c9a875" stroke-width="0.5" fill="none" opacity="0.4"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner tr" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner bl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner br" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+
+  <svg class="page-seal" viewBox="0 0 100 100">
+    <text x="50" y="68" text-anchor="middle" font-size="60" fill="currentColor">前</text>
+  </svg>
+
+  <div class="page-inner">
+    <div class="ch-header">
+      <div class="ch-kicker">
+        <div class="left"><span class="num-block">4·5·1</span><span>frontline of defense</span></div>
+        <div>環境庁 神祇部</div>
+      </div>
+      <div class="ch-title-en">— Frontline of Boundary Defense —</div>
+      <div class="ch-title-ko">경계 대책의 최전선, 환경청 신기부 <span class="jp-side">最前線</span></div>
+    </div>
+
+    <p class="body lead">본 캐논에서의 <strong>'환경청 신기부'</strong>는 <em>내각부 직속의 외청 조직</em>으로 설정되어 있다. 따라서, PC들의 대부분은 환경청 신기부에 소속된 <strong>국가 공무원</strong> 취급이 된다.</p>
+
+    <p class="body">단, 후술하겠지만 본 캐논의 신기부는 인재 부족을 보충하기 위해 <em>'인재 등용 프로그램'</em>이라는 제도를 발표·운용하고 있다. 이 때문에, 소속 직원들은 최전선에 가까운 인재일수록 <strong>개인적인 색채(개성)가 강한 경향</strong>이 있다. 계이뿐만 아니라, 너무 개성적인 퇴마사들의 다양한 행동이 총괄 부서인 신기실 직원들의 골머리를 앓게 하고 있는 듯하다.</p>
+
+    <div class="divider">
+      <div class="line"></div>
+      <div class="mark">人材登用</div>
+      <div class="line"></div>
+    </div>
+
+    <div class="term-card">
+      <div class="head">
+        <span class="label">Recruitment Program</span>
+        <span class="name">人材登用プログラム</span>
+        <span class="reading">Jinzai Touyou · 인재 등용 프로그램</span>
+      </div>
+      <div class="body-text">
+        계속 증가하는 경계 이상 현상에 대한 <strong>인원 부족을 해소</strong>하기 위해 신기부가 발족시킨 제도. 알기 쉽게 말하자면 <em>"대(對) 경계 이상 업무에 종사하는 직원에 한해, 시험·연수의 일부를 면제하는"</em> 제도이다.
+      </div>
+    </div>
+
+    <p class="body">이 제도로 인해 본래라면 공무원이 되지 않았을 인재들이 신기부에 집결하게 되어, 도입 전과 비교해 해당 부서는 <strong>대폭적인 전력 증강</strong>에 성공했다.</p>
+
+    <div class="note">
+      <div class="note-body">
+        반면, 이 제도로 인해 신기부 내 인원의 <strong>자질이나 사상, 성향에 큰 편차</strong>가 생겨난 것도 사실이며, 퇴마사라는 점을 강하게 특별시하는 <em>오래된 가문(그리고 그와 강하게 결속된 종교 단체)</em>으로부터는 비판의 표적이 되고 있다.
+      </div>
+    </div>
+
+    <div class="quote">
+      자격이 없다고? 좋다, 그렇다면 자격이 필요 없는 자리를 만들어 주마. 살아남는 자가 강한 거다, 종이쪼가리가 아니라.
+      <span class="attr">『인재 등용 프로그램 발족 회의록』 · 발언자 미상</span>
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <span>Tactical Exorcist Codex</span>
+    <span class="num">XI</span>
+    <span>Frontline of Defense</span>
+  </div>
+</div>
+
+
+<!-- ════ PAGE XII — CHUOU SHINKI SHITSU & SHINKIKAN ════ -->
+<div class="page" id="page-chuou">
+  <svg class="page-corner tl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><path d="M4 4 L14 14 M56 4 L46 14 M4 56 L14 46" stroke="#c9a875" stroke-width="0.5" fill="none" opacity="0.4"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner tr" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner bl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner br" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+
+  <svg class="page-seal" viewBox="0 0 100 100">
+    <text x="50" y="68" text-anchor="middle" font-size="60" fill="currentColor">官</text>
+  </svg>
+
+  <div class="page-inner">
+    <div class="ch-header">
+      <div class="ch-kicker">
+        <div class="left"><span class="num-block">4·5·2</span><span>the central office</span></div>
+        <div>中央神祇室</div>
+      </div>
+      <div class="ch-title-en">— The Brain of Shinki-bu : Chuou & Shinkikan —</div>
+      <div class="ch-title-ko">신기부의 두뇌, 중앙신기실과 '신기관' <span class="jp-side">中枢</span></div>
+    </div>
+
+    <p class="body lead"><strong>중앙신기실</strong>은 환경청 신기부의 내부 부국으로 설치된 조직이다. 그 설립 의의는 <em>"경계 이상에 즈음한 여러 업무의 입안, 및 경계 이상 발생 시 타 부서의 총괄"</em>로 여겨진다.</p>
+
+    <p class="body">소속 인원은 가장 적지만, 그 업무의 성질상 <strong>신기부의 중핵을 담당하는 조직</strong>이며, <em>실질적인 신기부의 의사결정부</em>로서 기능하고 있다.</p>
+
+    <div class="divider">
+      <div class="line"></div>
+      <div class="mark">神祇官</div>
+      <div class="line"></div>
+    </div>
+
+    <div class="term-card">
+      <div class="head">
+        <span class="label">National Qualification</span>
+        <span class="name">神祇官</span>
+        <span class="reading">Shinkikan · 신기관</span>
+      </div>
+      <div class="body-text">
+        2001년에 시행된 제도로 정해진 국가 자격 <em>"의식 기술 및 제구 취급에 관한 관리 총괄자"</em> 자격 소지자를 가리킨다.
+        <br><br>
+        해당 자격 보유자는 '경계'에 관한 지식이나 <strong>'가호/부정'</strong> 같은 영력 인자의 취급 등, 초상적 사상에 대해 <em>인류가 가질 수 있는 지견의 최첨단</em>을 갖추고 있음을 보증받으며, 그 이론에 따라 퇴마 업무를 입안·수행한다.
+      </div>
+    </div>
+
+    <p class="body">중앙신기실에 소속되어 있는 것은 <strong>예외 없이 '신기관'</strong>이다. '신기관'이 되려면 국가가 정한 시험에 합격한 후, 국가가 인정하는 해당 자격자의 감독하에 <em>수년간 실무 경험</em>을 쌓아야 한다.</p>
+
+    <!-- 신기관 5계급 -->
+    <div class="rank-table">
+      <div class="rank-table-head">
+        <span class="gt-kicker">[계급]</span>
+        <span class="gt-title">신기관의 5계급 — 갑·을·병·정·무</span>
+      </div>
+      <div class="rank-grid">
+        <div class="rank-cell rank-1">
+          <div class="rank-kanji">甲</div>
+          <div class="rank-ko">갑(甲)</div>
+          <div class="rank-num">壱</div>
+        </div>
+        <div class="rank-cell rank-2">
+          <div class="rank-kanji">乙</div>
+          <div class="rank-ko">을(乙)</div>
+          <div class="rank-num">弐</div>
+        </div>
+        <div class="rank-cell rank-3">
+          <div class="rank-kanji">丙</div>
+          <div class="rank-ko">병(丙)</div>
+          <div class="rank-num">参</div>
+        </div>
+        <div class="rank-cell rank-4">
+          <div class="rank-kanji">丁</div>
+          <div class="rank-ko">정(丁)</div>
+          <div class="rank-num">肆</div>
+        </div>
+        <div class="rank-cell rank-5">
+          <div class="rank-kanji">戊</div>
+          <div class="rank-ko">무(戊)</div>
+          <div class="rank-num">伍</div>
+        </div>
+      </div>
+      <div class="rank-footer">
+        <strong>위에서부터 순서대로</strong> '갑(甲)', '을(乙)', '병(丙)', '정(丁)', '무(戊)'의 5가지로 나뉜다. <em>안건의 중요도에 비례하여 계급이 높은 신기관이 담당</em>을 맡는 경우가 많다.
+      </div>
+    </div>
+
+    <div class="note">
+      <div class="note-body">
+        <strong>'신기관'이라는 단어 자체는 신기부 직원을 가리키는 것이 아니라, 해당 자격 보유자를 가리키는 말이다.</strong> 따라서 환경청에 소속되어 있지 않은 '신기관'도 일정 수 존재한다. 그 대부분은 일본에 산재한 신사와 사찰의 관리자이거나, 퇴마와 관련된 민간 기업에 고용되어 있는 케이스가 있는 듯하다.
+      </div>
+    </div>
+
+    <p class="body">환경청 신기부에 소속된 '신기관'은 앞서 서술한 대로 퇴마·퇴멸 업무를 입안하고 수행하는 임무를 맡고 있기 때문에, 많은 퇴마사들에게는 <strong>지휘관이나 관리직 같은 위치</strong>에 해당한다. 좀처럼 최전선에 모습을 드러내지 않는 신기관을 <em>"실전 경험이 없는, 이름뿐인 지휘관"</em>으로 간주하는 자도 존재하지만, 그들 대부분은 자격 취득 과정에서 모종의 술리나 기술에 특화되는 경향이 있어 <strong>전투를 해내지 못하는 것은 아니다</strong>.</p>
+  </div>
+
+  <div class="page-foot">
+    <span>Tactical Exorcist Codex</span>
+    <span class="num">XII</span>
+    <span>Central Office</span>
+  </div>
+</div>
+
+
+<!-- ════ PAGE XIII — KEITAI-KA : FRONTLINE SPECIALISTS ════ -->
+<div class="page" id="page-keitai">
+  <svg class="page-corner tl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><path d="M4 4 L14 14 M56 4 L46 14 M4 56 L14 46" stroke="#c9a875" stroke-width="0.5" fill="none" opacity="0.4"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner tr" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner bl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner br" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+
+  <svg class="page-seal" viewBox="0 0 100 100">
+    <text x="50" y="68" text-anchor="middle" font-size="60" fill="currentColor">剣</text>
+  </svg>
+
+  <div class="page-inner">
+    <div class="ch-header">
+      <div class="ch-kicker">
+        <div class="left"><span class="num-block">4·5·3</span><span>frontline specialists</span></div>
+        <div>境界対策課</div>
+      </div>
+      <div class="ch-title-en">— Specialists of Exorcist Combat —</div>
+      <div class="ch-title-ko">퇴마 전투의 스페셜리스트, 경계대책과 <span class="jp-side">境対課</span></div>
+    </div>
+
+    <!-- 부서 카드 -->
+    <div class="dept-card dept-red">
+      <div class="dept-card-head">
+        <div class="dept-icon">剣</div>
+        <div class="dept-titles">
+          <div class="dept-label">DIVISION · COMBAT</div>
+          <div class="dept-name">【경계대책과 (境界対策課)】</div>
+        </div>
+      </div>
+      <div class="dept-card-body">
+        환경청 신기부의 하부 조직 중 하나. <strong>경계 이상에 대한 직접 대처, 계이의 퇴멸을 직접적으로 담당하는 실동 부대</strong>. 다양한 계이와 최전선에서 싸우는 이들은 <em>상황을 가리지 않는 전투 기술</em>에 능통하다.
+      </div>
+    </div>
+
+    <p class="body lead">경계대책과는 <em>"경계 이상에 즈음하여 출현하는, 자립 행동형 부정의 덩어리"</em>인 '계이'의 섬멸――즉 <strong>"퇴멸"</strong>을 주된 업무로 하는 조직이다.</p>
+
+    <p class="body">오해를 두려워하지 않고 말하자면 중앙신기실의 지령에 바탕을 두고 <em>"현장에 나가 괴물을 토벌하는"</em> 것이 이들의 주 업무이며, <strong>깊은 전문 지식보다는 대상을 신속하게 퇴멸하기 위한 전투 기술</strong>이 요구되는 경향이 있다.</p>
+
+    <div class="divider">
+      <div class="line"></div>
+      <div class="mark">班</div>
+      <div class="line"></div>
+    </div>
+
+    <p class="body">전선 부대인 '경계대책과'는 주로 <strong>수명~수십 명의 '반(班)'</strong>으로 나뉘어 매일의 임무에 종사하고 있으나, 신기부는 만성적으로 인원이 부족하기 때문에 <em>반이나 조직을 넘나드는 지원이 일상화</em>되어 있다.</p>
+
+    <p class="body">소속된 인원은 환경청 지정 양성 기관에서 교육을 받은 자와 <em>'인재 등용 프로그램'</em>을 통해 외부에서 스카우트된 자가 <strong>반반 정도</strong>로 재적하고 있다.</p>
+
+    <div class="term-card">
+      <div class="head">
+        <span class="label">Field Commander</span>
+        <span class="name">班長</span>
+        <span class="reading">Hanchou · 반장</span>
+      </div>
+      <div class="body-text">
+        앞서 서술한 '반'은 <strong>'반장'</strong>이라 불리는 전선 지휘관급 퇴마사가 이끌고 있다. '반장'에게는 <em>반의 운용이나 장비, 임명권</em>이 부여되어 있기 때문에, 각각의 반은 <strong>전술이나 이념이 크게 다른 조직 형태</strong>를 띤다.
+      </div>
+    </div>
+
+    <div class="note">
+      <div class="note-body">
+        '반'에 속하지 않은 퇴마사들도 있으며, 이들은 <strong>임무마다 공백을 메우거나 그들끼리 임시 팀을 꾸리는 방식</strong>으로 활동을 이어간다.
+        <br><br>
+        <em>대부분의 PC는 아마도 이 조직에 소속되지 않을까 생각된다.</em>
+      </div>
+    </div>
+
+    <div class="quote">
+      반(班)이란 무엇인가. 그것은 단지 여섯 명의 퇴마사가 아니다 — 여섯 개의 의지가, 여섯 개의 한(恨)이, 여섯 개의 칼날이 하나의 진형(陣形)을 이룬 것이다.
+      <span class="attr">『경대 반장 수기』 · 이름 없는 자가 남긴 글</span>
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <span>Tactical Exorcist Codex</span>
+    <span class="num">XIII</span>
+    <span>Frontline Specialists</span>
+  </div>
+</div>
+
+
+<!-- ════ PAGE XIV — KEKKAI-KA : WARDS OF CONTAINMENT ════ -->
+<div class="page" id="page-kekkai">
+  <svg class="page-corner tl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><path d="M4 4 L14 14 M56 4 L46 14 M4 56 L14 46" stroke="#c9a875" stroke-width="0.5" fill="none" opacity="0.4"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner tr" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner bl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner br" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+
+  <svg class="page-seal" viewBox="0 0 100 100">
+    <text x="50" y="68" text-anchor="middle" font-size="60" fill="currentColor">結</text>
+  </svg>
+
+  <div class="page-inner">
+    <div class="ch-header">
+      <div class="ch-kicker">
+        <div class="left"><span class="num-block">4·5·4</span><span>wards of containment</span></div>
+        <div>結界管理課</div>
+      </div>
+      <div class="ch-title-en">— The Maintenance Division That Seals Anomaly —</div>
+      <div class="ch-title-ko">이상을 봉인하는 유지 보수 관리 부문, 결계관리과 <span class="jp-side">結界課</span></div>
+    </div>
+
+    <!-- 부서 카드 -->
+    <div class="dept-card dept-cyan">
+      <div class="dept-card-head">
+        <div class="dept-icon">結</div>
+        <div class="dept-titles">
+          <div class="dept-label">DIVISION · CONTAINMENT</div>
+          <div class="dept-name">【결계관리과 (結界管理課)】</div>
+        </div>
+      </div>
+      <div class="dept-card-body">
+        환경청 신기부의 하부 조직 중 하나. <strong>광역 결계의 부설이나 위험 구역의 봉쇄, 주물의 봉인 집행</strong> 같은 업무를 담당한다. 결계와 봉인의 스페셜리스트인 이들은 <em>방어전에 높은 적성</em>을 지닌다.
+      </div>
+    </div>
+
+    <p class="body lead">결계관리과는 <strong>경계 이상의 영향을 한정하거나, 계이의 활동 범위를 좁히기 위한 '결계'의 조성</strong>을 주된 업무로 하는 조직이다.</p>
+
+    <p class="body">특히, 대규모 경계 이상이 발생했을 때의 <em>초기 대응</em>을 담당하는 것이 이 조직이며, 경계 이상의 영향이 전파되는 것을 막기 위해 <strong>주변 지역을 광역 결계로 덮거나</strong>, 경계대책과의 전투원이 계이와 싸우기 위한 결계를 부설하는 역할을 맡는다.</p>
+
+    <div class="divider">
+      <div class="line"></div>
+      <div class="mark">三技</div>
+      <div class="line"></div>
+    </div>
+
+    <!-- 결계관리과 요구 능력 3종 -->
+    <div class="skill-pillars">
+      <div class="skill-pillar pillar-1">
+        <div class="pillar-num">壱</div>
+        <div class="pillar-title">전문 지식</div>
+        <div class="pillar-desc"><em>올바른 절차로 결계를 치고 기동</em>하기 위한 전문 지식</div>
+      </div>
+      <div class="skill-pillar pillar-2">
+        <div class="pillar-num">弐</div>
+        <div class="pillar-title">전투 능력</div>
+        <div class="pillar-desc"><em>결계 기동을 방해하려는 계이</em>를 물리칠 수 있는 전투 능력</div>
+      </div>
+      <div class="skill-pillar pillar-3">
+        <div class="pillar-num">参</div>
+        <div class="pillar-title">사고 능력</div>
+        <div class="pillar-desc"><em>미처 대피하지 못한 민간인</em>을 보호·유도하는 사고 능력</div>
+      </div>
+    </div>
+
+    <p class="body">그 성질상 위 세 가지 등 <strong>복합적인 실력이 요구되는 경향</strong>이 있어, <em>유지 보수 부문이라는 이미지와는 정반대로 소속 직원의 숙련도와 사기는 높다.</em></p>
+
+    <div class="note">
+      <div class="note-body">
+        퇴멸 전투에 능숙한 인원이 <strong>경계대책과의 임무 지원</strong>을 나가는 경우도 있으며, 반대로 경계대책과의 인원이 <strong>결계 조성의 장애물 배제</strong>를 위해 차출되는 경우도 있다. 적어도 조직 단위에서의 사이는 <em>나쁘지 않은 것으로 알려져 있다.</em>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <span>Tactical Exorcist Codex</span>
+    <span class="num">XIV</span>
+    <span>Wards of Containment</span>
+  </div>
+</div>
+
+
+<!-- ════ PAGE XV — SEIGU-KA : RESEARCH & ARMAMENT ════ -->
+<div class="page" id="page-seigu">
+  <svg class="page-corner tl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><path d="M4 4 L14 14 M56 4 L46 14 M4 56 L14 46" stroke="#c9a875" stroke-width="0.5" fill="none" opacity="0.4"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner tr" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner bl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner br" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+
+  <svg class="page-seal" viewBox="0 0 100 100">
+    <text x="50" y="68" text-anchor="middle" font-size="60" fill="currentColor">研</text>
+  </svg>
+
+  <div class="page-inner">
+    <div class="ch-header">
+      <div class="ch-kicker">
+        <div class="left"><span class="num-block">4·5·5</span><span>research & armament</span></div>
+        <div>祭具開発課</div>
+      </div>
+      <div class="ch-title-en">— The Research Division Against the Unknown —</div>
+      <div class="ch-title-ko">미지에 대항하는 연구 부문, 제구개발과 <span class="jp-side">祭具課</span></div>
+    </div>
+
+    <!-- 부서 카드 -->
+    <div class="dept-card dept-gold">
+      <div class="dept-card-head">
+        <div class="dept-icon">研</div>
+        <div class="dept-titles">
+          <div class="dept-label">DIVISION · RESEARCH</div>
+          <div class="dept-name">【제구개발과 (祭具開発課)】</div>
+        </div>
+      </div>
+      <div class="dept-card-body">
+        환경청 신기부의 하부 조직 중 하나. <strong>유세나 의식 기술, 영력에 대한 분석을 수행하는 연구 기관</strong>. 의식을 제구로 구현하는 기술자인 이들은 <em>모든 수단을 갖추고 있다.</em>
+      </div>
+    </div>
+
+    <p class="body lead">제구개발과는 <strong>경계대책과나 결계관리과가 다루는 제구(기어)를 신규 개발하거나, 경계 이상 현상 및 계이 그 자체의 분석·연구</strong>를 담당하는 기술 부서이다.</p>
+
+    <p class="body">또한, 퇴마사들이 매일 사용하는 <em>제구나 소모품의 제조 관리</em> 등도 이 부서가 담당하고 있어, 눈에 띄지 않는 곳에서 <strong>신기부의 활동을 뒷받침하는 숨은 공로자(보이지 않는 힘)</strong> 같은 부서가 되어 있다.</p>
+
+    <div class="divider">
+      <div class="line"></div>
+      <div class="mark">学者の眼</div>
+      <div class="line"></div>
+    </div>
+
+    <p class="body">소속된 인원 대부분은 <strong>전투보다 이론에 능한 학자풍의 성향</strong>이 많으며, 그 성질상 <em>퇴마와 관련된 민간 기업에서 파견되거나 이직해 온 사람</em>도 많다.</p>
+
+    <p class="body">제구나 계이의 성질에 정통하고, <strong>최신예 제구나 시제품을 다루는 이들</strong>은 종종 전투에서도 <em>뜻밖의 한 수</em>를 던질 때가 있다.</p>
+
+    <div class="note">
+      <div class="note-body">
+        이들 중 일부는 <strong>시제품 제구의 테스트나 계이의 데이터 회수</strong>를 위해 경계대책과의 임무에 동행하여, 협력해서 작전에 임하기도 한다. 경계대책과로서도 <em>제구의 사용감에 대한 피드백이나 신규 제구의 개발 요청</em> 등으로 일상적인 교류가 있어, 조직 간의 사이는 <strong>양호한 것으로 알려져 있다.</strong>
+      </div>
+    </div>
+
+    <div class="quote">
+      이 시제품은 — 흠, 아직 폭발할 가능성이 23.7%지만, 이론적으로는 작동할 거다. 자, 갖고 나가서 시험해 봐. 살아 돌아오면 데이터 잊지 말고 가져오고.
+      <span class="attr">『제구개발과 일상 회화 채록집』</span>
+    </div>
+
+    <!-- 3부서 종합 표시 -->
+    <div class="divider" style="margin-top:32px;">
+      <div class="line"></div>
+      <div class="mark">三課鼎立</div>
+      <div class="line"></div>
+    </div>
+
+    <div class="three-divisions">
+      <div class="td-cell td-red">
+        <div class="td-kanji">剣</div>
+        <div class="td-name">경계대책과</div>
+        <div class="td-sub">COMBAT</div>
+      </div>
+      <div class="td-connector">⇆</div>
+      <div class="td-cell td-cyan">
+        <div class="td-kanji">結</div>
+        <div class="td-name">결계관리과</div>
+        <div class="td-sub">CONTAINMENT</div>
+      </div>
+      <div class="td-connector">⇆</div>
+      <div class="td-cell td-gold">
+        <div class="td-kanji">研</div>
+        <div class="td-name">제구개발과</div>
+        <div class="td-sub">RESEARCH</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <span>Tactical Exorcist Codex</span>
+    <span class="num">XV</span>
+    <span>Research & Armament</span>
+  </div>
+</div>
+
+
+<!-- ════ PAGE XVI — SURROUNDING FORCES ════ -->
+<div class="page" id="page-environ">
+  <svg class="page-corner tl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><path d="M4 4 L14 14 M56 4 L46 14 M4 56 L14 46" stroke="#c9a875" stroke-width="0.5" fill="none" opacity="0.4"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner tr" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner bl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner br" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+
+  <svg class="page-seal" viewBox="0 0 100 100">
+    <text x="50" y="68" text-anchor="middle" font-size="60" fill="currentColor">環</text>
+  </svg>
+
+  <div class="page-inner">
+    <div class="ch-header">
+      <div class="ch-kicker">
+        <div class="left"><span class="num-block">4·6</span><span>surrounding forces</span></div>
+        <div>神祇部の環境</div>
+      </div>
+      <div class="ch-title-en">— The World Around the Shinki-bu —</div>
+      <div class="ch-title-ko">신기부를 둘러싼 환경에 대하여 <span class="jp-side">同族と異端</span></div>
+    </div>
+
+    <p class="body lead">본 캐논에서, 환경청 신기부는 일본 국내의 경계 대책 활동을 도맡아 하는 정부 기관으로 자리매김하고 있다.</p>
+
+    <p class="body">한편, <strong>'계이'를 물리치고 '경계 이상'을 진압하는 것을 그들만이 할 수 있는 것은 아니다.</strong> 그리고, <em>의식 기술은 퇴마사의 전유물이 아니다.</em></p>
+
+    <p class="body">신기부와는 다른 배경과 접근 방식으로 퇴마 업무를 수행하는 자들이 존재하며, 의식 기술을 범죄에 악용하는 자들이 있다.</p>
+
+    <div class="divider">
+      <div class="line"></div>
+      <div class="mark">✦</div>
+      <div class="line"></div>
+    </div>
+
+    <p class="body">본 항목에서는, 본 캐논에서의 <em>'신기부와는 다른 퇴마 기관'</em>, <em>'경계 기술을 악용하는 범죄자'</em>에 대해 개요를 서술하겠다.</p>
+
+    <!-- 세력 구도 간략 시각화 -->
+    <div style="margin: 28px 0; background: rgba(0,0,0,0.2); border: 1px solid rgba(201,168,117,0.15); padding: 28px 20px;">
+      <div style="text-align:center; font-family:'Cormorant Garamond',serif; font-style:italic; font-size:11px; letter-spacing:0.3em; color:var(--paper-dim); margin-bottom:20px;">— 경계 이상과 마주한 자들의 배치도 —</div>
+      <div style="display:flex; align-items:center; justify-content:center; gap:0; flex-wrap:wrap;">
+
+        <!-- 신기부 -->
+        <div style="text-align:center; padding:18px 20px; background:rgba(168,48,47,0.08); border:1px solid rgba(168,48,47,0.3); min-width:130px; position:relative;">
+          <div style="font-family:'Noto Serif KR',serif; font-weight:900; font-size:30px; color:var(--red-ink); text-shadow:0 0 12px rgba(168,48,47,0.5); margin-bottom:6px;">祇</div>
+          <div style="font-family:'Noto Serif KR',serif; font-size:13px; font-weight:700; color:var(--paper-bright); margin-bottom:3px;">환경청 신기부</div>
+          <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:10px; color:var(--paper-dim); letter-spacing:0.15em;">Government · Official</div>
+        </div>
+
+        <div style="padding:0 16px; font-size:18px; color:var(--paper-dim); opacity:0.4;">⇌</div>
+
+        <!-- 신궁본사 -->
+        <div style="text-align:center; padding:18px 20px; background:rgba(201,168,117,0.06); border:1px solid rgba(201,168,117,0.25); min-width:130px;">
+          <div style="font-family:'Noto Serif KR',serif; font-weight:900; font-size:30px; color:var(--gold); text-shadow:0 0 12px rgba(201,168,117,0.5); margin-bottom:6px;">宮</div>
+          <div style="font-family:'Noto Serif KR',serif; font-size:13px; font-weight:700; color:var(--paper-bright); margin-bottom:3px;">신궁본사</div>
+          <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:10px; color:var(--paper-dim); letter-spacing:0.15em;">Religion · Classical</div>
+        </div>
+
+        <div style="padding:0 16px; font-size:18px; color:var(--paper-dim); opacity:0.4;">⇌</div>
+
+        <!-- 범죄자 -->
+        <div style="text-align:center; padding:18px 20px; background:rgba(80,50,50,0.15); border:1px solid rgba(100,60,60,0.3); min-width:130px;">
+          <div style="font-family:'Noto Serif KR',serif; font-weight:900; font-size:30px; color:#7a4a4a; text-shadow:0 0 10px rgba(100,60,60,0.4); margin-bottom:6px;">罪</div>
+          <div style="font-family:'Noto Serif KR',serif; font-size:13px; font-weight:700; color:var(--paper-text); margin-bottom:3px;">범죄적 사용자</div>
+          <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:10px; color:var(--paper-dim); letter-spacing:0.15em;">Criminal · Outlawed</div>
+        </div>
+
+      </div>
+      <div style="text-align:center; margin-top:18px; font-family:'Noto Serif KR',serif; font-size:11.5px; color:var(--paper-dim); font-style:italic; letter-spacing:0.08em;">
+        이들 모두가 같은 <em style="color:var(--gold);">'경계'</em>와 마주하고 있다 — 각기 다른 동기와 수단으로.
+      </div>
+    </div>
+
+    <div class="note">
+      <div class="note-body">
+        이후 항목(4-7~)에서는 각 세력의 상세를 기술한다. 시나리오 작성 시 NPC나 적대 세력의 원천으로 활용할 수 있다.
+      </div>
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <span>Tactical Exorcist Codex</span>
+    <span class="num">XVI</span>
+    <span>Surrounding Forces</span>
+  </div>
+</div>
+
+
+<!-- ════ PAGE XVII — JINGUU-HONSHA ════ -->
+<div class="page" id="page-jinguu">
+  <svg class="page-corner tl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><path d="M4 4 L14 14 M56 4 L46 14 M4 56 L14 46" stroke="#c9a875" stroke-width="0.5" fill="none" opacity="0.4"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner tr" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner bl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner br" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+
+  <svg class="page-seal" viewBox="0 0 100 100">
+    <text x="50" y="68" text-anchor="middle" font-size="60" fill="currentColor">宮</text>
+  </svg>
+
+  <div class="page-inner">
+    <div class="ch-header">
+      <div class="ch-kicker">
+        <div class="left"><span class="num-block">4·7</span><span>the old blood</span></div>
+        <div>神宮本社</div>
+      </div>
+      <div class="ch-title-en">— The Exorcists of the Ancient Way —</div>
+      <div class="ch-title-ko">구시대의 퇴마사들, 신궁본사 <span class="jp-side">旧き血脈</span></div>
+    </div>
+
+    <!-- 세력 카드 -->
+    <div class="faction-card">
+      <div class="faction-card-head">
+        <div class="faction-seal" style="color:var(--gold);">宮</div>
+        <div class="faction-titles">
+          <div class="faction-kicker">Ancient Faction · Shrine Network</div>
+          <div class="faction-name">신궁본사 (神宮本社)</div>
+        </div>
+      </div>
+      <div class="faction-card-body">
+        본 캐논에서의 <strong>일본 각지의 신사를 포괄하는 종교 법인</strong>으로 설정되어 있다. 즉, 내각부 직할 정부 기관인 '환경청 신기부'와는 <em>성격을 완전히 달리하는 기관</em>이며, 이들은 행정이 정한 허용 범위 내에서 <strong>자신들의 이념에 따라 업무를 수행</strong>하고 있다.
+      </div>
+    </div>
+
+    <p class="body lead">본 캐논에서의 환경청 신기부는 2001년에 이루어진 조직 개편을 통해 그 외형을 갖추었다. 하지만 조직 개편 이전(혹은 '경계'의 개념이 제창되기 이전의) 시대에 있어, <em>"이 세상 것이 아닌 존재를 물리치고, 장소를 정화하는"</em> 일은 <strong>종교인들의 영역</strong>이었다.</p>
+
+    <div class="divider">
+      <div class="line"></div>
+      <div class="mark">古の血</div>
+      <div class="line"></div>
+    </div>
+
+    <p class="body">그 뿌리는 <strong>1987년의 '신기청 신기부 퇴멸과'</strong> 시대까지 거슬러 올라갈 수 있으며, 이 시대에 '요괴 퇴치'를 행하며 '계이'에 대한 대처 프로세스를 배운 자들이 각자의 종파로 사고방식을 가져가 뿌리내리게 한 것으로 여겨진다. 내각부도 이러한 배경을 고려하고, 또 <em>그들의 반발을 피하기 위해</em> 특례 조치로서 그들의 퇴마 업무를 인정하고 있다.</p>
+
+    <p class="body">또한, 행정이 '계이'에 대한 대응을 시작하기 아득히 오래전부터 계이와 싸워온 <em>사람들의 가문</em>은 오늘날 <strong>'퇴마술'</strong>이라 불리는 특수한 능력을 예로부터 갖추고 있다. 이러한 구시대의 '퇴마사'들은 예로부터 종교와 강하게 결속되는 경향이 있어, <strong>신기부보다 신궁본사에 더 많은 인원이 재적</strong>하고 있다.</p>
+
+    <p class="body">그들은 <em>과학과 영력 공학의 산물인 제구나 수의 재킷을 기피</em>하며, 예로부터 가문에 전해지는 <strong>의식 기술이나 혈통에 갖춰진 퇴마술</strong>을 주된 무기로 삼아 계이와 싸우고 있다. 구시대적(클래식)인 양식을 지닌 퇴마 명문의 대부분은 <em>"퇴마사"라는 존재를 세속화시키는 환경청의 방식을 달갑게 여기지 않는 듯하다.</em></p>
+
+    <p class="body">수백 년에 달하는 퇴마의 역사와 혈통에 의한 선별, 가혹한 단련을 통해 갈고닦아진 그들은 <strong>최첨단 장비를 운용하는 신기부의 퇴마사들과 비교해도 뒤지지 않는 실력</strong>을 갖추고 있다. 만약 현장에서 마주치게 된다면, <em>직접적으로 싸우지는 않더라도 어느 정도의 마찰은 피할 수 없을 것</em>으로 생각된다.</p>
+
+    <div class="divider">
+      <div class="line"></div>
+      <div class="mark">종합</div>
+      <div class="line"></div>
+    </div>
+
+    <!-- 3가지 특징 요약 -->
+    <div class="summary-list">
+      <div class="summary-list-head">종합하자면, '신궁본사'는 이하의 특징을 지닌다</div>
+      <div class="summary-list-item">
+        <div class="sli-num">①</div>
+        <div class="sli-body">
+          <strong>'신궁본사'</strong>는 "영자" 일본의 신사를 통괄하는 <em>포괄 종교 법인</em>이다.
+        </div>
+      </div>
+      <div class="summary-list-item">
+        <div class="sli-num">②</div>
+        <div class="sli-body">
+          그 중추에는 <strong>퇴마술이나 결계술 같은 퇴마사의 기초 이론을 갖추고 있던 구시대의 클래식 퇴마사</strong>들이 소속되어 있다.
+        </div>
+      </div>
+      <div class="summary-list-item">
+        <div class="sli-num">③</div>
+        <div class="sli-body">
+          <strong>'신궁본사'</strong>는 <em>'환경청 신기부'와 사이가 좋지 않다.</em>
+        </div>
+      </div>
+    </div>
+
+    <div class="quote">
+      종이 한 장 자격증으로 퇴마사가 되었다고? 웃기는 소리. 우리 가문은 칠백 년을 이 칼 하나로 경계를 지켜왔다. 그대들이 태어나기도 전부터.
+      <span class="attr">『어느 신궁본사 소속 퇴마사의 독백』</span>
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <span>Tactical Exorcist Codex</span>
+    <span class="num">XVII</span>
+    <span>The Jinguu-Honsha</span>
+  </div>
+</div>
+
+
+<!-- ════ PAGE XVIII — ONMYOU-RYOU ════ -->
+<div class="page" id="page-onmyou">
+  <svg class="page-corner tl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><path d="M4 4 L14 14 M56 4 L46 14 M4 56 L14 46" stroke="#c9a875" stroke-width="0.5" fill="none" opacity="0.4"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner tr" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner bl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner br" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+
+  <svg class="page-seal" viewBox="0 0 100 100">
+    <text x="50" y="68" text-anchor="middle" font-size="60" fill="currentColor">式</text>
+  </svg>
+
+  <div class="page-inner">
+    <div class="ch-header">
+      <div class="ch-kicker">
+        <div class="left"><span class="num-block">4·7·1</span><span>seekers of the ancient art</span></div>
+        <div>陰陽寮 · 式法</div>
+      </div>
+      <div class="ch-title-en">— Seekers of the Shikihou —</div>
+      <div class="ch-title-ko">식법(式法)의 탐구자, 음양료 <span class="jp-side">陰陽寮</span></div>
+    </div>
+
+    <div class="faction-card">
+      <div class="faction-card-head">
+        <div class="faction-seal" style="color:#c084fc;">式</div>
+        <div class="faction-titles">
+          <div class="faction-kicker">Subdivision · Onmyou-ryou</div>
+          <div class="faction-name">음양료 (陰陽寮 · 우라노츠카사)</div>
+        </div>
+      </div>
+      <div class="faction-card-body">
+        신궁본사 내에 존재하는 <strong>실동 부대 중 하나</strong>. 현세를 지키는 퇴마사임을 자랑스러워하며, 특히 역사가 긴 식법을 존중한다. 일본 <strong>최고(最古)의 퇴마사들의 후예</strong>인 이들은, 모두 <em>숙달된 술사로서 두려움의 대상</em>이 된다.
+      </div>
+    </div>
+
+    <p class="body lead">음양료란, 신궁본사 내에 존재하는 퇴마 실동 부대 중 하나이자 <strong>그 중핵을 담당하는 존재</strong>이다. <em>서일본 모처에 근거지를 두고 있으며</em>, 비밀주의적인 면을 지닌다.</p>
+
+    <p class="body">음양료의 퇴마사들은, 환경청 신기부가 결성되기 아득히 오래전부터 <strong>유세(은세)의 존재를 지각하고</strong>, 영력과 의식을 다루는 술법으로 계이를 물리쳐 온 <em>가문에 기원(루트)을 둔다</em>. 그러므로 이들은, <strong>식법(퇴마술)의 격과 숙련도를 중요시한다.</strong></p>
+
+    <div class="divider">
+      <div class="line"></div>
+      <div class="mark">脈々と</div>
+      <div class="line"></div>
+    </div>
+
+    <p class="body">이들은 조상으로부터 <em>고도로 복잡한 식법을 계승해 온 것을 존중하고</em>, 피나는 노력으로 술법을 갈고닦아, <strong>보다 강력한 식법으로서 다음 세대에 물려주는 것을 추구</strong>한다.</p>
+
+    <div class="quote">
+      때로는 그것이 현대 일본의 윤리에 크게 어긋나는 일이 되더라도 말이다.
+      <span class="attr">『음양료 내규 서문』 · 제1조</span>
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <span>Tactical Exorcist Codex</span>
+    <span class="num">XVIII</span>
+    <span>The Onmyou-ryou</span>
+  </div>
+</div>
+
+
+<!-- ════ PAGE XIX — YAKUMO-TAISHA ════ -->
+<div class="page" id="page-yakumo">
+  <svg class="page-corner tl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><path d="M4 4 L14 14 M56 4 L46 14 M4 56 L14 46" stroke="#c9a875" stroke-width="0.5" fill="none" opacity="0.4"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner tr" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner bl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner br" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+
+  <svg class="page-seal" viewBox="0 0 100 100">
+    <text x="50" y="68" text-anchor="middle" font-size="60" fill="currentColor">雲</text>
+  </svg>
+
+  <div class="page-inner">
+    <div class="ch-header">
+      <div class="ch-kicker">
+        <div class="left"><span class="num-block">4·7·2</span><span>wielders of the ancient gear</span></div>
+        <div>八雲大社</div>
+      </div>
+      <div class="ch-title-en">— Users of the Ancient Sacred Instruments —</div>
+      <div class="ch-title-ko">고대 제구의 사용자, 야쿠모타이샤 <span class="jp-side">八雲大社</span></div>
+    </div>
+
+    <div class="faction-card">
+      <div class="faction-card-head">
+        <div class="faction-seal" style="color:#d4a040;">雲</div>
+        <div class="faction-titles">
+          <div class="faction-kicker">Subdivision · Yakumo-Taisha</div>
+          <div class="faction-name">팔운대사 (八雲大社 · 야쿠모타이샤)</div>
+        </div>
+      </div>
+      <div class="faction-card-body">
+        신궁본사 내에 존재하는 실동 부대 중 하나. <strong>양산성이나 호환성을 도외시한, 전통적 제구 운용에 특화된 무예자 집단</strong>. 구시대, 제구란 <em>제사를 지내는 대장간에서 벼려져 신불에게 바쳐지는 것</em>이었다.
+      </div>
+    </div>
+
+    <p class="body lead">야쿠모타이샤는 <em>교토와 효고에 총본사를 둔</em>, 신궁본사 직할의 퇴마 실동 부대 중 하나이다. 이들은 <strong>제구 취급에 특화</strong>되어 있으며, 술법의 탐구자인 음양료와는 <em>쌍을 이루는(대비되는) 존재</em>로서 인지되고 있다.</p>
+
+    <div class="divider">
+      <div class="line"></div>
+      <div class="mark">神器</div>
+      <div class="line"></div>
+    </div>
+
+    <p class="body">이들이 취급하는 것은 양산성이나 호환성을 도외시한, 경우에 따라서는 <strong>국보급 명검이나 창, 그 외 전통적인 무구</strong>이다. 그 대부분은 신사와 사찰에 봉납된 것이며, 이들은 <em>제신(祭神)을 대신하여 계이를 토벌한다는 스탠스</em>로 업무를 수행하고 있다.</p>
+
+    <p class="body">오랜 연구와 단련 끝에, 이들이 다루는 <strong>전통적 제구는 영적인 힘을 갖추기에 이르는 경우도 많아</strong>, 식법으로 착각할 정도의 전투 방식을 취하는 퇴마사도 많이 소속되어 있다.</p>
+
+    <div class="note">
+      <div class="note-body">
+        음양료와 야쿠모타이샤는 신궁본사 내에서 양대 실동 세력을 이루며, <strong>식법(術法) 대 제구(祭具)</strong>라는 철학적 대립 구도를 형성하고 있다.
+      </div>
+    </div>
+
+    <div class="quote">
+      이 도(刀)는 천이백 년 전, 신의 이름으로 단조되었다. 그대들의 공장에서 찍어낸 고철과는 격이 다르다.
+      <span class="attr">『야쿠모타이샤 소속 퇴마사가 신기부 직원에게』</span>
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <span>Tactical Exorcist Codex</span>
+    <span class="num">XIX</span>
+    <span>The Yakumo-Taisha</span>
+  </div>
+</div>
+
+
+<!-- ════ PAGE XX — JINGUU DAIKU-SHUU ════ -->
+<div class="page" id="page-daiku">
+  <svg class="page-corner tl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><path d="M4 4 L14 14 M56 4 L46 14 M4 56 L14 46" stroke="#c9a875" stroke-width="0.5" fill="none" opacity="0.4"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner tr" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner bl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner br" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+
+  <svg class="page-seal" viewBox="0 0 100 100">
+    <text x="50" y="68" text-anchor="middle" font-size="60" fill="currentColor">社</text>
+  </svg>
+
+  <div class="page-inner">
+    <div class="ch-header">
+      <div class="ch-kicker">
+        <div class="left"><span class="num-block">4·7·3</span><span>ritual architects</span></div>
+        <div>神宮大工衆</div>
+      </div>
+      <div class="ch-title-en">— Clad in the Sacred Hall —</div>
+      <div class="ch-title-ko">사(社)를 두르는 의식술사, 신궁대공중 <span class="jp-style">神宮大工衆</span></div>
+    </div>
+
+    <div class="faction-card">
+      <div class="faction-card-head">
+        <div class="faction-seal" style="color:#7ab0b8;">社</div>
+        <div class="faction-titles">
+          <div class="faction-kicker">Subdivision · Jinguu-Daikushuu</div>
+          <div class="faction-name">신궁대공중 (神宮大工衆)</div>
+        </div>
+      </div>
+      <div class="faction-card-body">
+        신궁본사 내에 존재하는 의식 기술 부문. 무구가 아니라, <strong>'사社(야시로)'라 불리는 특수한 제구를 사용</strong>한다. <em>제작·정비하는 사의 종류에 따라 크게 두 파로 분류</em>된다.
+      </div>
+    </div>
+
+    <p class="body lead">신궁대공중은 <em>교토에 근거지를 둔</em>, 신궁본사 전속 <strong>궁대목(신사 건축을 전문으로 하는 목수)</strong> 단체이다. 이들은 음양료나 야쿠모타이샤와는 다른 접근 방식으로 의식 기술을 연구하고 있으며, 그 대부분은 <strong>'사(야시로)'라 불리는 건축물에 의한 의식에 특화</strong>되어 있다.</p>
+
+    <p class="body">사용자는 <em>"가궁사(仮宮司 · 카리미야즈카사)"</em>라 불린다.</p>
+
+    <div class="divider">
+      <div class="line"></div>
+      <div class="mark">二様の社</div>
+      <div class="line"></div>
+    </div>
+
+    <!-- 두 가지 사 분류 -->
+    <div class="skill-pillars" style="grid-template-columns:1fr 1fr;">
+
+      <div class="skill-pillar" style="text-align:left; padding:20px 18px;">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--red-ink),transparent);"></div>
+        <div class="pillar-num" style="color:var(--red-ink); text-shadow:0 0 10px rgba(168,48,47,0.5); font-size:26px; margin-bottom:10px;">機動祭祀殿</div>
+        <div class="pillar-title">기동제사전 (파워 슈트)</div>
+        <div class="pillar-desc" style="font-style:normal; color:var(--paper-text); line-height:1.85;">
+          가궁사가 신체에 직접 장착하여 운용하는 <strong>강화 외골격</strong>. 각 부품이 "사"의 구성 요소를 담당한다.
+          <br><br>
+          가궁사의 몸을 <em>영력 공급기(에너지 제너레이터)</em>로 삼아, 신체를 보호하면서 전투 기술을 지원하는 시스템.
+        </div>
+      </div>
+
+      <div class="skill-pillar" style="text-align:left; padding:20px 18px;">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#7ab0b8,transparent);"></div>
+        <div class="pillar-num" style="color:#7ab0b8; text-shadow:0 0 10px rgba(122,176,184,0.5); font-size:26px; margin-bottom:10px;">枝社 (브랜치)</div>
+        <div class="pillar-title">지사 (소형 드론)</div>
+        <div class="pillar-desc" style="font-style:normal; color:var(--paper-text); line-height:1.85;">
+          가궁사의 주위에 전개되는 <strong>소형 드론 유닛</strong>. 자율 또는 원격 조작으로 움직이는 독립된 "사"로 간주된다.
+          <br><br>
+          <em>다면적 공격</em> 또는 <em>전탄 집중</em>의 두 전술을 구사. 단, 기체 수가 줄면 성능이 저하되는 <strong>약점</strong>도 있다.
+        </div>
+      </div>
+
+    </div>
+
+    <div class="note">
+      <div class="note-body">
+        지사의 가장 큰 특징은 <strong>여러 기체의 동시 전개를 통한 다면적 공격</strong>으로, 자잘한 대미지를 다방면에서 쏘아 보내 회피하기 어려운 공격을 가하거나, 모든 드론의 공격을 한 곳에 집중시켜 <em>강력한 공격을 퍼부을 수 있다</em>. 반면, 드론의 총수가 줄어들면 성능이 저하되고 마는 약점을 가지고 있다.
+      </div>
+    </div>
+
+    <!-- 신궁본사 3파 정립 -->
+    <div class="divider" style="margin-top:28px;">
+      <div class="line"></div>
+      <div class="mark">神宮三派</div>
+      <div class="line"></div>
+    </div>
+
+    <div class="three-divisions">
+      <div class="td-cell" style="background:rgba(192,132,252,0.08); border-color:rgba(192,132,252,0.2);">
+        <div class="td-kanji" style="color:#c084fc; text-shadow:0 0 12px rgba(192,132,252,0.5);">式</div>
+        <div class="td-name">음양료</div>
+        <div class="td-sub">SHIKIHOU · 식법</div>
+      </div>
+      <div class="td-connector">✦</div>
+      <div class="td-cell" style="background:rgba(212,160,64,0.08); border-color:rgba(212,160,64,0.2);">
+        <div class="td-kanji" style="color:#d4a040; text-shadow:0 0 12px rgba(212,160,64,0.5);">雲</div>
+        <div class="td-name">야쿠모타이샤</div>
+        <div class="td-sub">KIGU · 고대 제구</div>
+      </div>
+      <div class="td-connector">✦</div>
+      <div class="td-cell" style="background:rgba(122,176,184,0.08); border-color:rgba(122,176,184,0.2);">
+        <div class="td-kanji" style="color:#7ab0b8; text-shadow:0 0 10px rgba(122,176,184,0.5);">社</div>
+        <div class="td-name">신궁대공중</div>
+        <div class="td-sub">YASHIRO · 사(社)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <span>Tactical Exorcist Codex</span>
+    <span class="num">XX</span>
+    <span>The Daiku-shuu</span>
+  </div>
+</div>
+
+
+<!-- ════ PAGE XXI — THE OUTLAWED ════ -->
+<div class="page" id="page-jusha">
+  <svg class="page-corner tl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><path d="M4 4 L14 14 M56 4 L46 14 M4 56 L14 46" stroke="#c9a875" stroke-width="0.5" fill="none" opacity="0.4"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner tr" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner bl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner br" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+
+  <svg class="page-seal" viewBox="0 0 100 100">
+    <text x="50" y="68" text-anchor="middle" font-size="60" fill="currentColor">罪</text>
+  </svg>
+
+  <div class="page-inner">
+    <div class="ch-header">
+      <div class="ch-kicker">
+        <div class="left"><span class="num-block">4·8</span><span>the outlawed</span></div>
+        <div>呪詛犯罪者</div>
+      </div>
+      <div class="ch-title-en">— Abusers of Boundary Techniques —</div>
+      <div class="ch-title-ko">경계 기술의 악용자, 주저 범죄자들 <span class="jp-side">禁忌の使い手</span></div>
+    </div>
+
+    <div class="term-card">
+      <div class="head">
+        <span class="label">Legal Term</span>
+        <span class="name">呪詛犯罪者</span>
+        <span class="reading">Jusha Hanzaisha · 주저 범죄자</span>
+      </div>
+      <div class="body-text">
+        광의로는 <strong>본 캐논에서 법률로 정해진 "주저 범죄" 또는 "주저 관련 범죄" 중 어느 한쪽의 요건을 충족하는 자</strong> 전반을 가리킨다.
+        <br><br>
+        <em>상세 : [4-11-8 : 주저] [4-11-9 : 주저 범죄/주저 관련 범죄] 참조</em>
+      </div>
+    </div>
+
+    <p class="body lead">신기부가 대책을 마련하는 '주저 범죄자'란, <em>"의식과 관련된 기술·능력을 지니고 있으면서 행정의 관할에 속하지 않고, 이를 악용하여 범죄 행위를 저지르는 자"</em>라는 측면으로 묶이는 경우가 많다. 해당자가 어느 법을 위반하고 있는지는 현장 레벨에서는 <strong>별로 신경 쓰지 않는 경향</strong>이 있다.</p>
+
+    <div class="divider">
+      <div class="line"></div>
+      <div class="mark">二面</div>
+      <div class="line"></div>
+    </div>
+
+    <!-- 전자/후자 구분 -->
+    <div class="skill-pillars" style="grid-template-columns:1fr 1fr; margin-bottom:20px;">
+      <div class="skill-pillar" style="text-align:left; padding:18px 16px;">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#8b6060,transparent);"></div>
+        <div class="pillar-title" style="color:#b88080; font-size:13px; margin-bottom:8px;">전자 · 경계 이상 편승형</div>
+        <div class="pillar-desc" style="font-style:normal; color:var(--paper-text); line-height:1.85; font-size:12.5px;">
+          경계 이상이 발생한 구역 내에서 피난 요청에 따르지 않고, <em>혼란을 틈타 절도를 하는</em> 등의 행위도 해당한다.
+        </div>
+      </div>
+      <div class="skill-pillar" style="text-align:left; padding:18px 16px;">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#7a3030,transparent);"></div>
+        <div class="pillar-title" style="color:#c07070; font-size:13px; margin-bottom:8px;">후자 · 금제 기술 악용형</div>
+        <div class="pillar-desc" style="font-style:normal; color:var(--paper-text); line-height:1.85; font-size:12.5px;">
+          퇴마술이나 제구 등 <strong>소정의 기관만이 다루도록 허가된 기술 체계·물품</strong> 등을 부정하게 입수하여 사용하는 자.
+        </div>
+      </div>
+    </div>
+
+    <p class="body">그 성질상, '주저 범죄자'의 대부분은 <strong>인간</strong>(일부, 고도의 지성을 지닌 계이가 인간으로서 활동하고 있는 경우가 있다)이며, 사건 해결에는 <em>대(對) 계이 전투와는 다른 접근 방식</em>이 요구된다.</p>
+
+    <p class="body">그중에는 <strong>신기부에서 제명된 전 직원</strong>이 기술이나 부정하게 조달한 제구를 악용하는 패턴이나, <strong>신궁본사에서 파문당한 퇴마술사</strong>가 범죄자로 전락한 패턴이 있다.</p>
+
+    <div class="note">
+      <div class="note-body">
+        이들 대부분은 이익 목적의 절도나 강도, 제구 밀매 등을 목적으로 하지만, 중에는 <strong>대규모 파괴를 통한 테러를 꾀하는 세력</strong>도 있어, 계이에 버금가는 새로운 위협으로서 신기부와 신궁본사 양쪽 모두의 <em>요주의 대상</em>이 되고 있다.
+      </div>
+    </div>
+
+    <p class="body">신기부 직원은 경계 관련 사안에 한하여 <strong>조사·체포 등의 권한이 인정</strong>된다. 이러한 임무에 임할 때는, 대(對) 주저 범죄자 전문 연수를 수강한 신기관(<em>속칭 신기 수사관</em>이라 불림)이 동행하는 가운데, 퇴마사들이 사건 조사나 대응을 맡는 케이스가 존재한다.</p>
+
+    <div class="quote">
+      괴물보다 사람이 더 무섭다. 계이는 본능에 따라 움직이지만, 인간은 목적을 갖고 움직인다.
+      <span class="attr">『신기부 신기 수사관 연수 교재』 · 冒頭</span>
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <span>Tactical Exorcist Codex</span>
+    <span class="num">XXI</span>
+    <span>The Outlawed</span>
+  </div>
+</div>
+
+
+<!-- ════ PAGE XXII — JUSATSU-SHA ════ -->
+<div class="page" id="page-jusatsu">
+  <svg class="page-corner tl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><path d="M4 4 L14 14 M56 4 L46 14 M4 56 L14 46" stroke="#c9a875" stroke-width="0.5" fill="none" opacity="0.4"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner tr" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner bl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner br" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-seal" viewBox="0 0 100 100"><text x="50" y="68" text-anchor="middle" font-size="60" fill="currentColor">殺</text></svg>
+
+  <div class="page-inner">
+    <div class="ch-header">
+      <div class="ch-kicker">
+        <div class="left"><span class="num-block">4·8·1</span><span>killers of the cursed art</span></div>
+        <div>呪殺師</div>
+      </div>
+      <div class="ch-title-en">— The Most Dangerous of the Corrupt —</div>
+      <div class="ch-title-ko">흉악 주저 범죄자, 주살사 <span class="jp-side">呪いの凶手</span></div>
+    </div>
+
+    <div class="faction-card">
+      <div class="faction-card-head">
+        <div class="faction-seal" style="color:#a83030;">殺</div>
+        <div class="faction-titles">
+          <div class="faction-kicker">Criminal Class · Most Dangerous</div>
+          <div class="faction-name">주살사 (呪殺師)</div>
+        </div>
+      </div>
+      <div class="faction-card-body">
+        주저 범죄 행위를 저지르는 자 중, <strong>직접적인 인명 및 재산의 살상이나 파괴를 행하는 자</strong>를 가리킨다. 이들에게 의식 기술이란 <em>손에 익은 무기이자, 흉기</em>이다. 그 성질상, 특히 <strong>대인 살상 능력에 뛰어난 의식 조정</strong>을 가하는 경우가 많다.
+      </div>
+    </div>
+
+    <p class="body lead">주저 범죄자 중에서도 <strong>살인, 강도, 폭행, 상해, 유괴, 인질극, 방화</strong> 등 이른바 강력범죄에 손을 대는 자들을 '주살사'라고 부른다. 뒷세계에는 <em>보수를 대가로 표적(타깃)의 주살을 하청받는 암살자나 해결사</em>도 존재하여, 단속을 담당하는 경찰 및 신기부와는 치열한 투쟁을 벌이고 있다.</p>
+
+    <div class="note">
+      <div class="note-body">
+        살의의 유무와 관계없이, <strong>의식 기술이나 제구에 의한 살상 및 파괴 행위는 중대한 범죄</strong>로 여겨져, 본인의 의사와는 무관하게 '주살사' 판정이 내려지는 경우도 많다.
+      </div>
+    </div>
+
+    <div class="divider">
+      <div class="line"></div>
+      <div class="mark">血染の力</div>
+      <div class="line"></div>
+    </div>
+
+    <p class="body">이들은 자신의 의식이나 식법에 독자적인 조정을 가하여, <strong>보다 살상력이 높은 것으로 승화</strong>시키고 있다.</p>
+
+    <div class="quote">
+      그것은 피비린내 나는 행위의 반복을 통해 그들에게 스며든, 인간이 가져서는 안 될 힘이라는 소문이 돌고 있다.
+      <span class="attr">『신기부 특수범죄 대책 메모 · 주살사 항목』</span>
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <span>Tactical Exorcist Codex</span>
+    <span class="num">XXII</span>
+    <span>The Jusalsha</span>
+  </div>
+</div>
+
+
+<!-- ════ PAGE XXIII — JUYO-SHA & SHIJUTSU-SHA ════ -->
+<div class="page" id="page-juyo">
+  <svg class="page-corner tl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><path d="M4 4 L14 14 M56 4 L46 14 M4 56 L14 46" stroke="#c9a875" stroke-width="0.5" fill="none" opacity="0.4"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner tr" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner bl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner br" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-seal" viewBox="0 0 100 100"><text x="50" y="68" text-anchor="middle" font-size="60" fill="currentColor">呪</text></svg>
+
+  <div class="page-inner">
+    <div class="ch-header">
+      <div class="ch-kicker">
+        <div class="left"><span class="num-block">4·8·2~3</span><span>enchanter & necromancer</span></div>
+        <div>呪与師 / 屍術師</div>
+      </div>
+      <div class="ch-title-en">— The Subtle and the Defiled —</div>
+      <div class="ch-title-ko">주여사 / 시술사 <span class="jp-side">呪いの変奏</span></div>
+    </div>
+
+    <div class="faction-card" style="margin-bottom:22px;">
+      <div class="faction-card-head">
+        <div class="faction-seal" style="color:#7a6090;">与</div>
+        <div class="faction-titles">
+          <div class="faction-kicker">4·8·2 · Criminal Class · Subtle</div>
+          <div class="faction-name">주여사 (呪与師 · Enchanter)</div>
+        </div>
+      </div>
+      <div class="faction-card-body">
+        주저 범죄 행위를 저지르는 자 중, <strong>교활하고 간접적인 수법을 취하는 자</strong>를 가리킨다. 이들에게 의식 기술이란 <em>저주이며, 타인에게 채우는 족쇄</em>가 된다. 그 성질상, <strong>타인의 행동을 속박하거나 불이익을 가져다주는 의식 조정</strong>을 가하는 경우가 많다.
+      </div>
+    </div>
+
+    <p class="body lead">주저 범죄자 중에서도, 간접적인 수법이나 소규모 불이익의 범주에서 의식을 행사하는 자들을 '주여사(인챈터)'라고 부른다. <em>'질 나쁜 주술'</em>이라고 불리는 경우도 많아, <strong>퇴마사에게서나 동업자인 주저 범죄자에게서나 한 단계 낮게 취급받기 십상</strong>인 존재로 여겨진다.</p>
+
+    <p class="body">하지만, 숙달된 주여사는 <strong>'소규모 저주를 다중으로 부여하는'</strong> 것으로 상대에게 불이익을 주어, 서서히 반격 수단을 깎아내는 수법을 선호한다. 자신의 영력을 마커로 삼아, <em>상대의 영체에 저주를 새겨넣는 의식</em>이 이들을 주여사로 만들고 있으며, <strong>강력한 퇴마사를 때로는 궁지로 몰아넣기도</strong> 한다.</p>
+
+    <div class="divider">
+      <div class="line"></div>
+      <div class="mark">死者の汚濁</div>
+      <div class="line"></div>
+    </div>
+
+    <div class="faction-card">
+      <div class="faction-card-head">
+        <div class="faction-seal" style="color:#5a5a6a;">屍</div>
+        <div class="faction-titles">
+          <div class="faction-kicker">4·8·3 · Criminal Class · Undead Arts</div>
+          <div class="faction-name">시술사 (屍術師 · Necromancer)</div>
+        </div>
+      </div>
+      <div class="faction-card-body">
+        주저 범죄자 중, <strong>"시술(네크로맨시)"을 다루는 자</strong>를 가리킨다. 시술이란 <em>부정을 매개로 생명 활동을 정지한 생물, 즉 시체를 조종하는 술법</em>이다. 그 성질상, <strong>자신이 조종하는 시체의 강화와 새로운 시체를 조달하는 의식</strong>을 지닌다.
+      </div>
+    </div>
+
+    <p class="body">부정을 부여하여 시체를 유사 소생시키는 행위는 대상을 불문하고 <strong>중대한 주저 범죄의 요건을 충족</strong>하며, 그 시체가 인간의 것이라면 <em>사체 유기 및 손괴로서 통상적인 범죄로도 처벌</em>받는다.</p>
+
+    <div class="term-card">
+      <div class="head">
+        <span class="label">Special Material</span>
+        <span class="name">屍人粉</span>
+        <span class="reading">Zombie Powder · 시인분</span>
+      </div>
+      <div class="body-text">
+        부정을 가공하여 만든 특수한 약품. 이것을 시체에 투여하면 <strong>임시 생명을 얻은 유해(언데드)</strong>가 만들어진다. 시술사들이 이들을 거느리고 전투에 임한다.
+      </div>
+    </div>
+
+    <div class="note">
+      <div class="note-body">
+        시술은 필요한 비용이나 감수해야 할 위험에 비해 강력한 의식이라고 말하기 어려우며, 특히 현대 일본에서는 <strong>반쯤 사장되어 가는 의식 체계</strong>로 여겨진다.
+      </div>
+    </div>
+
+    <div class="quote">
+      죽음이란 끝이 아니다. 적어도, 나에게는. 시체는 말이 없고, 불평하지 않으며, 지치지도 않는다 — 이보다 완벽한 병사가 있겠는가.
+      <span class="attr">『주저 범죄 수사 기록 · 시술사 계열 용의자 진술 발췌』</span>
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <span>Tactical Exorcist Codex</span>
+    <span class="num">XXIII</span>
+    <span>Enchanter & Necromancer</span>
+  </div>
+</div>
+
+
+<!-- ════ PAGE XXIV — GEAR I ════ -->
+<div class="page" id="page-gear-1">
+  <svg class="page-corner tl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><path d="M4 4 L14 14 M56 4 L46 14 M4 56 L14 46" stroke="#c9a875" stroke-width="0.5" fill="none" opacity="0.4"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner tr" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner bl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner br" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-seal" viewBox="0 0 100 100"><text x="50" y="68" text-anchor="middle" font-size="60" fill="currentColor">具</text></svg>
+
+  <div class="page-inner">
+    <div class="ch-header">
+      <div class="ch-kicker">
+        <div class="left"><span class="num-block">4·10</span><span>sacred equipment</span></div>
+        <div>祭具 / 機装</div>
+      </div>
+      <div class="ch-title-en">— The Tools of the Exorcist's Trade —</div>
+      <div class="ch-title-ko">제구 (祭具 · 기어) <span class="jp-side">壱</span></div>
+    </div>
+
+    <p class="body lead">본 항목에서는 <em>'택티컬 퇴마사 TRPG'</em>에 자주 등장하는 종류의 제구에 대해 간단한 해설을 덧붙이겠다.</p>
+
+    <div class="divider">
+      <div class="line"></div>
+      <div class="mark">狩衣</div>
+      <div class="line"></div>
+    </div>
+
+    <!-- 수의 -->
+    <div class="term-card">
+      <div class="head">
+        <span class="label">4-10-1 · Standard Issue</span>
+        <span class="name">狩衣</span>
+        <span class="reading">Kariginu · 수의(재킷)</span>
+      </div>
+      <div class="body-text">
+        신기부에 소속된 퇴마사들이 착용하는 <strong>표준 제복(유니폼)</strong>. 아라미드 수지 섬유와 다층화된 호부(부적)로 짜여 있어, <em>물리적인 대미지를 경감함과 동시에 경계 이상이 발생한 구역에 떠도는 "장기"로부터 착용자를 보호</em>한다.
+        <br><br>
+        <strong>'경장', '평장', '중장'</strong>의 3가지 구분으로 나뉘며, 캐릭터의 회피 성능을 높이는 '경장', 밸런스 중시의 '평장', 물리 대미지 경감 성능을 중시한 '중장'의 특징을 가지고 있다.
+      </div>
+    </div>
+
+    <div class="divider">
+      <div class="line"></div>
+      <div class="mark">形代紙</div>
+      <div class="line"></div>
+    </div>
+
+    <!-- 카타시로 -->
+    <div class="term-card">
+      <div class="head">
+        <span class="label">4-10-2 · Consumable Talisman</span>
+        <span class="name">形代紙</span>
+        <span class="reading">Katashiro · 카타시로</span>
+      </div>
+      <div class="body-text">
+        소비형 호부(부적). 손바닥 크기의 화지(일본 전통 종이)로 만든 종이 인형. <strong>사전에 의식을 통해 연결된 소유자에게 어떠한 파멸이 닥칠 때, 자동으로 그 결말을 대신 짊어지는 성질</strong>을 지닌다. 또한, 어느 정도의 대미지나 고통도 떠맡아 주기 때문에, 퇴마사들의 전투 지속 능력에 크게 공헌하고 있다.
+        <br><br>
+        <em>신기부에서는 출동 시 반드시 '7장'을 장비할 것이 의무화</em>되어 있다. "영력 회복 리소스 겸, 캐릭터의 잔기(목숨)"가 된다. "현재 체력의 2배를 초과하는 대미지를 받으면, 2장의 카타시로를 소모한다"는 룰이 있기 때문에, 상황에 따라 <strong>PC에게 허용되는 죽음은 3번까지</strong>가 된다.
+      </div>
+    </div>
+
+    <div class="divider">
+      <div class="line"></div>
+      <div class="mark">黒不浄</div>
+      <div class="line"></div>
+    </div>
+
+    <!-- 흑부정 -->
+    <div class="term-card">
+      <div class="head">
+        <span class="label">4-10-3 · Melee Weapon</span>
+        <span class="name">黒不浄</span>
+        <span class="reading">Kuro-Fujou · 흑부정</span>
+      </div>
+      <div class="body-text">
+        물질화시킨 부정을 벼려서 제조되는 <strong>근접도(近接刀)</strong>. 계이의 신체를 구성하는 부정과 동질의 것이므로, <em>결계나 술법의 영향 아래 있지 않더라도 계이를 베어 가르는 것이 가능</em>. 단, 소지하고 있는 것만으로도 대상의 영체에 악영향을 미치기 때문에, <strong>사용 시에는 수의의 착용이 의무화</strong>되어 있는 위험한 무기이기도 하다.
+        <br><br>
+        사용자의 체구나 전법에 맞춰, <em>쿠나이형이나 레이피어형, 대검형</em> 등 몇 가지 종류가 있는 듯하다. '근접 제구의 일종'으로 쓰이며, 택티컬 퇴마사 세계관에서는 대중적인 <strong>'대(對) 계이 무기'</strong> 중 하나이다.
+      </div>
+    </div>
+
+    <div class="quote">
+      흑부정은 우아하지 않다. 계이의 부정으로 계이를 베는 것이니 — 본래 이 세상에 있어서는 안 될 것으로, 이 세상에 있어서는 안 될 것을 베는 것이다.
+      <span class="attr">『신기부 제구 운용 지침서』</span>
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <span>Tactical Exorcist Codex</span>
+    <span class="num">XXIV</span>
+    <span>Gear I</span>
+  </div>
+</div>
+
+
+<!-- ════ PAGE XXV — GEAR II ════ -->
+<div class="page" id="page-gear-2">
+  <svg class="page-corner tl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><path d="M4 4 L14 14 M56 4 L46 14 M4 56 L14 46" stroke="#c9a875" stroke-width="0.5" fill="none" opacity="0.4"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner tr" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner bl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner br" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-seal" viewBox="0 0 100 100"><text x="50" y="68" text-anchor="middle" font-size="60" fill="currentColor">器</text></svg>
+
+  <div class="page-inner">
+    <div class="ch-header">
+      <div class="ch-kicker">
+        <div class="left"><span class="num-block">4·10</span><span>sacred equipment</span></div>
+        <div>祭具 / 機装</div>
+      </div>
+      <div class="ch-title-en">— The Tools of the Exorcist's Trade —</div>
+      <div class="ch-title-ko">제구 (祭具 · 기어) <span class="jp-side">弐</span></div>
+    </div>
+
+    <div class="divider">
+      <div class="line"></div>
+      <div class="mark">カラビナ</div>
+      <div class="line"></div>
+    </div>
+
+    <!-- 카라비너 시리즈 -->
+    <div class="term-card">
+      <div class="head">
+        <span class="label">4-10-4 · Ranged Weapon Series</span>
+        <span class="name">Carabiner</span>
+        <span class="reading">카라비너 시리즈 · カラビナシリーズ</span>
+      </div>
+      <div class="body-text">
+        <strong>로렌츠 작용(전자기력)</strong>을 이용하여 소형 하라이구시탄(祓串弾)을 쏘아내는 하라이구시 사출 장치. 작약식(화약)이 아닌 본 제품을 정식 채용한 것은, <em>국민 감정을 고려한 결과</em>로 여겨진다. 독일의 총기 메이커 <strong>'카라비너 사'</strong>가 유럽의 퇴마사용으로 개발한 철항 사출 장치를, 국내 라이선스 생산하거나 직수입하여 배치하고 있다.
+      </div>
+    </div>
+
+    <!-- 3개 모델 -->
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin:18px 0;">
+      <div style="background:rgba(0,0,0,0.2); border:1px solid rgba(201,168,117,0.18); padding:16px 14px; position:relative; overflow:hidden;">
+        <div style="position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,#9bb88a,transparent);"></div>
+        <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:9px; letter-spacing:0.25em; color:var(--paper-dim); margin-bottom:6px;">EW-38 · SHORT</div>
+        <div style="font-family:'Noto Serif KR',serif; font-weight:700; font-size:14px; color:var(--paper-bright); margin-bottom:8px;">카라비너 EW-38</div>
+        <div style="font-size:11.5px; color:var(--paper-text); line-height:1.75; font-family:'Noto Serif KR',serif;">권총 사이즈. <em>한 손으로 다룰 수 있는 소형·경량.</em> 근거리 전투의 견제용.</div>
+      </div>
+      <div style="background:rgba(0,0,0,0.2); border:1px solid rgba(201,168,117,0.18); padding:16px 14px; position:relative; overflow:hidden;">
+        <div style="position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,var(--gold),transparent);"></div>
+        <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:9px; letter-spacing:0.25em; color:var(--paper-dim); margin-bottom:6px;">ORZ90 · MEDIUM</div>
+        <div style="font-family:'Noto Serif KR',serif; font-weight:700; font-size:14px; color:var(--paper-bright); margin-bottom:8px;">카라비너 ORZ90</div>
+        <div style="font-size:11.5px; color:var(--paper-text); line-height:1.75; font-family:'Noto Serif KR',serif;">다루기 편한 바디에 <em>연사 성능.</em> 중거리 탄막 지원용.</div>
+      </div>
+      <div style="background:rgba(0,0,0,0.2); border:1px solid rgba(201,168,117,0.18); padding:16px 14px; position:relative; overflow:hidden;">
+        <div style="position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,#c46a48,transparent);"></div>
+        <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:9px; letter-spacing:0.25em; color:var(--paper-dim); margin-bottom:6px;">LW2000 · LONG</div>
+        <div style="font-family:'Noto Serif KR',serif; font-weight:700; font-size:14px; color:var(--paper-bright); margin-bottom:8px;">카라비너 LW2000</div>
+        <div style="font-size:11.5px; color:var(--paper-text); line-height:1.75; font-family:'Noto Serif KR',serif;">속사성과 맞바꾼 <em>긴 사거리와 위력.</em> 장거리 저격용.</div>
+      </div>
+    </div>
+
+    <div class="divider">
+      <div class="line"></div>
+      <div class="mark">注連鋼縄</div>
+      <div class="line"></div>
+    </div>
+
+    <!-- 주련강승 -->
+    <div class="term-card">
+      <div class="head">
+        <span class="label">4-10-5 · Barrier Rope</span>
+        <span class="name">注連鋼縄</span>
+        <span class="reading">Shimekou-jou · 주련강승(와이어)</span>
+      </div>
+      <div class="body-text">
+        액막이 처리가 된 FRP 수지와 강선으로 엮은 "밧줄"에, 일정 간격으로 강화 플라스틱 재질의 소형 <em>"시데(종이 장식)"</em>를 짜 넣은 것. <strong>결계의 윤곽을 정하고, 안과 밖을 가르기 위해 필요한 제구</strong>. 결계의 외곽을 형성하기 때문에, 주련강승 그 자체가 <em>영체에 직접 간섭 가능한 성질</em>을 지닌다. 이로 인해 다양한 응용이 가능해진다.
+      </div>
+    </div>
+
+    <div class="divider">
+      <div class="line"></div>
+      <div class="mark">祓串</div>
+      <div class="line"></div>
+    </div>
+
+    <!-- 하라이구시 -->
+    <div class="term-card">
+      <div class="head">
+        <span class="label">4-10-6 · Purification Stake</span>
+        <span class="name">祓串</span>
+        <span class="reading">Haraigushi · 하라이구시</span>
+      </div>
+      <div class="body-text">
+        액막이 처리가 된 강재로 만든 <strong>철 말뚝</strong>. 제조 과정에서 가해진 처리로 인해 <em>부정을 중화하는 능력(정화 능력)</em>을 지니지만, 흑부정 등과 비교하면 계이에 대한 결정타로는 부족함이 있다.
+        <br><br>
+        긴급 시의 <strong>근접/투척 무장</strong>으로서 퇴마사들이 휴대하는 것 외에, <em>결계를 치기 위한 기점</em>으로도 사용된다. 무장으로는 보조용이며, 근접 빌드가 보조적인 원거리 공격 수단으로 삼는 정도의 위치.
+      </div>
+    </div>
+
+    <div class="quote">
+      이 철 말뚝 하나가 전장의 모양을 바꾼다. 박아라, 쳐라, 그리고 결계를 친다 — 전투는 그 결계 안에서 결정된다.
+      <span class="attr">『경계대책과 신임 퇴마사 교육 교재 · 제구 사용 실습』</span>
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <span>Tactical Exorcist Codex</span>
+    <span class="num">XXV</span>
+    <span>Gear II</span>
+  </div>
+</div>
+
+
+<!-- ════ PAGE XXVI — TERMINOLOGY I ════ -->
+<div class="page" id="page-terms-1">
+  <svg class="page-corner tl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><path d="M4 4 L14 14 M56 4 L46 14 M4 56 L14 46" stroke="#c9a875" stroke-width="0.5" fill="none" opacity="0.4"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner tr" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner bl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner br" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-seal" viewBox="0 0 100 100"><text x="50" y="68" text-anchor="middle" font-size="60" fill="currentColor">語</text></svg>
+
+  <div class="page-inner">
+    <div class="ch-header">
+      <div class="ch-kicker">
+        <div class="left"><span class="num-block">4·11</span><span>glossary of terms</span></div>
+        <div>壱 · 신기부 · 경계 이상</div>
+      </div>
+      <div class="ch-title-en">— Terminology of the Eiji Canon —</div>
+      <div class="ch-title-ko">용어 (用語) <span class="jp-side">壱</span></div>
+    </div>
+
+    <p class="body lead">본 캐논에서의 각종 용어의 대략적인 설정·용법에 대해 기재 및 해설한다. 게임 중의 표현이나 시나리오 작성에 도움이 되기를 바란다.</p>
+
+    <div class="divider">
+      <div class="line"></div>
+      <div class="mark">4·11·1 神祇部</div>
+      <div class="line"></div>
+    </div>
+
+    <div class="term-card">
+      <div class="head">
+        <span class="label">Term 01</span>
+        <span class="name">神祇部</span>
+        <span class="reading">Shinki-bu · 신기부</span>
+      </div>
+      <div class="body-text">
+        <em>[4-5-1: 신기부]</em>에서 해설하고 있는, 환경청 관할하에 있는 조직을 가리킨다. 기본적으로 '신기부'라고 칭할 경우, 그 하부에 있는 <strong>'중앙신기실', '경계대책과', '결계관리과', '제구개발과'</strong>를 포괄하여 가리키는 경우가 많다.
+        <br><br>
+        현장에서는 각각의 섹션을 가리켜 <em>'신기실', '대책과', '관리과', '개발과'</em>라고 줄여 부르는 것도 일상화되어 있어, 엄밀한 호칭이 요구되는 국면은 그리 많지 않다. 매년 4월 1일자나 10월 1일자로 많은 계(係)나 반(班)이 통합과 발전적 해소를 반복하고 있어, <strong>조직도는 빈번하게 바뀐다.</strong>
+      </div>
+    </div>
+
+    <div class="divider">
+      <div class="line"></div>
+      <div class="mark">4·11·2 境界異常</div>
+      <div class="line"></div>
+    </div>
+
+    <div class="term-card">
+      <div class="head">
+        <span class="label">Term 02</span>
+        <span class="name">境界異常</span>
+        <span class="reading">Kyoukai-Ijou · 경계 이상</span>
+      </div>
+      <div class="body-text">
+        <em>[4-4: 경계 이상]</em>에서 해설하고 있는, "현세와 유세(은세)의 경계에 이상을 초래하는 현상"을 말한다. 구체적으로는 <strong>현세로의 "부정(穢れ)" 유출에 의한 영적 건강 피해</strong>와 <strong>"계이"의 출현에 의한 물리적 손해</strong>를 일으키는 사상을 가리킨다.
+      </div>
+    </div>
+
+    <!-- 경계 이상 3종 -->
+    <div style="margin:18px 0; display:flex; flex-direction:column; gap:10px;">
+
+      <div style="display:flex; align-items:stretch; background:rgba(0,0,0,0.2); border:1px solid rgba(201,168,117,0.15); overflow:hidden; transition:background 0.3s ease;">
+        <div style="width:5px; background:rgba(168,48,47,0.5); flex-shrink:0;"></div>
+        <div style="padding:14px 18px; flex:1;">
+          <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:10px; letter-spacing:0.25em; color:var(--red-ink); margin-bottom:5px;">TYPE — 01 · EROSION</div>
+          <div style="font-family:'Noto Serif KR',serif; font-weight:700; font-size:15px; color:var(--paper-bright); margin-bottom:6px;">침식형 경계 이상 <span style="font-weight:400; font-size:12px; color:var(--paper-dim); font-style:italic;">侵食型</span></div>
+          <div style="font-family:'Noto Serif KR',serif; font-size:13px; color:var(--paper-text); line-height:1.85; letter-spacing:0.02em;">특정 좌표를 중심으로 시간과 함께 <strong>얼룩이나 해짐이 번지듯이 현세 영역을 침식</strong>한다. 사람 눈에 띄지 않는 장소이거나 조사가 지연됨으로써 <em>대규모 경계 재해로 발전할 수 있어</em>, 조기 대처가 긴요하다고 여겨진다.</div>
+        </div>
+      </div>
+
+      <div style="display:flex; align-items:stretch; background:rgba(0,0,0,0.2); border:1px solid rgba(201,168,117,0.15); overflow:hidden;">
+        <div style="width:5px; background:rgba(201,168,117,0.4); flex-shrink:0;"></div>
+        <div style="padding:14px 18px; flex:1;">
+          <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:10px; letter-spacing:0.25em; color:var(--gold); margin-bottom:5px;">TYPE — 02 · GATE</div>
+          <div style="font-family:'Noto Serif KR',serif; font-weight:700; font-size:15px; color:var(--paper-bright); margin-bottom:6px;">문형 경계 이상 <span style="font-weight:400; font-size:12px; color:var(--paper-dim); font-style:italic;">門型</span></div>
+          <div style="font-family:'Noto Serif KR',serif; font-size:13px; color:var(--paper-text); line-height:1.85; letter-spacing:0.02em;">현세와 유세가 <strong>순간적으로 교차</strong>하고, 즉각 경계가 수복된다. 이러한 종류의 경계 이상 그 자체에 대처하는 일은 거의 없으며, <em>순간적인 경계 이상에 동반하여 현세에 출현한 계이에 대한 대처가 우선</em>된다.</div>
+        </div>
+      </div>
+
+      <div style="display:flex; align-items:stretch; background:rgba(0,0,0,0.2); border:1px solid rgba(201,168,117,0.15); overflow:hidden;">
+        <div style="width:5px; background:rgba(90,60,90,0.6); flex-shrink:0;"></div>
+        <div style="padding:14px 18px; flex:1;">
+          <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:10px; letter-spacing:0.25em; color:#9a70a0; margin-bottom:5px;">TYPE — 03 · SUBSTITUTION</div>
+          <div style="font-family:'Noto Serif KR',serif; font-weight:700; font-size:15px; color:var(--paper-bright); margin-bottom:6px;">치환형 경계 이상 <span style="font-weight:400; font-size:12px; color:var(--paper-dim); font-style:italic;">置換型</span></div>
+          <div style="font-family:'Noto Serif KR',serif; font-size:13px; color:var(--paper-text); line-height:1.85; letter-spacing:0.02em;">일정 지역·공간이 <strong>순간적으로 유세와 뒤섞인 상태로 치환</strong>된다. 거의 전조 없이 일정 면적의 경계 이상 구역이 형성되기 때문에, <em>가장 인명 피해가 발생하기 쉬운 경향</em>이 있다. 이러한 종류가 발생했을 경우, 대개는 <strong>신기부 총동원</strong>으로 대처에 임하게 된다.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="note">
+      <div class="note-body">
+        중앙신기실은 연간 발생하는 경계 이상의 비율에 대해 <strong>"가장 많은 것이 침식형, 다음이 문형, 치환형은 규모에 따라 다르나 적은 편"</strong>이라고 발표하고 있다.
+      </div>
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <span>Tactical Exorcist Codex</span>
+    <span class="num">XXVI</span>
+    <span>Terminology I</span>
+  </div>
+</div>
+
+
+<!-- ════ PAGE XXVII — TERMINOLOGY II ════ -->
+<div class="page" id="page-terms-2">
+  <svg class="page-corner tl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><path d="M4 4 L14 14 M56 4 L46 14 M4 56 L14 46" stroke="#c9a875" stroke-width="0.5" fill="none" opacity="0.4"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner tr" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner bl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner br" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-seal" viewBox="0 0 100 100"><text x="50" y="68" text-anchor="middle" font-size="60" fill="currentColor">神</text></svg>
+
+  <div class="page-inner">
+    <div class="ch-header">
+      <div class="ch-kicker">
+        <div class="left"><span class="num-block">4·11</span><span>glossary of terms</span></div>
+        <div>弐 · 식신 · 계이</div>
+      </div>
+      <div class="ch-title-en">— Shikigami & The Kai-i in Detail —</div>
+      <div class="ch-title-ko">용어 (用語) <span class="jp-side">弐</span></div>
+    </div>
+
+    <div class="divider">
+      <div class="line"></div>
+      <div class="mark">4·11·3 式神</div>
+      <div class="line"></div>
+    </div>
+
+    <div class="term-card">
+      <div class="head">
+        <span class="label">Term 03</span>
+        <span class="name">式神</span>
+        <span class="reading">Shikigami · 식신</span>
+      </div>
+      <div class="body-text">
+        퇴마사가 술법으로 형성하거나 특수한 제구에 의해 기동·사역되는 것으로 정의된다. 말하자면 <strong>영적 요소에 의해 동작하는 드론</strong>이다. 광의로는 "가호로 형성된, 반자율 행동물"로 여겨진다.
+        <br><br>
+        한편, 그 연원은 오래된 퇴마사 가문에 전해지는 술법에서 유래하였으며, 그와 이어지는 술법에 의해 형성된 것만을 <em>"식신"으로 치는 협의의 정의</em>도 존재한다.
+        <br><br>
+        제구개발과는 가호 기술과 기계 공학을 조합하여, 경계 이상 환경 하에서도 구동할 수 있는 드론을 개발하고 있다. 오늘날에는 이러한 것들도 <strong>"식신"이라고 부르는 경우가 많다.</strong>
+        <br><br>
+        퇴마술 '식신 사역'에 의해 만들어지는 것은 협의의 식신이며, <em>'사역 제구'나 '술연기점(術延起点)'</em>은 광의의 식신에 포함된다.
+      </div>
+    </div>
+
+    <div class="divider">
+      <div class="line"></div>
+      <div class="mark">4·11·4 界異</div>
+      <div class="line"></div>
+    </div>
+
+    <div class="term-card">
+      <div class="head">
+        <span class="label">Term 04</span>
+        <span class="name">界異</span>
+        <span class="reading">Kai-i · 계이</span>
+      </div>
+      <div class="body-text">
+        경계 이상 시에 출현하는, 유세의 존재. 그 특징은 천차만별이지만, <strong>"부정(穢れ) 그 자체로 신체가 구성되어 있거나, 부정을 매개로 현세에 존재하고 있는"</strong> 경우가 대부분이다.
+        <br><br>
+        계이는 몸에 두른 "부정"으로 인해, 정화 효과를 중화하거나 물리적 대미지를 경감한다. 이 작용을 유사 장갑으로 간주하여, <em>'예장(穢装)'</em>이라고 부른다. <strong>경량급 흑부정이나 소구경 하라이구시 사출 장치를 다루는 퇴마사에게 있어서, 견고한 예장을 지닌 계이는 천적</strong>이 될 수 있는 존재이다.
+      </div>
+    </div>
+
+    <!-- 계이 종류 목록 -->
+    <div class="summary-list" style="margin-top:16px;">
+      <div class="summary-list-head">알려진 계이의 종류 — 예시 목록</div>
+
+      <div style="padding:10px 18px; border-bottom:1px solid rgba(201,168,117,0.08); background:rgba(0,0,0,0.1);">
+        <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:10px; letter-spacing:0.25em; color:var(--paper-dim); margin-bottom:8px;">TYPE A · 부정 자체로 구성 — 흑충(黒虫) 계열</div>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <div style="display:flex; align-items:flex-start; gap:12px; font-family:'Noto Serif KR',serif; font-size:12.5px; color:var(--paper-text); line-height:1.8;">
+            <span style="color:var(--gold); font-weight:700; flex-shrink:0; min-width:120px;">울흑호랑나비<br><span style="font-size:10px; font-weight:400; color:var(--paper-dim);">웃코쿠아게하</span></span>
+            <span>비행에 의한 기동력과 무리에 의한 공격력이 성가신 계이. <em>검은 나비 형태.</em></span>
+          </div>
+          <div style="display:flex; align-items:flex-start; gap:12px; font-family:'Noto Serif KR',serif; font-size:12.5px; color:var(--paper-text); line-height:1.8;">
+            <span style="color:var(--gold); font-weight:700; flex-shrink:0; min-width:120px;">흑지네<br><span style="font-size:10px; font-weight:400; color:var(--paper-dim);">쿠로무카데</span></span>
+            <span>가늘고 긴 신체와 <em>날카로운 보각(다리)</em>으로 공격을 펼친다.</span>
+          </div>
+          <div style="display:flex; align-items:flex-start; gap:12px; font-family:'Noto Serif KR',serif; font-size:12.5px; color:var(--paper-text); line-height:1.8;">
+            <span style="color:var(--gold); font-weight:700; flex-shrink:0; min-width:120px;">위채개충<br><span style="font-size:10px; font-weight:400; color:var(--paper-dim);">기사이가이무</span></span>
+            <span>견고한 <em>예장으로 공격을 튕겨내고</em> 거체로 돌진을 펼친다.</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding:10px 18px;">
+        <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:10px; letter-spacing:0.25em; color:var(--paper-dim); margin-bottom:8px;">TYPE B · 부정을 매개로 현세에 존재</div>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <div style="display:flex; align-items:flex-start; gap:12px; font-family:'Noto Serif KR',serif; font-size:12.5px; color:var(--paper-text); line-height:1.8;">
+            <span style="color:var(--paper-dim); font-weight:700; flex-shrink:0; min-width:120px;">보해<br><span style="font-size:10px; color:var(--paper-dim);">호무쿠로</span></span>
+            <span>시체에 스며든 부정이 <em>유사 영혼 역할</em>을 함으로써 시체를 가동시킨다.</span>
+          </div>
+          <div style="display:flex; align-items:flex-start; gap:12px; font-family:'Noto Serif KR',serif; font-size:12.5px; color:var(--paper-text); line-height:1.8;">
+            <span style="color:var(--paper-dim); font-weight:700; flex-shrink:0; min-width:120px;">귀종<br><span style="font-size:10px; color:var(--paper-dim);">키슈</span></span>
+            <span>보해에서 변태하여 <em>대사를 활성화</em>시키고 강력한 백병전 능력을 갖춘다.</span>
+          </div>
+          <div style="display:flex; align-items:flex-start; gap:12px; font-family:'Noto Serif KR',serif; font-size:12.5px; color:var(--paper-text); line-height:1.8;">
+            <span style="color:var(--paper-dim); font-weight:700; flex-shrink:0; min-width:120px;">빙상황신<br><span style="font-size:10px; color:var(--paper-dim);">츠쿠모아라가미</span></span>
+            <span>기존의 물품이나 병기에 <em>부정이 깃들어 구동</em>하는 계이.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="note">
+      <div class="note-body">
+        "그 존재에 가호/부정과 같은 영적 요소를 필요로 한다"는 점에서 <strong>'계이'와 '식신'은 서로 비슷하지만</strong>, '계이'가 독립된 존재인 데 반해, '식신'은 어디까지나 <em>술자가 지닌 가호에 의존</em>하고 있다는 점에서 다르다.
+      </div>
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <span>Tactical Exorcist Codex</span>
+    <span class="num">XXVII</span>
+    <span>Terminology II</span>
+  </div>
+</div>
+
+
+<!-- ════ PAGE XXVIII — TERMINOLOGY III ════ -->
+<div class="page" id="page-terms-3">
+  <svg class="page-corner tl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><path d="M4 4 L14 14 M56 4 L46 14 M4 56 L14 46" stroke="#c9a875" stroke-width="0.5" fill="none" opacity="0.4"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner tr" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner bl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner br" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-seal" viewBox="0 0 100 100"><text x="50" y="68" text-anchor="middle" font-size="60" fill="currentColor">縁</text></svg>
+
+  <div class="page-inner">
+    <div class="ch-header">
+      <div class="ch-kicker">
+        <div class="left"><span class="num-block">4·11·5</span><span>the tamed and the wild</span></div>
+        <div>縁起</div>
+      </div>
+      <div class="ch-title-en">— On the "Engi" : The Bound Ones —</div>
+      <div class="ch-title-ko">연기 (縁起) <span class="jp-side">契りを結ぶ異</span></div>
+    </div>
+
+    <div class="term-card">
+      <div class="head">
+        <span class="label">Term 05</span>
+        <span class="name">縁起</span>
+        <span class="reading">Engi · 연기</span>
+      </div>
+      <div class="body-text">
+        연기란, <strong>"계이이면서도 사람을 따르는 개체"</strong>를 가리키는 호칭 구분이다. 그 존재의 중핵이 부정이나 가호 같은 영적 요소로 구축되어 있다는 점은 식신과 비슷하지만, <em>독립된 자아나 사고를 지니고 사역자와 독립된 존재로 있다</em>는 것이 가장 큰 차이가 된다.
+      </div>
+    </div>
+
+    <p class="body lead">그 대부분은 의식 기술이나 제구의 효과에 의해 <em>"사람에게 위해를 가하지 않는다", "술자의 지시에 일정 범위 내에서 따른다"</em> 등의 계약을 맺고, 사역자에게 <strong>"빙의한다(憑く)"</strong>.</p>
+
+    <div class="term-card">
+      <div class="head">
+        <span class="label">Key Process</span>
+        <span class="name">調伏</span>
+        <span class="reading">Choubuku · 조복</span>
+      </div>
+      <div class="body-text">
+        계약에 의한 <strong>무해화(행동 제한)</strong>와 사역자로의 연결 프로세스를 가리키는 용어. 조복된 연기는 <em>사역자의 가호를 일상적으로 섭취</em>하여 그 존재를 유지한다. 이 때문에 연기를 구성하는 영적 요소는 그 대부분이 <strong>가호(생명에 해가 없는 상태의 영적 요소)</strong>이며, 일반인도 접촉할 수 있는 경우가 많다.
+      </div>
+    </div>
+
+    <div class="divider">
+      <div class="line"></div>
+      <div class="mark">契約と戦力</div>
+      <div class="line"></div>
+    </div>
+
+    <p class="body">호부나 제어 장치 같은 특수한 제구를 매개로, 자신과 계약하고 있는 연기를 <strong>전투에 사용하는 퇴마사</strong>도 존재한다. 식신과 달리, 연기의 대부분은 <em>개체로서 안정된 퍼포먼스를 발휘하여 높은 전투 능력</em>을 갖추는 경우가 많다.</p>
+
+    <div class="note">
+      <div class="note-body">
+        단, 계약에 얽매여 있다고는 하나 이들은 계이이다. 신기부 및 경찰 조직은 <strong>공적 기관이나 인정받은 민간 퇴멸 사업자를 제외한 일반인이 연기를 보유하는 것을 인정하지 않으며</strong>, 또한 그러한 기관에 속한 퇴마사라 하더라도 <em>신고 없이 연기를 보유하는 것은 주저 범죄의 요건</em>을 충족한다.
+      </div>
+    </div>
+
+    <div class="quote">
+      이것은 계이다. 눈이 있고, 생각하며, 가끔은 나보다 사리를 더 잘 분별한다 — 하지만 나는 이것을 무기라고 부르지 않는다. 동반자라고 부른다.
+      <span class="attr">『연기 사역자의 수기 · 허가받은 민간 퇴멸사업자』</span>
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <span>Tactical Exorcist Codex</span>
+    <span class="num">XXVIII</span>
+    <span>Terminology III · Engi</span>
+  </div>
+</div>
+
+
+<!-- ════ PAGE XXIX — TERMINOLOGY IV : GISHIKI & SHIKIHOU ════ -->
+<div class="page" id="page-terms-4">
+  <svg class="page-corner tl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><path d="M4 4 L14 14 M56 4 L46 14 M4 56 L14 46" stroke="#c9a875" stroke-width="0.5" fill="none" opacity="0.4"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner tr" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner bl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner br" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-seal" viewBox="0 0 100 100"><text x="50" y="68" text-anchor="middle" font-size="60" fill="currentColor">式</text></svg>
+
+  <div class="page-inner">
+    <div class="ch-header">
+      <div class="ch-kicker">
+        <div class="left"><span class="num-block">4·11·6~7</span><span>ritual & inner arts</span></div>
+        <div>儀式 · 式法</div>
+      </div>
+      <div class="ch-title-en">— The Nature of Ritual and the Born Arts —</div>
+      <div class="ch-title-ko">의식 · 식법 / 퇴마술 <span class="jp-side">儀の本質</span></div>
+    </div>
+
+    <div class="divider">
+      <div class="line"></div>
+      <div class="mark">4·11·6 儀式</div>
+      <div class="line"></div>
+    </div>
+
+    <div class="term-card">
+      <div class="head">
+        <span class="label">Term 06</span>
+        <span class="name">儀式 / 儀術</span>
+        <span class="reading">Gishiki / Gijutsu · 의식</span>
+      </div>
+      <div class="body-text">
+        본 캐논에서, <strong>"가호"나 "부정" 같은 영적 요소를 이용하여 어떠한 초자연 현상을 일으키는 것</strong>을 "의식"이라고 총칭한다. 신기부 직원이나 신궁본사의 신직들에게 "의식"은 극히 친숙한 존재이며, 특별히 의식하는 일은 적다.
+        <br><br>
+        어느 "의식"이든 <em>그것을 성립시키기 위한 구성 요소(팩터)를 필요로 하며</em>, 그것들을 특정 절차로 실행함으로써 성립된다. 같은 "의식"이더라도, <strong>그것을 거행하는 자의 지식·기량에 따라 발휘되는 효과에는 큰 차이</strong>가 나는 경우가 많다.
+        <br><br>
+        이러한, <strong>"의식에서 힘을 끌어내기 위한 기법(테크닉)"을 "의술(儀術)"</strong>이라고 부르는 경우가 있다.
+      </div>
+    </div>
+
+    <!-- 의식 응용 예시 2종 -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:16px 0;">
+      <div style="background:rgba(0,0,0,0.2); border:1px solid rgba(201,168,117,0.15); padding:14px 16px;">
+        <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:9px; letter-spacing:0.25em; color:var(--paper-dim); margin-bottom:6px;">EXAMPLE · 01</div>
+        <div style="font-family:'Noto Serif KR',serif; font-weight:700; font-size:13px; color:var(--paper-bright); margin-bottom:6px;">명복 (名伏)</div>
+        <div style="font-family:'Noto Serif KR',serif; font-size:12px; color:var(--paper-text); line-height:1.8;">대상자의 <em>"이름"에 은폐·위장 처리</em>를 가하는 기구. "가호를 써서 이름을 숨기는" 의식으로 <strong>일시적인 기척 차단 효과</strong>를 가져온다.</div>
+      </div>
+      <div style="background:rgba(0,0,0,0.2); border:1px solid rgba(201,168,117,0.15); padding:14px 16px;">
+        <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:9px; letter-spacing:0.25em; color:var(--paper-dim); margin-bottom:6px;">EXAMPLE · 02</div>
+        <div style="font-family:'Noto Serif KR',serif; font-weight:700; font-size:13px; color:var(--paper-bright); margin-bottom:6px;">컴파운드 재궁</div>
+        <div style="font-family:'Noto Serif KR',serif; font-size:12px; color:var(--paper-text); line-height:1.8;"><em>『명현(鳴弦)의 의식』</em>의 원리를 응용. 활과 현으로 발생시킨 "소리"에 지향성을 부여해 <strong>극히 짧은 절차로 의식을 성립</strong>시키도록 설계.</div>
+      </div>
+    </div>
+
+    <div class="divider">
+      <div class="line"></div>
+      <div class="mark">4·11·7 式法 / 祓魔術</div>
+      <div class="line"></div>
+    </div>
+
+    <div class="term-card">
+      <div class="head">
+        <span class="label">Term 07</span>
+        <span class="name">式法 / 祓魔術</span>
+        <span class="reading">Shikihou / Futsumajutsu · 식법 / 퇴마술</span>
+      </div>
+      <div class="body-text">
+        인간 중에는, 소수지만 <strong>"의식을 성립시킬 수 있는 구성 요소(팩터)를 선천적으로 내재하고 있는 개체"</strong>가 존재한다. "태어날 때부터 의식이 빌트인되어 있다"고도 표현할 수 있으며, 그러한 인물은 특정 몸짓이나 손 모양, 발성이나 강하게 의식하는 것 등을 트리거로 삼아 의식을 실행한다. 이렇게 하여, <em>어떤 존재가 내장하고 있는 의식을 "식법"이라고 부른다.</em>
+        <br><br>
+        "식법"이란 "의식"의 발동에서 역산하여 해석하는 형태로 가설이 세워져 있으며, <strong>그 인물이 내재하고 있는 의식 요소의 대부분은 본인조차 잘 언어화할 수 없는, 반쯤 블랙박스화</strong>되어 있는 경우가 대부분이다.
+      </div>
+    </div>
+
+    <div class="note">
+      <div class="note-body">
+        <strong>"식법"이라는 단어</strong> 자체는 헤이안 시대의 음양사가 사용한 단어에서 유래. 신기관이 공적인 자리에서 쓸 법한 표현이다. 세속화가 진행된 현대에는, 신기부 내에서는 속칭인 <em>"퇴마술"</em>이라고 불리는 경향이 있다. 반면, 고식 전통을 중시하는 신궁본사의 술사들은 완고하게 이를 <strong>"식법"</strong>이라 부르며, <em>"식을 친다(式を打つ)"</em>라는 고풍스러운 말투를 존중하는 경우가 많다.
+      </div>
+    </div>
+
+    <div class="quote">
+      제구는 언제든 부서진다. 배터리는 소모된다. 하지만 식법은 내 안에서 죽지 않는다 — 그것이 나 자신인 한.
+      <span class="attr">『신궁본사 소속 식법 사역자의 말』</span>
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <span>Tactical Exorcist Codex</span>
+    <span class="num">XXIX</span>
+    <span>Terminology IV</span>
+  </div>
+</div>
+
+
+<!-- ════ PAGE XXX — TERMINOLOGY V : JUZO & CRIME ════ -->
+<div class="page" id="page-terms-5">
+  <svg class="page-corner tl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><path d="M4 4 L14 14 M56 4 L46 14 M4 56 L14 46" stroke="#c9a875" stroke-width="0.5" fill="none" opacity="0.4"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner tr" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner bl" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-corner br" viewBox="0 0 60 60"><path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/><circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/></svg>
+  <svg class="page-seal" viewBox="0 0 100 100"><text x="50" y="68" text-anchor="middle" font-size="60" fill="currentColor">法</text></svg>
+
+  <div class="page-inner">
+    <div class="ch-header">
+      <div class="ch-kicker">
+        <div class="left"><span class="num-block">4·11·8~9</span><span>law & transgression</span></div>
+        <div>呪詛 · 呪詛犯罪</div>
+      </div>
+      <div class="ch-title-en">— On Juzo : The Cursed Act and Its Crime —</div>
+      <div class="ch-title-ko">주저 · 주저 범죄 <span class="jp-side">禁断の術の法</span></div>
+    </div>
+
+    <div class="divider">
+      <div class="line"></div>
+      <div class="mark">4·11·8 呪詛</div>
+      <div class="line"></div>
+    </div>
+
+    <div class="term-card">
+      <div class="head">
+        <span class="label">Term 08</span>
+        <span class="name">呪詛</span>
+        <span class="reading">Juzo · 주저</span>
+      </div>
+      <div class="body-text">
+        행정기관이나 신궁본사의 관리 관할을 받지 않는 인물이 의식을 행하여, <strong>타인의 인명 및 재산을 해치는 일 전반</strong>을 가리켜 "주저"라고 부른다. 특히 인명 살상을 목적으로 한 주저는 중죄 행위이며, <em>기본적으로 살인 사건과 동등하게 취급</em>된다.
+        <br><br>
+        또한, 직접적으로 의식을 위해에 사용하지 않았더라도, <strong>보조적으로 이를 활용했을 경우, 역시 "주저" 행위로 판단</strong>되는 경우가 많다. 주저 행위는 사법적인 면에서도 엄중히 금지되어 있으며, 특히 위협도가 클 경우, <em>결계관리과 주도의 "봉인" 집행이 허가</em>되는 경우가 있다.
+      </div>
+    </div>
+
+    <div class="divider">
+      <div class="line"></div>
+      <div class="mark">4·11·9 呪詛犯罪</div>
+      <div class="line"></div>
+    </div>
+
+    <div class="term-card">
+      <div class="head">
+        <span class="label">Term 09</span>
+        <span class="name">呪詛犯罪 / 呪詛関連犯罪</span>
+        <span class="reading">주저 범죄 / 주저 관련 범죄</span>
+      </div>
+      <div class="body-text">
+        주저를 이용하여 직접 타인을 해치는 범죄를 <strong>"주저 범죄"</strong>라고 부른다. 또한, 직접적인 가해 행위가 없더라도 의식(儀式) 및 의식(儀術)과 관련된 위법 행위 전반을 <strong>"주저 관련 범죄"</strong>라고 호칭한다.
+        <br><br>
+        후자는 꽤 광범위한 정의로 되어 있어, 예를 들어 <em>신기부만이 운용을 허가받은 칼날 형태의 근접 제구 "흑부정"의 절도·판매(밀매)</em> 등도 해당한다. 일부 자격을 지닌 신기관은 주저 범죄에 관한 <strong>수사권</strong>을 가지며, 신기부·신궁본사 직원은 그들 신기관의 관할 하에서 <strong>체포나 강제 수사의 권한</strong>을 지닌다.
+      </div>
+    </div>
+
+    <!-- 주저 범죄자 4분류 -->
+    <div class="summary-list" style="margin-top:16px;">
+      <div class="summary-list-head">신기부의 주저 범죄자 분류 체계</div>
+
+      <div class="summary-list-item">
+        <div class="sli-num" style="color:var(--red-ink);">殺</div>
+        <div class="sli-body">
+          <strong>주살사 (呪殺師)</strong> — 사상, 이득, 충동에 기반하여, 의식(儀式) 및 의식(儀術)으로 <em>타인을 살상하는 자</em>. 의식에 의한 타인의 살상은 대개 <strong>살인 미수로 처리</strong>된다.
+        </div>
+      </div>
+
+      <div class="summary-list-item">
+        <div class="sli-num" style="color:#5a5a6a;">屍</div>
+        <div class="sli-body">
+          <strong>시술사 (屍術師)</strong> — 의도적으로 생물의 시체에 "부정"을 부여하고, <em>소생시켜 조종하는 자</em>. 인간의 시체를 사용했을 경우, 거의 예외 없이 <strong>사체 손괴·유기죄와 세트</strong>가 된다.
+        </div>
+      </div>
+
+      <div class="summary-list-item">
+        <div class="sli-num" style="color:#7a6090;">与</div>
+        <div class="sli-body">
+          <strong>주여사 (呪与師)</strong> — 직접적인 살상을 동반하지 않거나, 인명을 위협하지 않는 것이 명백한 정도의 주저를 이용하여 <em>협박이나 행동의 속박을 행하는 자</em>가 해당한다.
+        </div>
+      </div>
+
+      <div class="summary-list-item">
+        <div class="sli-num" style="color:var(--paper-dim);">他</div>
+        <div class="sli-body">
+          <strong>기타</strong> — 본인이 직접 의식을 행하는 것은 아니지만, 다른 주저 범죄자의 서포트나 정보 제공, <em>위법한 제구의 개발이나 조달 등</em>, 주저 범죄의 방조로 간주되는 자.
+        </div>
+      </div>
+    </div>
+
+    <!-- 마지막 FINIS -->
+    <div class="divider" style="margin-top:40px;">
+      <div class="line"></div>
+      <div class="mark">✦ FINIS ✦</div>
+      <div class="line"></div>
+    </div>
+
+    <div style="text-align:center; margin-top:22px; padding-bottom:4px;">
+      <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:13px; color:var(--paper-dim); letter-spacing:0.3em; margin-bottom:10px;">— End of Records —</div>
+      <div style="font-family:'Noto Serif KR',serif; font-size:14px; color:var(--gold); font-weight:700; letter-spacing:0.15em; text-shadow:0 0 14px rgba(201,168,117,0.4); margin-bottom:8px;">영자(永慈)의 기록은, 이로써 잠시 닫힌다.</div>
+      <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:11.5px; color:var(--paper-dim); letter-spacing:0.2em;">다음 기록이 열릴 날까지 — 경계를 수호하는 자들에게 가호를.</div>
+    </div>
+  </div>
+
+  <div class="page-foot">
+    <span>Tactical Exorcist Codex · 永慈</span>
+    <span class="num">XXX</span>
+    <span>Terminology V · Fin.</span>
+  </div>
+</div>
+
+</div>
+
+<script>
+(function(){
+  // Back to TOC floating button
+  const backBtn = document.createElement('a');
+  backBtn.href = '#page-toc';
+  backBtn.className = 'back-to-toc';
+  backBtn.title = '목차로 돌아가기';
+  document.body.appendChild(backBtn);
+
+  const tocPage = document.getElementById('page-toc');
+  if (tocPage) {
+    window.addEventListener('scroll', () => {
+      const tocBottom = tocPage.getBoundingClientRect().bottom;
+      if (tocBottom < 0) {
+        backBtn.classList.add('visible');
+      } else {
+        backBtn.classList.remove('visible');
+      }
+    });
+  }
+
+  // Smooth scroll for internal anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', function(e) {
+      const targetId = this.getAttribute('href').slice(1);
+      const target = document.getElementById(targetId);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        history.pushState(null, null, '#' + targetId);
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>
