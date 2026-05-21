@@ -2,7 +2,13 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#080604">
+<meta name="color-scheme" content="dark">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
 <title>택티컬 퇴마사 — 세계관 설정집 · 永慈</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600;700;900&family=Noto+Sans+KR:wght@300;400;500;700&family=Black+Han+Sans&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
 <style>
@@ -159,7 +165,8 @@ body::after {
 
 .cover-classify {
   display: inline-block;
-  margin-bottom: 40px;
+  margin-top: 0;
+  margin-bottom: 32px;
   padding: 7px 20px;
   border: 1px solid var(--red-ink);
   color: var(--red-ink);
@@ -189,6 +196,14 @@ body::after {
   margin: 0 auto 32px;
   width: 110px; height: 110px;
   position: relative; z-index: 2;
+}
+/* Seal pinned to top-right corner of the cover */
+.cover-seal-tr {
+  position: absolute;
+  top: 30px; right: 30px;
+  width: 78px; height: 78px;
+  margin: 0;
+  z-index: 3;
 }
 .cover-seal svg {
   width: 100%; height: 100%;
@@ -1205,17 +1220,221 @@ body::after {
 /* ═══════════════════════════════════════════════════
    RESPONSIVE
 ═══════════════════════════════════════════════════ */
-@media (max-width: 720px) {
-  body { padding: 24px 12px 64px; }
-  .cover { padding: 60px 24px 50px; }
-  .cover-main { font-size: 32px; }
-  .page-inner { padding: 32px 28px; }
-  .ch-title-ko { font-size: 22px; }
-  .toc-item { font-size: 12px; padding: 9px 10px 9px 16px; }
-  .page-foot { margin: 0 28px; }
-  .skill-pillars { grid-template-columns: 1fr; }
-  .rank-grid { grid-template-columns: repeat(5, 1fr); }
-  .three-divisions { flex-direction: column; }
+/* ═══════════════════════════════════════════════════
+   RESPONSIVE — TABLET
+═══════════════════════════════════════════════════ */
+@media (max-width: 860px) {
+  .wrap { max-width: 100%; }
+  .page-inner { padding: 44px 44px 48px; }
+  .page-foot { margin: 0 44px; }
+}
+
+/* ═══════════════════════════════════════════════════
+   RESPONSIVE — MOBILE (≤ 600px)
+═══════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  body {
+    padding: 16px 10px 60px;
+    /* lighten fixed background work on mobile GPUs */
+  }
+  /* Disable heavy scanline grain on mobile for readability + perf */
+  body::after { opacity: 0.18; }
+
+  .wrap { max-width: 100%; }
+
+  /* ── Cover ── */
+  .cover { padding: 48px 22px 40px; margin-bottom: 24px; }
+  .cover::before { inset: 9px; }
+  .cover::after  { inset: 13px; }
+  .cover-seal { width: 84px; height: 84px; margin-bottom: 22px; }
+  .cover-seal-tr { top: 16px; right: 16px; width: 56px; height: 56px; margin: 0; }
+  .cover-classify { font-size: 8.5px; letter-spacing: 0.25em; padding: 6px 14px; margin-bottom: 24px; }
+  .cover-classify::before { left: -12px; }
+  .cover-classify::after  { right: -12px; }
+  .cover-jp { font-size: 9.5px; letter-spacing: 0.4em; }
+  .cover-main { font-size: 30px; letter-spacing: 0.04em; }
+  .cover-sub { font-size: 16px; margin-bottom: 28px; }
+  .cover-desc { font-size: 12.5px; line-height: 1.95; max-width: 100%; }
+  .cover-rule .line { max-width: 60px; }
+  .cover-meta { gap: 18px; font-size: 9px; }
+  .cover-btn { padding: 12px 28px; font-size: 12px; letter-spacing: 0.2em; }
+  .cover-orb { display: none; }
+
+  /* ── Page ── */
+  .page { margin-bottom: 22px; }
+  .page-inner { padding: 30px 22px 34px; }
+  .page-foot {
+    margin: 0 22px;
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+    gap: 8px;
+  }
+  .page-foot .num { font-size: 13px; }
+  /* Show corners faintly always on mobile (no hover) */
+  .page-corner { opacity: 0.4 !important; width: 44px; height: 44px; }
+  .page-corner.tl, .page-corner.tr { top: 9px; }
+  .page-corner.bl, .page-corner.br { bottom: 9px; }
+  .page-corner.tl, .page-corner.bl { left: 9px; }
+  .page-corner.tr, .page-corner.br { right: 9px; }
+  /* Show watermark always, very faint */
+  .page-seal { opacity: 0.04 !important; width: 130px; height: 130px; right: 12px; }
+  /* Disable mouse-glow on touch */
+  .page-glow { display: none; }
+  /* Show header underline always */
+  .page .ch-header::after { width: 56px; }
+
+  /* ── Chapter header ── */
+  .ch-kicker {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    font-size: 8.5px;
+    letter-spacing: 0.25em;
+    margin-bottom: 12px;
+  }
+  .ch-kicker .num-block { font-size: 13px; }
+  .ch-title-en { font-size: 12px; letter-spacing: 0.15em; }
+  .ch-title-ko { font-size: 21px; line-height: 1.3; }
+  .ch-title-ko .jp-side, .ch-title-ko .jp-style {
+    display: block;
+    margin-left: 0;
+    margin-top: 4px;
+    font-size: 13px;
+  }
+
+  /* ── Body text ── */
+  .body { font-size: 13.5px; line-height: 1.95; text-align: left; }
+  .body.lead::first-letter { font-size: 52px; padding: 4px 10px 0 0; }
+
+  /* ── Divider ── */
+  .divider { margin: 24px 0; gap: 10px; }
+  .divider .mark { font-size: 11px; letter-spacing: 0.15em; }
+
+  /* ── Note / Quote ── */
+  .note { padding: 15px 18px 15px 32px; font-size: 12.5px; }
+  .quote { padding: 20px 22px; font-size: 13.5px; line-height: 1.95; }
+  .quote::before { font-size: 56px; top: -6px; }
+  .quote .attr { font-size: 10px; letter-spacing: 0.12em; }
+
+  /* ── Term card ── */
+  .term-card .head {
+    padding: 11px 16px;
+    gap: 6px 10px;
+  }
+  .term-card .head .name { font-size: 17px; }
+  .term-card .head .reading { font-size: 11px; }
+  .term-card .head .label { font-size: 9px; letter-spacing: 0.2em; }
+  .term-card .body-text { padding: 14px 18px; font-size: 12.5px; line-height: 1.95; }
+
+  /* ── Timeline ── */
+  .timeline { padding-left: 28px; }
+  .timeline::before { left: 6px; }
+  .tl-entry::before { left: -27px; width: 8px; height: 8px; }
+  .tl-entry.major::before { left: -29px; width: 12px; height: 12px; }
+  .tl-year { font-size: 17px; }
+  .tl-entry.major .tl-year { font-size: 20px; }
+  .tl-text { font-size: 12.5px; line-height: 1.85; }
+
+  /* ── Grade table ── */
+  .grade-table-head { padding: 12px 16px; flex-wrap: wrap; gap: 8px; }
+  .gt-title { font-size: 13px; }
+  .grade-num { width: 58px; font-size: 22px; padding: 12px 4px; }
+  .grade-num .grade-en { font-size: 9px; }
+  .grade-body { padding: 12px 14px; }
+  .grade-label { font-size: 13px; }
+  .grade-desc { font-size: 11.5px; }
+
+  /* ── Rank table — keep 5 cols but shrink ── */
+  .rank-table-head { padding: 12px 16px; flex-wrap: wrap; gap: 8px; }
+  .rank-cell { padding: 12px 2px; gap: 4px; }
+  .rank-kanji { font-size: 24px; }
+  .rank-ko { font-size: 9px; letter-spacing: 0.02em; }
+  .rank-num { font-size: 8px; }
+  .rank-footer { padding: 12px 16px; font-size: 11.5px; }
+
+  /* ── Dept / faction cards ── */
+  .dept-card-head, .faction-card-head { padding: 13px 16px; gap: 13px; }
+  .dept-icon { font-size: 30px; min-width: 36px; }
+  .faction-seal { font-size: 36px; min-width: 42px; }
+  .dept-name, .faction-name { font-size: 14.5px; }
+  .dept-label, .faction-kicker { font-size: 9px; letter-spacing: 0.2em; }
+  .dept-card-body, .faction-card-body { padding: 14px 18px; font-size: 12.5px; line-height: 1.95; }
+
+  /* ── Skill pillars → single column ── */
+  .skill-pillars { grid-template-columns: 1fr; gap: 8px; }
+  .skill-pillar { padding: 16px 16px; }
+
+  /* ── Three divisions → stacked ── */
+  .three-divisions { flex-direction: column; gap: 8px; padding: 16px; }
+  .td-connector { transform: rotate(90deg); font-size: 16px; }
+  .td-cell { width: 100%; }
+
+  /* ── Summary list ── */
+  .summary-list-head { padding: 9px 16px; font-size: 10px; letter-spacing: 0.18em; }
+  .summary-list-item { padding: 12px 16px; gap: 12px; font-size: 12.5px; }
+  .summary-list-item .sli-num { font-size: 16px; min-width: 22px; }
+
+  /* ── TOC ── */
+  .toc-page .page-inner { padding: 32px 18px 38px; }
+  .toc-header { margin-bottom: 24px; padding-bottom: 18px; }
+  .toc-kicker { font-size: 11px; letter-spacing: 0.3em; }
+  .toc-title { font-size: 24px; }
+  .toc-item {
+    padding: 12px 8px 12px 18px;
+    font-size: 12px;
+    /* bigger tap target */
+    min-height: 44px;
+    flex-wrap: wrap;
+  }
+  .toc-item::before { left: 2px; }
+  /* Hide English subtitle + dots on mobile, keep label + number */
+  .toc-en { display: none; }
+  .toc-dots { margin: 0 6px; }
+  .toc-num { font-size: 14px; min-width: 24px; }
+
+  /* ── Floating button — bigger tap, lower-right safe ── */
+  .back-to-toc {
+    bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+    right: calc(18px + env(safe-area-inset-right, 0px));
+    width: 50px; height: 50px;
+  }
+  .back-to-toc::before { font-size: 20px; }
+
+  /* ── Inline grid blocks (gear models, type cards) → stack ── */
+  .page-inner [style*="grid-template-columns:1fr 1fr 1fr"],
+  .page-inner [style*="grid-template-columns:1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+  /* Faction placement diagram → wrap vertically */
+  .page-inner [style*="display:flex"][style*="justify-content:center"][style*="flex-wrap:wrap"] {
+    flex-direction: column;
+  }
+}
+
+/* ═══════════════════════════════════════════════════
+   RESPONSIVE — SMALL MOBILE (≤ 380px)
+═══════════════════════════════════════════════════ */
+@media (max-width: 380px) {
+  .cover-main { font-size: 25px; }
+  .cover-sub { font-size: 14px; }
+  .page-inner { padding: 26px 16px 30px; }
+  .ch-title-ko { font-size: 19px; }
+  .rank-kanji { font-size: 20px; }
+  .rank-cell { padding: 10px 1px; }
+  .grade-num { width: 50px; font-size: 19px; }
+  .body { font-size: 13px; }
+}
+
+/* ═══════════════════════════════════════════════════
+   REDUCED MOTION
+═══════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  #particle-canvas { display: none; }
 }
 
 </style>
@@ -1224,9 +1443,7 @@ body::after {
 
 <!-- ════ COVER ════ -->
 <div class="cover">
-  <div class="cover-classify">0等級 機密文書</div>
-
-  <div class="cover-seal">
+  <div class="cover-seal cover-seal-tr">
     <svg viewBox="0 0 100 100">
       <circle cx="50" cy="50" r="46" fill="none" stroke="#c9a875" stroke-width="0.8" opacity="0.6"/>
       <circle cx="50" cy="50" r="40" fill="none" stroke="#c9a875" stroke-width="0.4" opacity="0.4"/>
@@ -1237,6 +1454,8 @@ body::after {
       <text x="50" y="58" text-anchor="middle" font-family="Noto Serif KR, serif" font-size="22" fill="#a8302f" font-weight="900">永</text>
     </svg>
   </div>
+
+  <div class="cover-classify">0等級 機密文書</div>
 
   <div class="cover-jp">— 神祇部 著作 —</div>
   <div class="cover-main">환경청 신기부</div>
@@ -1259,9 +1478,30 @@ body::after {
     <div class="item">EDITION <strong>MMXL</strong></div>
   </div>
 
-  <a href="#page-toc" class="cover-btn">기록을 살펴본다     <text x="50" y="58" text-anchor="middle" font-family="Noto Serif KR, serif" font-size="22" fill="#a8302f" font-weight="900">永</text>
-    </svg>
-  </div>
+  <a href="#page-toc" class="cover-btn">목차로 들어가기</a>
+</div>
+
+
+<!-- ════ TABLE OF CONTENTS ════ -->
+<div class="page toc-page" id="page-toc">
+  <svg class="page-corner tl" viewBox="0 0 60 60">
+    <path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/>
+    <path d="M4 4 L14 14 M56 4 L46 14 M4 56 L14 46" stroke="#c9a875" stroke-width="0.5" fill="none" opacity="0.4"/>
+    <circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/>
+    <path d="M14 4 L26 4 M4 14 L4 26" stroke="#a8302f" stroke-width="0.5" opacity="0.5"/>
+  </svg>
+  <svg class="page-corner tr" viewBox="0 0 60 60">
+    <path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/>
+    <circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/>
+  </svg>
+  <svg class="page-corner bl" viewBox="0 0 60 60">
+    <path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/>
+    <circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/>
+  </svg>
+  <svg class="page-corner br" viewBox="0 0 60 60">
+    <path d="M4 56 L4 4 L56 4" stroke="#c9a875" stroke-width="0.8" fill="none" opacity="0.5"/>
+    <circle cx="4" cy="4" r="3" fill="none" stroke="#a8302f" stroke-width="0.6" opacity="0.7"/>
+  </svg>
 
   <div class="page-inner">
     <div class="toc-header">
@@ -1463,9 +1703,7 @@ body::after {
 
     <p class="body lead">본 항목에서는 택티컬 퇴마사 TRPG의 무대에 대해 기재한다. 본 항목에서 다루는 설정은 일종의 <strong>캐논(Canon, 공식 설정)</strong>으로 삼으며, 코어 설정과는 일정한 거리를 두는 것으로 한다.</p>
 
-    <p class="body">또한, 본 시스템으로 세션을 개최하는 게임 마스터는 본 항목의 설정이 아닌 자신이 구상한 캐논을 적용하여 시나리오를 작성하거나, 게임을 진행해도 무방하다.</p>
-
-    <p class="body">본 항목은 어디까지나 필자(<em>보팔 놋치</em>)가 TRPG를 위해 준비한 설정 모음이라는 점을 유의하기 바란다.</p>
+    <p class="body">또한, 본 시스템으로 세션을 개최하는 게임 마스터는 본 항목의 설정이 아닌 자신이 구상한 캐논을 적용하여 시나리오를 작성하거나, 게임을 진행해도 무방하다. 본 항목은 어디까지나 TRPG를 위해 준비된 설정 모음이라는 점을 유의하기 바란다.</p>
 
     <div class="divider">
       <div class="line"></div>
@@ -1475,9 +1713,7 @@ body::after {
 
     <div class="note">
       <div class="note-body">
-        룰북 제작자의 요청에 따라, <strong>비공식적인 캐릭터는 제거</strong>되었다. 사유는, 개인성을 강조하기 위해, 유저가 창작한 캐릭터로써의 조직을 선출하는 방식을 취한다.
-        <br><br>
-        <em>(월드 섹션 참고 : note.com/vorpal_notch/n/nad175d71c375)</em>
+        본 설정집에서는 <strong>개인성을 강조하기 위해</strong>, 유저가 창작한 캐릭터로써의 조직을 선출하는 방식을 취한다. 따라서 비공식적인 캐릭터는 수록되어 있지 않다.
       </div>
     </div>
   </div>
@@ -1590,7 +1826,7 @@ body::after {
       </div>
 
       <div class="tl-entry">
-        <div class="tl-year">1980</div>
+        <div class="tl-year">1980 경</div>
         <div class="tl-text">고도 경제 성장과 함께 인구 증가 및 도시 발전이 급격히 진행됨. 그에 따라 <strong>괴기 현상이나 유령, 요괴, 우주인 등 초상 현상의 보고 건수가 증가</strong>함.</div>
       </div>
 
@@ -3982,7 +4218,8 @@ function mkParticle(){
     color: c
   };
 }
-for(let i=0;i<90;i++) particles.push(mkParticle());
+const PARTICLE_COUNT = window.innerWidth < 600 ? 35 : 90;
+for(let i=0;i<PARTICLE_COUNT;i++) particles.push(mkParticle());
 
 function tick(){
   ctx.clearRect(0,0,W,H);
